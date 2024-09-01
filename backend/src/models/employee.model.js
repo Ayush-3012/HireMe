@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const employeeSchema = new mongoose.Schema(
   {
@@ -48,9 +49,13 @@ const employeeSchema = new mongoose.Schema(
       },
     ],
     resumeUrl: { type: String, trim: true },
-    appliedJobs: { type: mongoose.Schema.Types.ObjectId, ref: "Job" },
+    appliedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   { timestamps: true }
 );
+
+employeeSchema.methods.validatePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 export const Employee = mongoose.model("Employee", employeeSchema);

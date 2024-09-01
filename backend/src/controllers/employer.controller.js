@@ -1,4 +1,5 @@
-import Employer from "../models/employer.model.js";
+import { Employer } from "../models/employer.model.js";
+import { createToken } from "../utils/token-manager.js";
 import bcrypt from "bcrypt";
 
 export const registerEmployer = async (req, res) => {
@@ -43,19 +44,79 @@ export const loginEmployer = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find the employer
     const employer = await Employer.findOne({ email });
-    if (!employer) {
+    if (!employer)
       return res.status(404).json({ message: "Employer not found" });
-    }
 
-    // Validate password
-    const isMatch = await bcrypt.compare(password, employer.password);
-    if (!isMatch) {
+    const passwordMatch = await employer.validatePassword(password);
+    if (!passwordMatch)
       return res.status(400).json({ message: "Invalid password" });
-    }
 
-    
+    res.clearCookie(process.env.COOKIE_NAME, {
+      httpOnly: true,
+      domain: "localhost",
+      signed: true,
+      path: "/",
+    });
+
+    const token = createToken(employer._id.toString());
+
+    res.cookie(process.env.COOKIE_NAME, token, {
+      httpOnly: true,
+      path: "/",
+      domain: "localhost",
+      signed: true,
+    });
+
+    return res
+      .status(200)
+      .json({ message: "Employer Login Successfull", employer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const viewEmployerProfile = async (req, res) => {
+  try {
+    const foundEmployer = await Employer.findById(req.user.userId);
+
+    res.json({ message: "This is a protected route", foundEmployer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateEmployerProfile = async (req, res) => {
+  try {
+    const updates = req.body;
+
+    const updatedEmployer = await Employer.findByIdAndUpdate(
+      req.user.userId,
+      updates,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedEmployer)
+      return res.status(404).json({ message: "Employer not found" });
+
+    return res
+      .status(200)
+      .json({ message: "Employer Updated Successfully", updatedEmployer });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const logoutEmployer = async (req, res) => {
+  try {
+    res.clearCookie(process.env.COOKIE_NAME, {
+      httpOnly: true,
+      domain: "localhost",
+      signed: true,
+      path: "/",
+    });
+
+    res.json({ message: "Employer Logged out successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

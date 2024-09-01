@@ -1,4 +1,5 @@
 import mongoose, { mongo } from "mongoose";
+import bcrypt from "bcrypt";
 
 const employerSchema = new mongoose.Schema(
   {
@@ -50,5 +51,9 @@ const employerSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+employerSchema.methods.validatePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 export const Employer = mongoose.model("Employer", employerSchema);
