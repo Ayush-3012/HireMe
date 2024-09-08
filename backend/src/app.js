@@ -14,8 +14,10 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 import employerRouter from "./routes/employer.routes.js";
 import employeeRouter from "./routes/employee.routes.js";
+import jobRouter from "./routes/job.routes.js";
 
 app.use("/api/v1/employer", employerRouter);
 app.use("/api/v1/employee", employeeRouter);
+app.use("/api/v1/jobs", jobRouter);
 
 export default app;
