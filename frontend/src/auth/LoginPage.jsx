@@ -1,22 +1,26 @@
-import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("employee");
+
+  const auth = useAuth();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    const user = { email, password };
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_ROUTES}/employer/login`,
-        { email, password },
-        { withCredentials: true }
-      );
-      const data = await res.data;
-      return data;
+      auth.setUserType(userType);
+      await auth.loginAuth(user);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleLogout = async () => {
+    auth.logoutAuth();
   };
   return (
     <>
@@ -39,6 +43,11 @@ const LoginPage = () => {
         />
         <br />
         <br />
+        <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+          <option value="employee">Employee</option>
+          <option value="employer">Employer</option>
+        </select>
+
         <button
           type="submit"
           className="border-4 border-black px-4 py-4 rounded-md"
@@ -46,6 +55,13 @@ const LoginPage = () => {
           Login
         </button>
       </form>
+      <button
+        onClick={handleLogout}
+        type="submit"
+        className="border-4 border-black px-4 py-4 rounded-md"
+      >
+        Logout
+      </button>
     </>
   );
 };

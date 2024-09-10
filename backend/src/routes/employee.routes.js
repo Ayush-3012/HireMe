@@ -12,6 +12,7 @@ const employeeRouter = Router();
 
 employeeRouter.route("/register").post(registerEmployee);
 employeeRouter.route("/login").post(loginEmployee);
+employeeRouter.route("/auth-status").get(verifyToken);
 employeeRouter.route("/profile").get(verifyToken, viewEmployeeProfile);
 employeeRouter.route("/profile").put(verifyToken, updateEmployeeProfile);
 employeeRouter.route("/logout").get(verifyToken, logoutEmployee);

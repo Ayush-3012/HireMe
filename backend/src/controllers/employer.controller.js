@@ -13,7 +13,7 @@ export const registerEmployer = async (req, res) => {
       industry,
       companyDescription,
       website,
-    } = req.body;
+    } = req.body.user;
 
     const existingEmployer = await Employer.findOne({ email });
     if (existingEmployer) {
@@ -42,8 +42,7 @@ export const registerEmployer = async (req, res) => {
 
 export const loginEmployer = async (req, res) => {
   try {
-    const { email, password } = req.body;
-
+    const { email, password } = req.body.user;
     const employer = await Employer.findOne({ email });
     if (!employer)
       return res.status(404).json({ message: "Employer not found" });
@@ -109,6 +108,7 @@ export const updateEmployerProfile = async (req, res) => {
 
 export const logoutEmployer = async (req, res) => {
   try {
+    console.log("lougt claled forn frontend")
     res.clearCookie(process.env.COOKIE_NAME, {
       httpOnly: true,
       domain: "localhost",
