@@ -108,8 +108,8 @@ export const updateEmployerProfile = async (req, res) => {
 
 export const logoutEmployer = async (req, res) => {
   try {
-    console.log("lougt claled forn frontend")
-    res.clearCookie(process.env.COOKIE_NAME, {
+    console.log("lougt claled forn frontend");
+    await res.clearCookie(process.env.COOKIE_NAME, {
       httpOnly: true,
       domain: "localhost",
       signed: true,

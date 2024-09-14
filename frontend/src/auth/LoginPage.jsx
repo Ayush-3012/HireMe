@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userType, setUserType] = useState("employee");
+  const [userType, setUserType] = useState("");
 
   const auth = useAuth();
 
@@ -20,7 +20,7 @@ const LoginPage = () => {
   };
 
   const handleLogout = async () => {
-    auth.logoutAuth();
+    await auth.logoutAuth();
   };
   return (
     <>
@@ -44,6 +44,9 @@ const LoginPage = () => {
         <br />
         <br />
         <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+          <option value="" disabled hidden>
+            ---
+          </option>
           <option value="employee">Employee</option>
           <option value="employer">Employer</option>
         </select>

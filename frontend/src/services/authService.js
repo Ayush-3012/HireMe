@@ -51,14 +51,13 @@ export const checkAuthStatus = async (userType) => {
 
 export const logoutUser = async (userType) => {
   try {
-    const res = await axios.get(
+    await axios.get(
       `${import.meta.env.VITE_API_ROUTES}/${getUserRoute(userType)}/logout`,
       {
         withCredentials: true,
       }
     );
-    const data = await res.data;
-    return data;
+  
   } catch (error) {
     console.log(error);
   }

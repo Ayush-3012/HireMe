@@ -12,7 +12,7 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userType, setUserType] = useState("employee");
+  const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
