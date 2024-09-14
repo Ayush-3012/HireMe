@@ -17,9 +17,6 @@ export const verifyToken = async (req, res, next) => {
     else {
       req.user = success;
       return next();
-      // return res
-      //   .status(200)
-      //   .json({ message: "User is authenticated", user: req.user });
     }
   });
 };

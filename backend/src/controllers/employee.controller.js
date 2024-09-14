@@ -44,7 +44,7 @@ export const registerEmployee = async (req, res) => {
 
 export const loginEmployee = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body.user;
 
     const employee = await Employee.findOne({ email });
     if (!employee)

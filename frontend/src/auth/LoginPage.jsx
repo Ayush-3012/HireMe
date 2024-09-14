@@ -12,7 +12,6 @@ const LoginPage = () => {
     e.preventDefault();
     const user = { email, password };
     try {
-      auth.setUserType(userType);
       await auth.loginAuth(user);
     } catch (error) {
       console.log(error);
@@ -43,10 +42,13 @@ const LoginPage = () => {
         />
         <br />
         <br />
-        <select value={userType} onChange={(e) => setUserType(e.target.value)}>
-          <option value="" disabled hidden>
-            ---
-          </option>
+        <select
+          value={userType}
+          onChange={(e) => {
+            auth.setUserType(e.target.value);
+            setUserType(e.target.value);
+          }}
+        >
           <option value="employee">Employee</option>
           <option value="employer">Employer</option>
         </select>

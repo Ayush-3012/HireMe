@@ -12,7 +12,9 @@ const employerRouter = Router();
 
 employerRouter.route("/register").post(registerEmployer);
 employerRouter.route("/login").post(loginEmployer);
-employerRouter.route("/auth-status").get(verifyToken);
+employerRouter.route("/auth-status").get(verifyToken, (req, res) => {
+  res.status(200).json({ message: "User is authenticated" });
+});
 employerRouter.route("/profile").get(verifyToken, viewEmployerProfile);
 employerRouter.route("/profile").put(verifyToken, updateEmployerProfile);
 employerRouter.route("/logout").get(verifyToken, logoutEmployer);
