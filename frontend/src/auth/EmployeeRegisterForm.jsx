@@ -74,9 +74,9 @@ const EmployeeRegisterForm = () => {
                 required
               />
             </div>
-            <div className="flex justify-evenly gap-4">
+            <div className="flex justify-evenly gap-10">
               <input
-                className="outline w-96 p-2 font-serif text-xl  "
+                className="outline h-12 w-96 p-2 font-serif text-xl  "
                 type="text"
                 placeholder="Website"
                 value={resumeUrl}

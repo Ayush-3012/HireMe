@@ -1,0 +1,69 @@
+import { useState, useEffect } from "react";
+import {
+  checkAuthStatus,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "../services/authService";
+
+export const useAuth = () => {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userType, setUserType] = useState("");
+  // const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const storedUserType = localStorage.getItem("userType");
+    if (storedUserType) {
+      setUserType(storedUserType);
+    }
+    const checkStatus = async () => {
+      if (!storedUserType) return;
+      const data = await checkAuthStatus(storedUserType);
+
+      if (data) {
+        setUser(data);
+        setIsAuthenticated(true);
+      }
+    }
+    checkStatus();
+  }, []);
+
+  const registerAuth = async (user) => {
+    const data = await registerUser(user, userType);
+    if (data) {
+      setUser({ data });
+      setIsAuthenticated(true);
+      setUserType(userType);
+      localStorage.setItem("userType", userType);
+    }
+  };
+
+  const loginAuth = async (user) => {
+    const data = await loginUser(user, userType);
+    if (data) {
+      setUser({ data });
+      setIsAuthenticated(true);
+      setUserType(userType);
+      localStorage.setItem("userType", userType);
+    }
+  };
+
+  const logoutAuth = async () => {
+    await logoutUser(userType);
+    setIsAuthenticated(false);
+    setUser(null);
+    setUserType(null);
+    localStorage.removeItem("userType");
+  };
+
+  return {
+    user,
+    isAuthenticated,
+    // loading,
+    setUserType,
+    loginAuth,
+    logoutAuth,
+    registerAuth,
+  };
+};
