@@ -1,29 +1,45 @@
-// import { useState } from "react";
 import { useProfileContext } from "../context/ProfileContext";
 
-const ProfilePage = () => {
+const EmployerProfile = () => {
   const profile = useProfileContext();
-  // const [formData, setFormData] = useState(profile || {});
 
-  console.log(profile.profile);
+  if (!profile?.profile || !profile?.profile?.foundEmployer) {
+    return <div>Loading...</div>;
+  }
 
-  // const handleInputChange = (e) => {
-  //   setFormData({
-  //     ...formData,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
+  const {
+    companyName,
+    companyDescription,
+    contactNumber,
+    email,
+    industry,
+    location,
+    website,
+  } = profile.profile.foundEmployer;
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   await profile.saveProfile(formData);
-  // };
-
-  // if (profile.loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  return <div></div>;
+  return (
+    <div>
+      <h1>{companyName}</h1>
+      <p>
+        <strong>Description:</strong> {companyDescription}
+      </p>
+      <p>
+        <strong>Contact Number:</strong> {contactNumber}
+      </p>
+      <p>
+        <strong>Email:</strong> {email}
+      </p>
+      <p>
+        <strong>Industry:</strong> {industry}
+      </p>
+      <p>
+        <strong>Location:</strong> {location}
+      </p>
+      <p>
+        <strong>Website:</strong> <a href={website}>{website}</a>
+      </p>
+    </div>
+  );
 };
 
-export default ProfilePage;
+export default EmployerProfile;

@@ -5,7 +5,7 @@ import { AuthContextProvider } from "./context/AuthContext";
 import LoginPage from "./auth/LoginPage";
 import RegisterPage from "./auth/RegisterPage";
 import { ProfileContextProvider } from "./context/ProfileContext";
-import ProfilePage from "./pages/EmployerProfile";
+import UserProfile from "./pages/UserProfile";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/userProfile" element={<ProfilePage />} />
+          <Route path="/userProfile" element={<UserProfile />} />
         </Routes>
       </ProfileContextProvider>
     </AuthContextProvider>

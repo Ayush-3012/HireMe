@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -7,7 +6,6 @@ const HomePage = () => {
         <div className="text-center py-2">
           Welcome to HireMe - Home Page
         </div>
-        <Link to={"/userProfile"}>Profile</Link>
       </div>
     </>
   );

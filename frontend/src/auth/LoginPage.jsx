@@ -25,7 +25,7 @@ const LoginPage = () => {
         <button
           className={`border p-4 rounded-md  duration-500 bg-black text-white font-serif ${
             userType === "employer" &&
-            "bg-white text-black text-xl transition-all duration-500"
+            "bg-white text-red-500 text-xl transition-all duration-500"
           }`}
           onClick={() => {
             auth.setUserType("employer");
@@ -38,7 +38,7 @@ const LoginPage = () => {
         <button
           className={`border p-4 rounded-md  duration-500 bg-black text-white font-serif ${
             userType === "employee" &&
-            "bg-white text-black text-xl transition-all duration-500"
+            "bg-white text-red-500 text-xl transition-all duration-500"
           }`}
           onClick={() => {
             auth.setUserType("employee");
