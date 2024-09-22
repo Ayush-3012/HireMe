@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const auth = useAuthContext();
+  const { auth } = useAuthContext();
 
   const handleLogout = async () => {
     await auth?.logoutAuth();

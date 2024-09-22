@@ -1,31 +1,23 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useProfileContext } from "../context/ProfileContext";
 
-const EmployeeProfile = () => {
-  const profile = useProfileContext();
-
+const EmployeeProfile = ({ EmployeeProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(
-    profile?.profile?.foundEmployee || {}
-  );
+  const [formData, setFormData] = useState(EmployeeProfile || {});
 
-  if (!profile?.profile || !profile?.profile?.foundEmployee) {
-    return <div>Loading...</div>;
-  }
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleUpdateProfile = async () => {
-    try {
-      await profile?.saveProfile(formData);
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-  };
+  // const handleUpdateProfile = async () => {
+  //   try {
+  //     await EmployeeProfile?.saveProfile(formData);
+  //     setIsEditing(false);
+  //   } catch (error) {
+  //     console.error("Error updating profile:", error);
+  //   }
+  // };
 
   const {
     fullName,

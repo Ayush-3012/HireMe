@@ -1,12 +1,5 @@
-import { useProfileContext } from "../context/ProfileContext";
-
-const EmployerProfile = () => {
-  const profile = useProfileContext();
-
-  if (!profile?.profile || !profile?.profile?.foundEmployer) {
-    return <div>Loading...</div>;
-  }
-
+/* eslint-disable react/prop-types */
+const EmployerProfile = ({ EmployerProfile }) => {
   const {
     companyName,
     companyDescription,
@@ -15,7 +8,7 @@ const EmployerProfile = () => {
     industry,
     location,
     website,
-  } = profile.profile.foundEmployer;
+  } = EmployerProfile;
 
   return (
     <div>

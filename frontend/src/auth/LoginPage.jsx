@@ -6,7 +6,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
 
-  const auth = useAuthContext();
+  const { auth } = useAuthContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,8 +24,7 @@ const LoginPage = () => {
       <div className="flex my-2 py-2 mx-4 justify-evenly">
         <button
           className={`border p-4 rounded-md  duration-500 bg-black text-white font-serif ${
-            userType === "employer" &&
-            "bg-white text-red-500 text-xl transition-all duration-500"
+            userType === "employer" && " text-xl transition-all duration-500"
           }`}
           onClick={() => {
             auth.setUserType("employer");
@@ -37,8 +36,7 @@ const LoginPage = () => {
 
         <button
           className={`border p-4 rounded-md  duration-500 bg-black text-white font-serif ${
-            userType === "employee" &&
-            "bg-white text-red-500 text-xl transition-all duration-500"
+            userType === "employee" && "text-xl transition-all duration-500 "
           }`}
           onClick={() => {
             auth.setUserType("employee");

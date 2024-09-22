@@ -5,7 +5,7 @@ import EmployeeRegisterForm from "./EmployeeRegisterForm";
 
 const RegisterPage = () => {
   const [registeringUser, setRegisteringUser] = useState(null);
-  const auth = useAuthContext();
+  const {auth} = useAuthContext();
 
   return (
     <>

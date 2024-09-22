@@ -34,9 +34,9 @@ export const registerEmployer = async (req, res) => {
     });
 
     await newEmployer.save();
-    res.status(201).json({ message: "Employer registered successfully" });
+    return res.status(201).json({ message: "Employer registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -71,7 +71,7 @@ export const loginEmployer = async (req, res) => {
       .status(200)
       .json({ message: "Employer Login Successfull", employer });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -79,9 +79,9 @@ export const viewEmployerProfile = async (req, res) => {
   try {
     const foundEmployer = await Employer.findById(req.user.userId);
 
-    res.json({ message: "This is a protected route", foundEmployer });
+    return res.json({ message: "This is a protected route", foundEmployer });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -102,7 +102,7 @@ export const updateEmployerProfile = async (req, res) => {
       .status(200)
       .json({ message: "Employer Updated Successfully", updatedEmployer });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -116,8 +116,8 @@ export const logoutEmployer = async (req, res) => {
       path: "/",
     });
 
-    res.json({ message: "Employer Logged out successfully" });
+    return res.json({ message: "Employer Logged out successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };

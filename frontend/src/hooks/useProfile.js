@@ -4,25 +4,27 @@ import { viewProfile, updateProfile } from "../services/profileService";
 export const useProfile = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [userType, setUserType] = useState("");
+  const [userType] = useState(localStorage.getItem("userType") || "");
 
   useEffect(() => {
-    const storedUserType = localStorage.getItem("userType");
-    if (!storedUserType) return;
-    else {
-      setUserType(storedUserType);
-
-      const fetchProfile = async () => {
-        try {
-          const data = await viewProfile(storedUserType);
-          if (data) setProfile(data);
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-        }
-      };
-      fetchProfile();
+    if (!userType) {
+      setLoading(false);
+      return;
     }
-  }, []);
+
+    const fetchProfile = async () => {
+      try {
+        setLoading(true);
+        const data = await viewProfile(userType);
+        if (data) setProfile(data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfile();
+  }, [userType]);
 
   const saveProfile = async (updatedProfile) => {
     try {
@@ -33,5 +35,5 @@ export const useProfile = () => {
     }
   };
 
-  return { profile, saveProfile, loading, setLoading };
+  return { profile, saveProfile, loading };
 };

@@ -25,7 +25,7 @@ export const useAuth = () => {
         setUser(data);
         setIsAuthenticated(true);
       }
-    }
+    };
     checkStatus();
   }, []);
 
