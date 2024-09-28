@@ -1,20 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { auth } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await auth?.logoutAuth();
+    navigate("/");
   };
   return (
     <nav>
       <ul className="flex gap-4 border justify-evenly text-2xl font-serif py-2">
-        <Link to={"/"}>Home</Link>
-        <Link to={"/login"}>Login</Link>
-        <Link to="/register">Register</Link>
-        <Link to={"/userProfile"}>My Profile</Link>
-        <button onClick={() => handleLogout()}>Logout</button>
+        {!auth?.user && <Link to={"/login"}>Login</Link>}
+        {!auth?.user && <Link to="/register">Register</Link>}
+        {auth?.user && <Link to={"/userProfile"}>My Profile</Link>}
+        {auth?.user && <button onClick={() => handleLogout()}>Logout</button>}
 
         {/*    <li>
               <Link to="/employee/profile">Employee Profile</Link>

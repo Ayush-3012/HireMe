@@ -5,7 +5,7 @@ import EmployeeRegisterForm from "./EmployeeRegisterForm";
 
 const RegisterPage = () => {
   const [registeringUser, setRegisteringUser] = useState(null);
-  const {auth} = useAuthContext();
+  const { auth } = useAuthContext();
 
   return (
     <>
@@ -15,6 +15,7 @@ const RegisterPage = () => {
           className="p-4 rounded-md bg-blue-600 text-white font-serif"
           onClick={() => {
             auth.setUserType("employer");
+            // profile.setUserType("employer");
             setRegisteringUser("employer");
           }}
         >

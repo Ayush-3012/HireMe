@@ -28,6 +28,7 @@ const LoginPage = () => {
           }`}
           onClick={() => {
             auth.setUserType("employer");
+            // profile.setUserType("employer");
             setUserType("employer");
           }}
         >
@@ -40,6 +41,7 @@ const LoginPage = () => {
           }`}
           onClick={() => {
             auth.setUserType("employee");
+            // profile.setUserType("employee");
             setUserType("employee");
           }}
         >

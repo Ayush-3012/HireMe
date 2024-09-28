@@ -1,39 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { viewProfile, updateProfile } from "../services/profileService";
 
 export const useProfile = () => {
   const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [userType] = useState(localStorage.getItem("userType") || "");
+  // const [loading, setLoading] = useState(true);
+  // const [storedUserType] = useState(localStorage.getItem("userType"));
+  const storedUserType = localStorage.getItem("userType");
 
-  useEffect(() => {
-    if (!userType) {
-      setLoading(false);
-      return;
-    }
-
-    const fetchProfile = async () => {
-      try {
-        setLoading(true);
-        const data = await viewProfile(userType);
-        if (data) setProfile(data);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProfile();
-  }, [userType]);
+  const fetchProfile = async () => {
+    if (!storedUserType) return;
+    const data = await viewProfile(storedUserType);
+    if (data) setProfile(data);
+  };
 
   const saveProfile = async (updatedProfile) => {
     try {
-      const data = await updateProfile(userType, updatedProfile);
+      const data = await updateProfile(storedUserType, updatedProfile);
       setProfile(data);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
-  return { profile, saveProfile, loading };
+  return { profile, setProfile, fetchProfile, saveProfile };
 };

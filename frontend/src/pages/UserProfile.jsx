@@ -4,19 +4,17 @@ import { useAuthContext } from "../context/AuthContext";
 
 const UserProfile = () => {
   const currentUser = localStorage.getItem("userType");
-  const { profile, loading } = useAuthContext();
-
-  if (loading) return <div>Loading...</div>;
+  const { profile } = useAuthContext();
 
   if (!profile) return <div>No Profile Found</div>;
 
   return (
     <>
       {currentUser === "employee" && (
-        <EmployeeProfile EmployeeProfile={profile.foundEmployee} />
+        <EmployeeProfile EmployeeProfile={profile.profile.foundEmployee} />
       )}
       {currentUser === "employer" && (
-        <EmployerProfile EmployerProfile={profile.foundEmployer} />
+        <EmployerProfile EmployerProfile={profile.profile.foundEmployer} />
       )}
     </>
   );

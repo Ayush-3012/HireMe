@@ -7,9 +7,9 @@ const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 export const AuthContextProvider = ({ children }) => {
   const auth = useAuth();
-  const { profile, loading } = useProfile();
+  const profile = useProfile();
 
-  const contextValue = { auth, profile, loading };
+  const contextValue = { auth, profile };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
