@@ -6,7 +6,6 @@ import {
   logoutUser,
   registerUser,
 } from "../services/authService";
-// import { useAuthContext } from "../context/AuthContext";
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -14,7 +13,6 @@ export const useAuth = () => {
   const [userType, setUserType] = useState("");
   // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const profile = useAuthContext();
 
   useEffect(() => {
     const storedUserType = localStorage.getItem("userType");
@@ -23,7 +21,6 @@ export const useAuth = () => {
     const checkStatus = async () => {
       if (!storedUserType) return;
       const data = await checkAuthStatus(storedUserType);
-      // console.log(data);
       if (data) {
         setUser(data);
         // setIsAuthenticated(true);

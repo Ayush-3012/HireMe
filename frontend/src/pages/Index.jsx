@@ -1,17 +1,11 @@
 import LoginPage from "../auth/LoginPage";
 import RegisterPage from "../auth/RegisterPage";
-import { useAuthContext } from "../context/AuthContext";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 
 const Index = () => {
-  const { profile } = useAuthContext();
-
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-
-  useEffect(() => {
-    if (profile) profile.setProfile(null);
-  }, []);
 
   const handleSignUpClick = () => {
     setShowSignUp(true);

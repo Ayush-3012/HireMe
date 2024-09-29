@@ -6,13 +6,14 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
 
-  const { auth } = useAuthContext();
+  const { auth, profile } = useAuthContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const user = { email, password };
     try {
       await auth.loginAuth(user);
+      await profile.fetchProfile(userType);
     } catch (error) {
       console.log(error);
     }

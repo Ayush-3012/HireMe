@@ -1,15 +1,5 @@
-import { useEffect } from "react";
-import { useAuthContext } from "../context/AuthContext";
-
 const HomePage = () => {
-  const { profile } = useAuthContext();
-  useEffect(() => {
-    if (!profile.profile) fetchProfileData();
-  }, []);
 
-  const fetchProfileData = async () => {
-    await profile?.fetchProfile();
-  };
   return (
     <>
       <div className="flex flex-col text-4xl items-center justify-center font-serif">
