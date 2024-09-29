@@ -34,7 +34,9 @@ export const registerEmployer = async (req, res) => {
     });
 
     await newEmployer.save();
-    return res.status(201).json({ message: "Employer registered successfully" });
+    return res
+      .status(201)
+      .json({ message: "Employer registered successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -108,7 +110,6 @@ export const updateEmployerProfile = async (req, res) => {
 
 export const logoutEmployer = async (req, res) => {
   try {
-    console.log("lougt claled forn frontend");
     await res.clearCookie(process.env.COOKIE_NAME, {
       httpOnly: true,
       domain: "localhost",

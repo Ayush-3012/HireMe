@@ -10,7 +10,7 @@ import {
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState(null);
   // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -63,6 +63,7 @@ export const useAuth = () => {
     user,
     // isAuthenticated,
     // loading,
+    userType,
     setUserType,
     loginAuth,
     logoutAuth,

@@ -7,16 +7,16 @@ const UserProfile = () => {
   const { profile } = useAuthContext();
 
   if (!profile) return <div>No Profile Found</div>;
-  console.log(profile.profile);
+  // console.log(profile.profile.foundEmployer);
 
   return (
     <>
-      {/* {currentUser === "employee" && (
+      {currentUser === "employee" && (
         <EmployeeProfile EmployeeProfile={profile.profile.foundEmployee} />
       )}
       {currentUser === "employer" && (
         <EmployerProfile EmployerProfile={profile.profile.foundEmployer} />
-      )} */}
+      )}
     </>
   );
 };
