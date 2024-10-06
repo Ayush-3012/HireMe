@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { useProfile } from "../hooks/useProfile";
+import useJob from "../hooks/useJob";
 
 const AuthContext = createContext();
 
@@ -8,8 +9,9 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const auth = useAuth();
   const profile = useProfile();
+  const jobs = useJob();
 
-  const contextValue = { auth, profile };
+  const contextValue = { auth, profile, jobs };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

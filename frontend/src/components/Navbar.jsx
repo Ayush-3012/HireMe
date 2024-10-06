@@ -10,7 +10,7 @@ const Navbar = () => {
     <>
       <div className="flex p-2 bg-green-400 rounded-md">
         <div className="text-3xl flex items-center justify-center bg-red-400 font-serif w-2/5 text-center">
-          <Link to={"/home"}>HireMe</Link>
+          {auth?.user ? <Link to={"/home"}>HireMe</Link> : <Link to={"/"}>HireMe</Link>}
         </div>
 
         {!auth.user && <NavLoutItem />}
