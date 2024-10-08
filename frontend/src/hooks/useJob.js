@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllJobs } from "../services/jobService";
+import { getAllJobs, createJob } from "../services/jobService";
 
 export const useJob = () => {
   const [jobs, setJobs] = useState([]);
@@ -16,11 +16,19 @@ export const useJob = () => {
 
   const fetchJobDetails = async (jobId) => {};
 
-  const createJob = async (jobData) => {};
+  const createNewJob = async (jobData) => {
+    try {
+      const data = await createJob(jobData);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
 
-  const updateJob = async (ojbId, updateData) => {};
+  const updateExistingJob = async (jobId, updateData) => {};
 
-  const deleteJob = async (jobId) => {};
+  const deleteExisingJob = async (jobId) => {};
 
   const applyJob = async (jobId) => {};
 
@@ -28,9 +36,9 @@ export const useJob = () => {
     jobs,
     fetchJobs,
     fetchJobDetails,
-    createJob,
-    updateJob,
-    deleteJob,
+    createNewJob,
+    updateExistingJob,
+    deleteExisingJob,
     applyJob,
   };
 };

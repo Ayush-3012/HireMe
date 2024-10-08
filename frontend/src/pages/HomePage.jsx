@@ -1,7 +1,7 @@
 // import { Link } from "react-router-dom";
 // import { useAuthContext } from "../context/AuthContext";
 
-import ERHome from "../components/homepageComponents/ERHome";
+import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
 
 const HomePage = () => {

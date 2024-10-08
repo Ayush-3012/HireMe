@@ -22,7 +22,7 @@ export const createJob = async (req, res) => {
       experienceLevel,
       status,
       remote,
-    } = req.body;
+    } = req.body.jobData;
 
     const newJob = new Job({
       title,
