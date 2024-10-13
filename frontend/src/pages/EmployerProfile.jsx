@@ -1,35 +1,26 @@
 /* eslint-disable react/prop-types */
-const EmployerProfile = ({ EmployerProfile }) => {
-  const {
-    companyName,
-    companyDescription,
-    contactNumber,
-    email,
-    industry,
-    location,
-    website,
-  } = EmployerProfile;
-
+const EmployerProfile = ({ employerProfile }) => {
   return (
     <div>
-      <h1>{companyName}</h1>
+      <h1>{employerProfile.companyName}</h1>
       <p>
-        <strong>Description:</strong> {companyDescription}
+        <strong>Description:</strong> {employerProfile.companyDescription}
       </p>
       <p>
-        <strong>Contact Number:</strong> {contactNumber}
+        <strong>Contact Number:</strong> {employerProfile.contactNumber}
       </p>
       <p>
-        <strong>Email:</strong> {email}
+        <strong>Email:</strong> {employerProfile.email}
       </p>
       <p>
-        <strong>Industry:</strong> {industry}
+        <strong>Industry:</strong> {employerProfile.industry}
       </p>
       <p>
-        <strong>Location:</strong> {location}
+        <strong>Location:</strong> {employerProfile.location}
       </p>
       <p>
-        <strong>Website:</strong> <a href={website}>{website}</a>
+        <strong>Website:</strong>{" "}
+        <a href={employerProfile.website}>{employerProfile.website}</a>
       </p>
     </div>
   );

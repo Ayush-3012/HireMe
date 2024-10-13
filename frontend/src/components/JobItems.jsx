@@ -1,8 +1,13 @@
 /* eslint-disable react/prop-types */
 
+import { Link } from "react-router-dom";
+
 const JobItems = ({ job }) => {
   return (
-    <div className="bg-cyan-300 rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200">
+    <Link
+      to={`/about/job/${job._id}`}
+      className="bg-cyan-300 rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200"
+    >
       <div className="text-sm mx-4 flex flex-col gap-2">
         <p>Title:{job.title}</p>
         <p>Desciription: {job.description}</p>
@@ -20,8 +25,7 @@ const JobItems = ({ job }) => {
           ))}
         </div>
       </div>
-      {/* </Link> */}
-    </div>
+    </Link>
   );
 };
 

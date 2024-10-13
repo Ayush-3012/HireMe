@@ -13,10 +13,23 @@ export const getAllJobs = async () => {
   }
 };
 
-export const getJobDetails = async (JobId) => {
+export const getEmployerJobs = async (employerId) => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/view:${JobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/viewMyJobs${employerId}`,
+      { withCredentials: true }
+    );
+    const data = await res.data.jobs;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getJobDetails = async (jobId) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/view${jobId}`,
       { withCredentials: true }
     );
     const data = await res.data;

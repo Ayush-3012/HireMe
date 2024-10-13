@@ -10,7 +10,7 @@ export const viewProfile = async (userType) => {
       `${import.meta.env.VITE_API_ROUTES}/${getUserRoute(userType)}/profile`,
       { withCredentials: true }
     );
-    const data = res.data;
+    const data = res.data.foundUser;
     return data;
   } catch (error) {
     throw new Error("Unable to View Profile" + error.message);

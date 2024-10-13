@@ -5,19 +5,12 @@ import JobCard from "../JobCard";
 import ERDashboard from "./ERDashboard";
 
 const ERHome = () => {
-  const { jobs } = useAuthContext();
+  const { jobs, profile } = useAuthContext();
 
   useEffect(() => {
-    const fetchAllJobs = async () => {
-      // const stats = await getEmployerStats(); // Mock API call
-      // setJobStats(stats);
-      await jobs?.fetchJobs();
-      // console.log(jobs?.jobs.length);
-    };
-
-    fetchAllJobs();
+    const userId = profile?.userProfile._id;
+    jobs?.fetchEmployerJobs(userId);
   }, []);
-
   return (
     <div className="border w-[90%] flex flex-col">
       <div>
@@ -29,18 +22,18 @@ const ERHome = () => {
         </Link>
       </div>
 
-      {/* <div className="dashboard-overview">
+      <div className="dashboard-overview">
         <h2>Your Dashboard</h2>
-        <ERDashboard />
-      </div> */}
+        <ERDashboard jobsPosted={profile.userProfile.jobsPosted} />
+      </div>
 
       <div className="my-10">
         <h2>Manage Your Jobs</h2>
-        {jobs?.jobs.length === 0 ? (
+        {jobs?.employerJobs.length === 0 ? (
           <p>No jobs posted yet. Post your first job</p>
         ) : (
           <div className="text-xl">
-            <JobCard jobs={jobs?.jobs} />
+            <JobCard jobs={jobs.employerJobs} />
           </div>
         )}
       </div>

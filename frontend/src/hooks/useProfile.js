@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { viewProfile, updateProfile } from "../services/profileService";
 
 export const useProfile = () => {
-  const [profile, setProfile] = useState(null);
+  const [userProfile, setUserProfile] = useState(null);
   // const [loading, setLoading] = useState(true);
-  // const [storedUserType] = useState(localStorage.getItem("userType"));
   const storedUserType = localStorage.getItem("userType");
-
-  useEffect(() => {
-    fetchProfile(storedUserType);
-  }, [])
 
   const fetchProfile = async (userType) => {
     if (!storedUserType && !userType) return;
     const data = await viewProfile(storedUserType || userType);
-    // console.log(data)
-    if (data) setProfile(data);
+    if (data) setUserProfile(data);
   };
 
   const saveProfile = async (updatedProfile) => {
     try {
       const data = await updateProfile(storedUserType, updatedProfile);
-      setProfile(data);
+      setUserProfile(data);
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
-  return { profile, setProfile, fetchProfile, saveProfile };
+  return { userProfile, setUserProfile, fetchProfile, saveProfile };
 };

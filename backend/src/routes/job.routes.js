@@ -5,6 +5,7 @@ import {
   deleteJob,
   getAllJobs,
   getJobDetails,
+  getJobsByEmployer,
   updateJob,
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
@@ -13,6 +14,7 @@ const jobRouter = Router();
 
 jobRouter.route("/create").post(verifyToken, createJob);
 jobRouter.route("/view").get(verifyToken, getAllJobs);
+jobRouter.route("/viewMyJobs:employerId").get(verifyToken, getJobsByEmployer);
 jobRouter.route("/view:jobId").get(verifyToken, getJobDetails);
 jobRouter.route("/apply:jobId").post(verifyToken, applyForJob);
 jobRouter.route("/update:jobId").put(verifyToken, updateJob);

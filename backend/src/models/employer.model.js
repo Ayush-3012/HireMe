@@ -44,10 +44,12 @@ const employerSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    jobsPosted: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
-    },
+    jobsPosted: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Job",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -79,9 +79,9 @@ export const loginEmployer = async (req, res) => {
 
 export const viewEmployerProfile = async (req, res) => {
   try {
-    const foundEmployer = await Employer.findById(req.user.userId);
+    const foundUser = await Employer.findById(req.user.userId);
 
-    return res.json({ message: "This is a protected route", foundEmployer });
+    return res.json({ message: "This is a protected route", foundUser });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

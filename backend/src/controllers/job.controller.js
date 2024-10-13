@@ -41,6 +41,9 @@ export const createJob = async (req, res) => {
 
     await newJob.save();
 
+    employer.jobsPosted.push(newJob._id);
+    await employer.save();
+
     return res
       .status(201)
       .json({ message: "Job created successfully", job: newJob });
@@ -60,9 +63,19 @@ export const getAllJobs = async (req, res) => {
   }
 };
 
+export const getJobsByEmployer = async (req, res) => {
+  try {
+    const { employerId } = req.params;
+    const jobs = await Job.find({ employer: employerId });
+    return res.status(200).json({ jobs });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to fetch jobs." });
+  }
+};
+
 export const getJobDetails = async (req, res) => {
   try {
-    const foundJob = await Job.findById(req.query.jobId);
+    const foundJob = await Job.findById(req.params.jobId);
     if (!foundJob)
       return res.status(404).json({ message: "No Such Job Found" });
 
