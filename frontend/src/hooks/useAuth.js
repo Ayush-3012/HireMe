@@ -9,9 +9,7 @@ import {
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
-  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userType, setUserType] = useState(null);
-  // const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +21,7 @@ export const useAuth = () => {
       const data = await checkAuthStatus(storedUserType);
       if (data) {
         setUser(data);
-        // setIsAuthenticated(true);
+        localStorage.setItem("userId", data.userId);
       }
     };
     checkStatus();
@@ -32,8 +30,6 @@ export const useAuth = () => {
   const registerAuth = async (user) => {
     const data = await registerUser(user, userType);
     if (data) {
-      setUser({ data });
-      // setIsAuthenticated(true);
       setUserType(userType);
       localStorage.setItem("userType", userType);
     }
@@ -42,21 +38,20 @@ export const useAuth = () => {
   const loginAuth = async (user) => {
     const data = await loginUser(user, userType);
     if (data) {
-      setUser({ data });
-      // setIsAuthenticated(true);
       setUserType(userType);
       localStorage.setItem("userType", userType);
+      localStorage.setItem("userId", data.userId);
       navigate("/home");
     }
   };
 
   const logoutAuth = async () => {
     await logoutUser(userType);
-    // setIsAuthenticated(false);
     setUser(null);
     setUserType(null);
-    navigate("/");
     localStorage.removeItem("userType");
+    localStorage.removeItem("userId");
+    navigate("/");
   };
 
   return {

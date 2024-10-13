@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useAuthContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/AuthContext";
 
 const NavLoutItem = () => {
   const [showEmployer, setShowEmployer] = useState(true);
   const [showEmployee, setShowEmployee] = useState(true);
 
-  const { auth } = useAuthContext();
+  const { auth } = useAllContext();
   return (
     <>
       <div className="flex bg-blue-400 justify-evenly w-3/5 font-serif py-1">

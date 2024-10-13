@@ -1,10 +1,10 @@
 // import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useAllContext } from "../context/AuthContext";
 import EmployerRegisterForm from "./EmployerRegisterForm";
 import EmployeeRegisterForm from "./EmployeeRegisterForm";
 
 const RegisterPage = () => {
-  const { auth } = useAuthContext();
+  const { auth } = useAllContext();
 
   return (
     <>

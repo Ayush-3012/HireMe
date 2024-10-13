@@ -57,7 +57,6 @@ export const logoutUser = async (userType) => {
         withCredentials: true,
       }
     );
-  
   } catch (error) {
     console.log(error);
   }

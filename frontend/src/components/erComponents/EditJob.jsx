@@ -1,20 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
+import { useParams } from "react-router-dom";
 
-const PostJob = () => {
+const EditJob = () => {
   const { jobs } = useAllContext();
-  // State for each form field
+  const { jobId } = useParams();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [salaryRange, setSalaryRange] = useState("");
   const [employmentType, setEmploymentType] = useState("Full-Time");
   const [companyName, setCompanyName] = useState("");
-  const [applicationDeadline, setApplicationDeadline] = useState("");
+  //   const [applicationDeadline, setApplicationDeadline] = useState("");
   const [requiredSkills, setRequiredSkills] = useState([]);
   const [experienceLevel, setExperienceLevel] = useState("Senior");
   const [remote, setRemote] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobData = async () => {
+      try {
+        await jobs?.fetchJobDetails(jobId);
+
+        if (jobs.aboutJob) {
+          setTitle(jobs.aboutJob.title);
+          setDescription(jobs.aboutJob.description);
+          setLocation(jobs.aboutJob.location);
+          setSalaryRange(jobs.aboutJob.salaryRange);
+          setEmploymentType(jobs.aboutJob.employmentType);
+          setCompanyName(jobs.aboutJob.companyName);
+          //   setApplicationDeadline(jobs.aboutJob.applicationDeadline);
+          setRequiredSkills(jobs.aboutJob.requiredSkills);
+          setExperienceLevel(jobs.aboutJob.experienceLevel);
+          setRemote(jobs.aboutJob.remote);
+        }
+      } catch (error) {
+        console.log("Error fetching job details: ", error);
+      }
+    };
+
+    fetchJobData();
+  }, [jobId]);
 
   const handleSkillsChange = (e) => {
     setRequiredSkills(e.target.value.split(","));
@@ -29,53 +56,38 @@ const PostJob = () => {
       !location ||
       !salaryRange ||
       !companyName ||
-      !applicationDeadline ||
+      //   !applicationDeadline ||
       requiredSkills.length === 0
     ) {
       setError("All fields are required");
       return;
     }
 
-    const jobData = {
+    const updatedJobData = {
       title,
       description,
       location,
       salaryRange,
       employmentType,
       companyName,
-      applicationDeadline,
+      //   applicationDeadline,
       requiredSkills,
       experienceLevel,
       remote,
       status: "Open",
-      postedDate: new Date(),
-      employer: "66d4bff468585badc4eaa113", // placeholder, will be dynamic
     };
 
     try {
-      const data = await jobs.createNewJob(jobData);
-      console.log(data.message);
-
-      setTitle("");
-      setDescription("");
-      setLocation("");
-      setSalaryRange("");
-      setEmploymentType("Full-Time");
-      setCompanyName("");
-      setApplicationDeadline("");
-      setRequiredSkills([]);
-      setExperienceLevel("Senior");
-      setRemote(false);
-      setError(null);
+      await jobs.updateExistingJob(jobId, updatedJobData);
     } catch (error) {
-      setError("Failed to post the job. Please try again.", error);
+      setError("Failed to update the job. Please try again.");
       console.log(error);
     }
   };
 
   return (
     <div className="w-3/4 mx-auto mt-8 p-4 border border-gray-300 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Post a New Job</h2>
+      <h2 className="text-2xl font-bold mb-4">Edit Job</h2>
 
       {error && <p className="text-red-500">{error}</p>}
 
@@ -90,7 +102,6 @@ const PostJob = () => {
           />
         </div>
 
-        {/* Job Description */}
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
             Description
@@ -111,6 +122,7 @@ const PostJob = () => {
             onChange={(e) => setLocation(e.target.value)}
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
             Salary Range
@@ -150,7 +162,7 @@ const PostJob = () => {
           />
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
             Application Deadline
           </label>
@@ -160,7 +172,8 @@ const PostJob = () => {
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}
           />
-        </div>
+        </div> */}
+
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
             Required Skills (comma separated)
@@ -168,7 +181,7 @@ const PostJob = () => {
           <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded-md"
-            value={requiredSkills.join(",")}
+            value={requiredSkills}
             onChange={handleSkillsChange}
           />
         </div>
@@ -194,19 +207,17 @@ const PostJob = () => {
           </label>
           <input
             type="checkbox"
-            className="w-full p-2 border border-gray-300 rounded-md"
             checked={remote}
             onChange={(e) => setRemote(e.target.checked)}
           />
         </div>
 
-        {/* Submit Button */}
         <div>
           <button
             type="submit"
             className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
           >
-            Post Job
+            Update Job
           </button>
         </div>
       </form>
@@ -214,4 +225,4 @@ const PostJob = () => {
   );
 };
 
-export default PostJob;
+export default EditJob;

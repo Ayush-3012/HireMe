@@ -4,6 +4,7 @@ import {
   createJob,
   getJobDetails,
   getEmployerJobs,
+  updateJob,
 } from "../services/jobService";
 
 export const useJob = () => {
@@ -50,7 +51,15 @@ export const useJob = () => {
     }
   };
 
-  // const updateExistingJob = async (jobId, updateData) => {};
+  const updateExistingJob = async (jobId, updateData) => {
+    try {
+      const data = await updateJob(jobId, updateData);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
 
   // const deleteExisingJob = async (jobId) => {};
 
@@ -64,7 +73,7 @@ export const useJob = () => {
     fetchJobDetails,
     createNewJob,
     fetchEmployerJobs,
-    // updateExistingJob,
+    updateExistingJob,
     // deleteExisingJob,
     // applyJob,
   };

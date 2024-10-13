@@ -1,19 +1,18 @@
 import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext.jsx";
+import { useAllContext } from "../context/AuthContext.jsx";
 
-// eslint-disable-next-line react/prop-types
-const LoginPage = ({ logingUser }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { auth, profile } = useAuthContext();
+  const { auth } = useAllContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const user = { email, password };
     try {
       await auth.loginAuth(user);
-      await profile.fetchProfile(logingUser);
+      // await profile.fetchProfile(logingUser);
     } catch (error) {
       console.log(error);
     }

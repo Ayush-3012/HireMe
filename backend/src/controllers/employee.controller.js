@@ -72,7 +72,7 @@ export const loginEmployee = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Employee Login Successfull", employee });
+      .json({ message: "Employee Login Successfull", userId: employee._id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -101,9 +101,7 @@ export const updateEmployeeProfile = async (req, res) => {
     if (!updatedEmployee)
       return res.status(404).json({ message: "Employee not found" });
 
-    return res
-      .status(200)
-      .json({ message: "Employee Updated Successfully", updatedEmployee });
+    return res.status(200).json({ message: "Employee Updated Successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

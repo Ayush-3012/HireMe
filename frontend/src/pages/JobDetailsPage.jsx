@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useAllContext } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
 
 const JobDetailsPage = () => {
-  const { jobs } = useAuthContext();
+  const { jobs } = useAllContext();
   const { jobId } = useParams();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const JobDetailsPage = () => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [jobId, jobs]);
 
   return (
     <>

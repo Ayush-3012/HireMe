@@ -1,45 +1,36 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../context/AuthContext";
-import { useEffect } from "react";
-import JobCard from "../JobCard";
 import ERDashboard from "./ERDashboard";
+import { useEffect } from "react";
+import { useAllContext } from "../../context/AuthContext";
 
 const ERHome = () => {
-  const { jobs, profile } = useAuthContext();
+  const { jobs } = useAllContext();
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
-    const userId = profile?.userProfile._id;
-    jobs?.fetchEmployerJobs(userId);
+    const fetchData = async () => {
+      try {
+        if (jobs) await jobs?.fetchEmployerJobs(userId);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
   }, []);
+
   return (
-    <div className="border w-[90%] flex flex-col">
-      <div>
-        <p className="text-center">
-          Post a job and start finding the best talent for your company!
-        </p>
+    <div className="w-[95%] flex flex-col gap-4">
+      <div className="flex border-2 p-2 border-orange-800 justify-evenly">
+        <p>Post a job and start finding the best talent for your company!</p>
         <Link to="/postJob" className="px-4 bg-blue-400 rounded-xl">
           Post a Job
         </Link>
       </div>
 
-      <div className="dashboard-overview">
+      <div className="flex flex-col border-2 p-2 border-green-600">
         <h2>Your Dashboard</h2>
-        <ERDashboard jobsPosted={profile.userProfile.jobsPosted} />
-      </div>
-
-      <div className="my-10">
-        <h2>Manage Your Jobs</h2>
-        {jobs?.employerJobs.length === 0 ? (
-          <p>No jobs posted yet. Post your first job</p>
-        ) : (
-          <div className="text-xl">
-            <JobCard jobs={jobs.employerJobs} />
-          </div>
-        )}
-      </div>
-
-      <div className="notifications">
-        <h2>Notifications</h2>
+        <ERDashboard employerJobs={jobs?.employerJobs} />
       </div>
     </div>
   );

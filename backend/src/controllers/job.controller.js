@@ -132,7 +132,7 @@ export const updateJob = async (req, res) => {
         .status(400)
         .json({ message: "Cannot update job, Employer not found" });
 
-    const foundJob = await Job.findById(req.query.jobId);
+    const foundJob = await Job.findById(req.params.jobId);
     if (!foundJob) return res.status(404).json({ message: "Job Not Found" });
 
     if (foundJob.employer.toString() !== req.user.userId.toString())
@@ -140,7 +140,7 @@ export const updateJob = async (req, res) => {
         .status(403)
         .json({ message: "Unauthorized to update this job" });
 
-    const updatedJob = await Job.findByIdAndUpdate(req.query.jobId, req.body, {
+    const updatedJob = await Job.findByIdAndUpdate(req.params.jobId, req.body, {
       new: true,
     });
     return res

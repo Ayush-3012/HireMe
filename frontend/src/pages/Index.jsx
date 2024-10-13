@@ -2,11 +2,11 @@ import { useState } from "react";
 import LoginPage from "../auth/LoginPage";
 import UserAction from "../components/UserAction";
 import RegisterPage from "../auth/RegisterPage";
-import { useAuthContext } from "../context/AuthContext";
+import { useAllContext } from "../context/AuthContext";
 
 const Index = () => {
   const [currentAction, setCurrentAction] = useState("");
-  const { auth } = useAuthContext();
+  const { auth } = useAllContext();
   return (
     <>
       {!auth.userType && (

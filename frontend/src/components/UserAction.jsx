@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useAuthContext } from "../context/AuthContext";
+import { useAllContext } from "../context/AuthContext";
 
 const UserAction = ({ onActionChange }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const { auth } = useAuthContext();
+  const { auth } = useAllContext();
 
   let currentUser = auth.userType === "employer" ? "Company" : "Job Seeker";
   return (

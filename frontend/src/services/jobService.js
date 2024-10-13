@@ -53,10 +53,10 @@ export const createJob = async (jobData) => {
   }
 };
 
-export const applyForJob = async (JobId) => {
+export const applyForJob = async (jobId) => {
   try {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/apply:${JobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/apply${jobId}`,
       { withCredentials: true }
     );
     const data = await res.data;
@@ -66,24 +66,25 @@ export const applyForJob = async (JobId) => {
   }
 };
 
-export const updateJob = async (JobId, updateData) => {
+export const updateJob = async (jobId, updateData) => {
   try {
     const res = await axios.put(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/update:${JobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/update${jobId}`,
       { updateData },
       { withCredentials: true }
     );
     const data = await res.data;
-    return data;
+    console.log(data);
+    // return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const deleteJob = async (JobId) => {
+export const deleteJob = async (jobId) => {
   try {
     const res = await axios.delete(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/delete:${JobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/delete${jobId}`,
       { withCredentials: true }
     );
     const data = await res.data;

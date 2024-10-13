@@ -71,7 +71,7 @@ export const loginEmployer = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Employer Login Successfull", employer });
+      .json({ message: "Employer Login Successfull", userId: employer._id });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -100,9 +100,7 @@ export const updateEmployerProfile = async (req, res) => {
     if (!updatedEmployer)
       return res.status(404).json({ message: "Employer not found" });
 
-    return res
-      .status(200)
-      .json({ message: "Employer Updated Successfully", updatedEmployer });
+    return res.status(200).json({ message: "Employer Updated Successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
