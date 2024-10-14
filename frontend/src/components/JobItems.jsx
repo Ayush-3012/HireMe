@@ -17,6 +17,7 @@ const JobItems = ({ job, showEditButton = false }) => {
       <Link to={`/about/job/${job._id}`}>
         <div className="text-sm mx-4 flex flex-col gap-2">
           <div className="flex justify-between px-4 mt-1">
+            <p>Id: {job._id}</p>
             <p>Title: {job.title}</p>
             <p>Company Name: {job.companyName}</p>
           </div>

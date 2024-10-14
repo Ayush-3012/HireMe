@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import PostJob from "./components/erComponents/PostJob";
 import NotFound from "./partials/NotFound";
 import JobDetailsPage from "./pages/JobDetailsPage";
-import EditJob from "./components/erComponents/EditJob";
+import UpdateJob from "./components/erComponents/UpdateJob";
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/postJob" element={<PostJob />} />
         <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
-        <Route path="/edit/job/:jobId" element={<EditJob />} />
+        <Route path="/edit/job/:jobId" element={<UpdateJob />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthContextProvider>

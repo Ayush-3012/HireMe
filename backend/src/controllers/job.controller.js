@@ -140,12 +140,14 @@ export const updateJob = async (req, res) => {
         .status(403)
         .json({ message: "Unauthorized to update this job" });
 
-    const updatedJob = await Job.findByIdAndUpdate(req.params.jobId, req.body, {
-      new: true,
-    });
-    return res
-      .status(200)
-      .json({ message: "Job updated successfully", job: updatedJob });
+    const updatedJob = await Job.findByIdAndUpdate(
+      req.params.jobId,
+      req.body.updateData,
+      {
+        new: true,
+      }
+    );
+    return res.status(200).json({ message: "Job updated successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -156,15 +158,16 @@ export const deleteJob = async (req, res) => {
     const employer = await Employer.findById(req.user.userId);
     if (!employer)
       return res.status(404).json({ message: "Employer Not Found" });
-    const foundJob = await Job.findById(req.query.jobId);
+
+    const foundJob = await Job.findById(req.params.jobId);
     if (!foundJob) return res.status(404).json({ message: "Job Not Found" });
 
-    if (job.employer.toString() !== req.user.userId.toString())
+    if (foundJob.employer.toString() !== req.user.userId.toString())
       return res
         .status(403)
         .json({ message: "Unauthorized to delete this job" });
 
-    await Job.findByIdAndDelete(jobId);
+    await Job.findByIdAndDelete(req.params.jobId);
     return res.status(200).json({ message: "Job deleted successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });

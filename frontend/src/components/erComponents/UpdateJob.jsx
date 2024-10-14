@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
 import { useParams } from "react-router-dom";
 
-const EditJob = () => {
+const UpdateJob = () => {
   const { jobs } = useAllContext();
   const { jobId } = useParams();
 
@@ -12,7 +13,7 @@ const EditJob = () => {
   const [salaryRange, setSalaryRange] = useState("");
   const [employmentType, setEmploymentType] = useState("Full-Time");
   const [companyName, setCompanyName] = useState("");
-  //   const [applicationDeadline, setApplicationDeadline] = useState("");
+  const [applicationDeadline, setApplicationDeadline] = useState("");
   const [requiredSkills, setRequiredSkills] = useState([]);
   const [experienceLevel, setExperienceLevel] = useState("Senior");
   const [remote, setRemote] = useState(false);
@@ -21,19 +22,19 @@ const EditJob = () => {
   useEffect(() => {
     const fetchJobData = async () => {
       try {
-        await jobs?.fetchJobDetails(jobId);
+        const data = await jobs?.fetchJobDetails(jobId);
 
-        if (jobs.aboutJob) {
-          setTitle(jobs.aboutJob.title);
-          setDescription(jobs.aboutJob.description);
-          setLocation(jobs.aboutJob.location);
-          setSalaryRange(jobs.aboutJob.salaryRange);
-          setEmploymentType(jobs.aboutJob.employmentType);
-          setCompanyName(jobs.aboutJob.companyName);
-          //   setApplicationDeadline(jobs.aboutJob.applicationDeadline);
-          setRequiredSkills(jobs.aboutJob.requiredSkills);
-          setExperienceLevel(jobs.aboutJob.experienceLevel);
-          setRemote(jobs.aboutJob.remote);
+        if (data) {
+          setTitle(data.title);
+          setDescription(data.description);
+          setLocation(data.location);
+          setSalaryRange(data.salaryRange);
+          setEmploymentType(data.employmentType);
+          setCompanyName(data.companyName);
+          setApplicationDeadline(data.applicationDeadline);
+          setRequiredSkills(data.requiredSkills);
+          setExperienceLevel(data.experienceLevel);
+          setRemote(data.remote);
         }
       } catch (error) {
         console.log("Error fetching job details: ", error);
@@ -41,7 +42,7 @@ const EditJob = () => {
     };
 
     fetchJobData();
-  }, [jobId]);
+  }, []);
 
   const handleSkillsChange = (e) => {
     setRequiredSkills(e.target.value.split(","));
@@ -56,7 +57,7 @@ const EditJob = () => {
       !location ||
       !salaryRange ||
       !companyName ||
-      //   !applicationDeadline ||
+      !applicationDeadline ||
       requiredSkills.length === 0
     ) {
       setError("All fields are required");
@@ -70,7 +71,7 @@ const EditJob = () => {
       salaryRange,
       employmentType,
       companyName,
-      //   applicationDeadline,
+      applicationDeadline,
       requiredSkills,
       experienceLevel,
       remote,
@@ -78,7 +79,8 @@ const EditJob = () => {
     };
 
     try {
-      await jobs.updateExistingJob(jobId, updatedJobData);
+      const data = await jobs?.updateExistingJob(jobId, updatedJobData);
+      console.log(data);
     } catch (error) {
       setError("Failed to update the job. Please try again.");
       console.log(error);
@@ -162,7 +164,7 @@ const EditJob = () => {
           />
         </div>
 
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
             Application Deadline
           </label>
@@ -172,7 +174,7 @@ const EditJob = () => {
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}
           />
-        </div> */}
+        </div>
 
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
@@ -225,4 +227,4 @@ const EditJob = () => {
   );
 };
 
-export default EditJob;
+export default UpdateJob;
