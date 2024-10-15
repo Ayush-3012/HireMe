@@ -6,12 +6,7 @@ export const useProfile = () => {
   // const [loading, setLoading] = useState(true);
   const storedUserType = localStorage.getItem("userType");
 
-  // useEffect(() => {
-  //   fetchProfile(storedUserType);
-  // }, []);
-
   const fetchProfile = async (userType) => {
-    // if (!storedUserType && !userType) return;
     const data = await viewProfile(storedUserType || userType);
     if (data) setUserProfile(data);
   };
