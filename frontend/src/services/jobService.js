@@ -13,6 +13,22 @@ export const getAllJobs = async () => {
   }
 };
 
+export const getSpecificJobs = async (keywords) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/getSpecificJobs`,
+      {
+        params: { keywords },
+        withCredentials: true,
+      }
+    );
+    const data = await res.data.foundJobs;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getEmployerJobs = async (employerId) => {
   try {
     const res = await axios.get(

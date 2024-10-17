@@ -14,7 +14,7 @@ export const registerEmployee = async (req, res) => {
       education,
       experience,
       resumeUrl,
-    } = req.body;
+    } = req.body.user;
 
     const existingEmployee = await Employee.findOne({ email });
     if (existingEmployee) {

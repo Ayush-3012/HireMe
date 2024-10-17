@@ -64,7 +64,7 @@ const ERDashboard = ({ employerJobs }) => {
           <div className="text-xl grid grid-cols-1 gap-6">
             {employerJobs?.map((job) => (
               <div className="flex flex-col gap-2" key={job._id}>
-                <JobItems job={job} showEditButton={true} />
+                <JobItems job={job} showEditButton={true} showDeleteButton={true} />
               </div>
             ))}
           </div>

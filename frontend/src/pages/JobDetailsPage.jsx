@@ -2,13 +2,11 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { useParams } from "react-router-dom";
-import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
 
 const JobDetailsPage = () => {
   const { jobs } = useAllContext();
   const { jobId } = useParams();
   const [aboutJob, setAboutJob] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,22 +23,7 @@ const JobDetailsPage = () => {
   return (
     <>
       <div className="px-4 m-4 rounded-xl overflow-y-scroll h-[95%] bg-blue-400 max-sm:px-1 max-sm:m-1">
-        <div className="flex justify-end">
-          <button
-            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-            onClick={() => setShowModal(true)}
-          >
-            Delete
-          </button>
-          <ConfirmationModal
-            show={showModal}
-            onClose={() => setShowModal(false)}
-            onConfirm={async () => {
-              setShowModal(false);
-              await jobs?.deleteExisingJob(jobId);
-            }}
-          />
-        </div>
+        
 
         <div className="flex flex-col my-5 bg-orange-200 rounded-xl p-4 mx-auto relative max-sm:mx-1 max-md:p-1">
           <div className="flex gap-2 flex-col p-5 max-sm:p-2">

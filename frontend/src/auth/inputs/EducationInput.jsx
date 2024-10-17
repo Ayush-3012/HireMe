@@ -1,9 +1,7 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 import { IoAddCircle } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
-const EducationInput = () => {
-  const [education, setEducation] = useState([{}]);
-
+const EducationInput = ({ education, setEducation }) => {
   const handleEducationChange = (index, event) => {
     const { name, value } = event.target;
     const newEducation = education.slice();

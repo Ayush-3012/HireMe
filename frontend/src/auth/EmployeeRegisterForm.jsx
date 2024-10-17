@@ -2,23 +2,48 @@ import { useState } from "react";
 import ExperienceInput from "./inputs/ExperienceInput";
 import SkillsInput from "./inputs/SkillsInput";
 import EducationInput from "./inputs/EducationInput";
+import { useAllContext } from "../context/AuthContext";
 
 const EmployeeRegisterForm = () => {
+  const { auth } = useAllContext();
+
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [contact, setContact] = useState("");
   const [location, setLocation] = useState("");
-  // const [skills, setSkills] = useState([""]);
-  // const [education, setEduction] = useState([{}]);
-  // const [experience, setExperience] = useState([{}]);
   const [resumeUrl, setResumeUrl] = useState("");
+  const [skills, setSkills] = useState([""]);
+  const [experience, setExperience] = useState([{}]);
+  const [education, setEducation] = useState([{}]);
+
+  const handleEERegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      const user = {
+        fullName,
+        email,
+        password,
+        contactNumber: contact,
+        location,
+        resumeUrl,
+        skills,
+        education,
+        experience,
+      };
+    
+      await auth?.registerAuth(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       <div className="flex items-center justify-center w-full border-4">
-        <form method="post">
+        <form method="post" onSubmit={handleEERegister}>
           <div className="flex m-4 justify-center flex-col gap-4 p-4 border-4 border-black">
             <div className=" flex justify-evenly gap-4">
               <input
@@ -83,11 +108,17 @@ const EmployeeRegisterForm = () => {
                 onChange={(e) => setResumeUrl(e.target.value)}
                 required
               />
-              <SkillsInput />
+              <SkillsInput skills={skills} setSkills={setSkills} />
             </div>
             <div className="flex justify-evenly gap-4">
-              <EducationInput />
-              <ExperienceInput />
+              <EducationInput
+                education={education}
+                setEducation={setEducation}
+              />
+              <ExperienceInput
+                experience={experience}
+                setExperience={setExperience}
+              />
             </div>
 
             <button

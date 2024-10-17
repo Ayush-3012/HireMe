@@ -1,9 +1,37 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
+import { useState } from "react";
+import { useAllContext } from "../context/AuthContext";
 
-const JobItems = ({ job, showEditButton = false }) => {
+const JobItems = ({
+  job,
+  showEditButton = false,
+  showDeleteButton = false,
+}) => {
+  const [showModal, setShowModal] = useState(false);
+  const { jobs } = useAllContext();
+
   return (
     <div className="bg-cyan-300  rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200">
+      {showDeleteButton && (
+        <div className="flex justify-end">
+          <button
+            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+            onClick={() => setShowModal(true)}
+          >
+            Delete
+          </button>
+          <ConfirmationModal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            onConfirm={async () => {
+              setShowModal(false);
+              await jobs?.deleteExisingJob(job._id);
+            }}
+          />
+        </div>
+      )}
       {showEditButton && (
         <div className="flex justify-end">
           <Link

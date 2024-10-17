@@ -1,9 +1,8 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
 import { IoAddCircle } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 
-const ExperienceInput = () => {
-  const [experience, setExperience] = useState([{}]);
+const ExperienceInput = ({experience, setExperience}) => {
 
   const handleExperienceChange = (index, event) => {
     const { name, value } = event.target;

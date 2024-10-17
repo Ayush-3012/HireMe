@@ -50,6 +50,7 @@ const employeeSchema = new mongoose.Schema(
     ],
     resumeUrl: { type: String, trim: true },
     appliedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
+    savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Job" }],
   },
   { timestamps: true }
 );

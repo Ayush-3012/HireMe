@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { IoAddCircle } from "react-icons/io5";
 
-const SkillsInput = () => {
-  const [skills, setSkills] = useState([""]);
+const SkillsInput = ({skills, setSkills}) => {
 
   const handleSkillChange = (index, event) => {
     const newSkills = skills.slice();

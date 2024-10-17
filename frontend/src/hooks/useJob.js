@@ -6,11 +6,13 @@ import {
   getEmployerJobs,
   updateJob,
   deleteJob,
+  getSpecificJobs,
 } from "../services/jobService";
 
 export const useJob = () => {
   const [jobs, setJobs] = useState([]);
   const [employerJobs, setEmployerJobs] = useState([]);
+  const [specificJobs, setSpecificJobs] = useState([]);
 
   const fetchJobs = async () => {
     try {
@@ -19,6 +21,15 @@ export const useJob = () => {
     } catch (error) {
       console.log(error);
       return error;
+    }
+  };
+
+  const fetchSpecificJobs = async (keywords) => {
+    try {
+      const data = await getSpecificJobs(keywords);
+      setSpecificJobs(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -76,9 +87,11 @@ export const useJob = () => {
   return {
     jobs,
     employerJobs,
+    specificJobs,
     fetchJobs,
     fetchJobDetails,
     createNewJob,
+    fetchSpecificJobs,
     fetchEmployerJobs,
     updateExistingJob,
     deleteExisingJob,

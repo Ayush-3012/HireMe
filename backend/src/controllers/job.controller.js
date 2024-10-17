@@ -63,6 +63,27 @@ export const getAllJobs = async (req, res) => {
   }
 };
 
+export const getSpecificJobs = async (req, res) => {
+  try {
+    const { keywords } = req.query;
+    const searchCriteria = {};
+
+    if (keywords) {
+      searchCriteria.$or = [
+        { title: { $regex: keywords, $options: "i" } },
+        { location: { $regex: keywords, $options: "i" } },
+        { companyName: { $regex: keywords, $options: "i" } },
+        { description: { $regex: keywords, $options: "i" } },
+      ];
+    }
+
+    const foundJobs = await Job.find(searchCriteria);
+    return res.status(200).json({ foundJobs });
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to fetch specific jobs" });
+  }
+};
+
 export const getJobsByEmployer = async (req, res) => {
   try {
     const { employerId } = req.params;
