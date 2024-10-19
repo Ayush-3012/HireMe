@@ -7,6 +7,7 @@ import {
   getJobDetails,
   getJobsByEmployer,
   getSpecificJobs,
+  saveJob,
   updateJob,
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
@@ -20,6 +21,7 @@ jobRouter.route("/getSpecificJobs").get(verifyToken, getSpecificJobs);
 jobRouter.route("/view:jobId").get(verifyToken, getJobDetails);
 jobRouter.route("/apply:jobId").post(verifyToken, applyForJob);
 jobRouter.route("/update:jobId").put(verifyToken, updateJob);
+jobRouter.route("/save").put(verifyToken, saveJob);
 jobRouter.route("/delete:jobId").delete(verifyToken, deleteJob);
 
 export default jobRouter;

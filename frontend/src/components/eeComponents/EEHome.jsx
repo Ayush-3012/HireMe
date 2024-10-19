@@ -1,6 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAllContext } from "../../context/AuthContext"; // Assuming you are using this hook for employee data
 import { useState } from "react";
+import EEDashboard from "./EEDashboard";
 
 const EEHome = () => {
   const { profile, jobs } = useAllContext();
@@ -19,8 +20,8 @@ const EEHome = () => {
         <h1>Welcome, {profile?.userProfile?.fullName || "Job Seeker"}</h1>
       </div>
 
-      <div className="px-4 py-2 flex flex-col mb-8">
-        <h2 className="text-xl font-semibold">Search for Jobs</h2>
+      <div className="px-4 py-2 flex flex-col">
+        <h2 className="text-xl font-semibold text-zinc-200">Search for Jobs</h2>
         <form
           onSubmit={handleSearchSubmit}
           className="mt-2 flex gap-4 justify-center items-center"
@@ -42,43 +43,16 @@ const EEHome = () => {
         </form>
       </div>
 
-      <div className="flex flex-col gap-4 text-xl">
-        <div className="px-4">
-          <h2 className="text-2xl font-semibold">Saved Jobs</h2>
-          {profile?.userProfile?.savedJobs.length === 0 ? (
-            <p className="text-zinc-200">You haven’t saved any jobs yet.</p>
-          ) : (
-            <>
-              {profile?.userProfile?.savedJobs.map((item) => (
-                <div key={item}>{item}</div>
-              ))}
-            </>
-          )}
-        </div>
-
-        <div className="px-4">
-          <h2 className="text-2xl font-semibold">Application Status</h2>
-          {profile?.userProfile?.appliedJobs.length === 0 ? (
-            <p className="text-zinc-200">Track the jobs you have applied to.</p>
-          ) : (
-            <>
-              {profile?.userProfile?.appliedJobs.map((item) => (
-                <div key={item}>{item}</div>
-              ))}
-            </>
-          )}
-        </div>
-
-        <div className="px-4 flex flex-col">
-          <h2 className="text-2xl font-semibold">Recommended Jobs</h2>
-          <p className="text-zinc-200">Jobs tailored to your profile.</p>
-        </div>
-
-        <div className="px-4">
-          <h2 className="text-2xl font-semibold">Notifications</h2>
-          <p className="text-zinc-200">You have no new notifications.</p>
-        </div>
+      <div className="flex items-center justify-center my-2">
+        <Link
+          to={"/showAllJobs"}
+          className="bg-blue-500 w-1/2 text-white text-2xl py-1 px-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
+        >
+          Show All Job
+        </Link>
       </div>
+
+      <EEDashboard />
     </div>
   );
 };

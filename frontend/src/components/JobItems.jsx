@@ -4,17 +4,13 @@ import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
 import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 
-const JobItems = ({
-  job,
-  showEditButton = false,
-  showDeleteButton = false,
-}) => {
+const JobItems = ({ job }) => {
   const [showModal, setShowModal] = useState(false);
-  const { jobs } = useAllContext();
+  const { jobs, auth } = useAllContext();
 
   return (
     <div className="bg-cyan-300  rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200">
-      {showDeleteButton && (
+      {auth.userType === "employer" && (
         <div className="flex justify-end">
           <button
             className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
@@ -32,7 +28,7 @@ const JobItems = ({
           />
         </div>
       )}
-      {showEditButton && (
+      {auth?.userType === "employer" && (
         <div className="flex justify-end">
           <Link
             to={`/edit/job/${job._id}`}
@@ -42,7 +38,21 @@ const JobItems = ({
           </Link>
         </div>
       )}
+
       <Link to={`/about/job/${job._id}`}>
+        {auth?.userType === "employee" && (
+          <div className="flex justify-end">
+            <button
+              className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+              onClick={async (e) => {
+                e.preventDefault();
+                await jobs?.bookmarkJob(job._id);
+              }}
+            >
+              Save
+            </button>
+          </div>
+        )}
         <div className="text-sm mx-4 flex flex-col gap-2">
           <div className="flex justify-between px-4 mt-1">
             <p>Id: {job._id}</p>

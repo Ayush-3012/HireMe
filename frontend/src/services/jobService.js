@@ -97,6 +97,20 @@ export const updateJob = async (jobId, updateData) => {
   }
 };
 
+export const saveCurrentJob = async (jobId) => {
+  try {
+    const res = await axios.put(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/save`,
+      { jobId },
+      { withCredentials: true }
+    );
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deleteJob = async (jobId) => {
   try {
     const res = await axios.delete(

@@ -174,6 +174,31 @@ export const updateJob = async (req, res) => {
   }
 };
 
+export const saveJob = async (req, res) => {
+  try {
+    const employee = await Employee.findById(req.user.userId);
+    if (!employee)
+      return res.status(404).json({ message: "Employee Not Found" });
+
+    const foundJob = await Job.findById(req.body.jobId);
+    if (!foundJob) return res.status(404).json({ message: "Job Not Found" });
+
+    const isAlreadySaved = employee.savedJobs.some(
+      (item) => item.toString() === req.body.jobId.toString()
+    );
+
+    if (isAlreadySaved) {
+      return res.status(403).json({ message: "Already Saved" });
+    }
+
+    employee.savedJobs.push(req.body.jobId);
+    await employee.save();
+    return res.status(200).json({ message: "Job Saved successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export const deleteJob = async (req, res) => {
   try {
     const employer = await Employer.findById(req.user.userId);

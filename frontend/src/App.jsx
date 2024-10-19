@@ -9,6 +9,7 @@ import NotFound from "./partials/NotFound";
 import JobDetailsPage from "./pages/JobDetailsPage";
 import UpdateJob from "./components/erComponents/UpdateJob";
 import FoundJobs from "./components/eeComponents/FoundJobs";
+import AllJobs from "./pages/AllJobs";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/postJob" element={<PostJob />} />
         <Route path="/searchResult" element={<FoundJobs />} />
+        <Route path="/showAllJobs" element={<AllJobs />} />
         <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
         <Route path="/edit/job/:jobId" element={<UpdateJob />} />
         <Route path="*" element={<NotFound />} />

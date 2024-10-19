@@ -7,6 +7,7 @@ import {
   updateJob,
   deleteJob,
   getSpecificJobs,
+  saveCurrentJob,
 } from "../services/jobService";
 
 export const useJob = () => {
@@ -72,6 +73,16 @@ export const useJob = () => {
     }
   };
 
+  const bookmarkJob = async (jobId) => {
+    try {
+      const data = await saveCurrentJob(jobId);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   const deleteExisingJob = async (jobId) => {
     try {
       const data = await deleteJob(jobId);
@@ -95,6 +106,7 @@ export const useJob = () => {
     fetchEmployerJobs,
     updateExistingJob,
     deleteExisingJob,
+    bookmarkJob,
     // applyJob,
   };
 };
