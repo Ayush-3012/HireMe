@@ -23,6 +23,12 @@ const JobDetailsPage = () => {
     fetchData();
   }, []);
 
+  const handleJobApply = async (e) => {
+    e.preventDefault();
+    const res = await jobs?.applyJob(jobId);
+    console.log(res.data);
+  };
+
   const formatApplicationDeadline = (timestamp) => {
     const date = new Date(timestamp);
 
@@ -35,8 +41,8 @@ const JobDetailsPage = () => {
 
   return (
     <>
-      <div className="p-2 m-2 rounded-xl font-serif bg-blue-400">
-        <div className=" bg-orange-200 rounded-xl p-4 ">
+      <div className="p-2 m-2 rounded-xl font-serif bg-blue-400 flex flex-col items-center justify-center">
+        <div className=" bg-orange-200 rounded-xl p-4 w-full">
           <div className="flex flex-col px-2 border-black">
             <h2 className="text-3xl text-purple-700 font-black">
               {aboutJob.title}
@@ -58,24 +64,24 @@ const JobDetailsPage = () => {
               </h2>
             </div>
             <div className="flex justify-evenly my-4 items-center">
-              <div className="text-xl p-2 flex flex-col bg-white rounded-xl  justify-center gap-1">
+              <div className="text-xl px-4 py-2 flex flex-col bg-white rounded-xl justify-center gap-1">
                 <span>Annual CTC</span>
                 <span className="text-lg">{aboutJob.salaryRange}</span>
               </div>
-              <div className="text-xl p-2 flex flex-col bg-white rounded-xl justify-center gap-1">
+              <div className="text-xl px-4 py-2 flex flex-col bg-white rounded-xl justify-center gap-1">
                 <span>Located In</span>
                 <span className="text-lg">{aboutJob.location}</span>
               </div>
-              <div className="text-xl p-2 flex flex-col bg-white rounded-xl justify-center gap-1">
+              <div className="text-xl px-4 py-2 flex flex-col bg-white rounded-xl justify-center gap-1">
                 <span>Employment Type</span>
                 <span className="text-lg">{aboutJob.employmentType}</span>
               </div>
 
-              <div className="text-xl p-2 flex flex-col bg-white rounded-xl justify-center gap-1">
+              <div className="text-xl px-4 py-2 flex flex-col bg-white rounded-xl justify-center gap-1">
                 <span>Experience Level</span>
                 <span className="text-lg">{aboutJob.experienceLevel}</span>
               </div>
-              <div className="text-xl p-2 flex flex-col bg-white rounded-xl justify-center gap-1">
+              <div className="text-xl px-4 py-2 flex flex-col bg-white rounded-xl justify-center gap-1">
                 <span>Apply By</span>
                 <span className="text-lg">
                   {formatApplicationDeadline(aboutJob.applicationDeadline)}
@@ -109,6 +115,12 @@ const JobDetailsPage = () => {
             </h2>
           </div>
         </div>
+        <button
+          className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-orange-200 px-4 py-2 rounded-xl w-96 justify-center"
+          onClick={(e) => handleJobApply(e)}
+        >
+          Apply
+        </button>
       </div>
     </>
   );

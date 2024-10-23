@@ -3,7 +3,6 @@ import { viewProfile, updateProfile } from "../services/profileService";
 
 export const useProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
-  // const [loading, setLoading] = useState(true);
   const storedUserType = localStorage.getItem("userType");
 
   const fetchProfile = async (userType) => {

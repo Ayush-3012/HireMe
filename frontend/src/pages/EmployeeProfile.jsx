@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-
 import { useState } from "react";
+import { useAllContext } from "../context/AuthContext";
 
 const EmployeeProfile = ({ employeeProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -9,19 +9,27 @@ const EmployeeProfile = ({ employeeProfile }) => {
   const [contact, setContact] = useState(employeeProfile.contactNumber);
   const [location, setLocation] = useState(employeeProfile.location);
 
+  const { profile } = useAllContext();
+
   const handleSaveProfile = async (e) => {
     e.preventDefault();
 
     try {
-      const user = {
-        fullName,
-        email,
-        // password,
-        contactNumber: contact,
-        location,
-      };
-
-      console.log(user);
+      if (
+        employeeProfile.fullName !== fullName ||
+        employeeProfile.email !== email ||
+        employeeProfile.contactNumber !== contact ||
+        employeeProfile.location !== location
+      ) {
+        const user = {
+          fullName,
+          email,
+          // password,
+          contactNumber: contact,
+          location,
+        };
+        await profile?.saveProfile(user);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -8,6 +8,7 @@ import {
   deleteJob,
   getSpecificJobs,
   saveCurrentJob,
+  applyForJob,
 } from "../services/jobService";
 
 export const useJob = () => {
@@ -93,7 +94,15 @@ export const useJob = () => {
     }
   };
 
-  // const applyJob = async (jobId) => {};
+  const applyJob = async (jobId) => {
+    try {
+      const data = await applyForJob(jobId);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
 
   return {
     jobs,
@@ -107,7 +116,7 @@ export const useJob = () => {
     updateExistingJob,
     deleteExisingJob,
     bookmarkJob,
-    // applyJob,
+    applyJob,
   };
 };
 

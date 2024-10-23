@@ -114,7 +114,7 @@ export const applyForJob = async (req, res) => {
         message: "The LoggedIn user is not an employee, cannot apply",
       });
 
-    const foundJob = await Job.findById(req.query.jobId);
+    const foundJob = await Job.findById(req.params.jobId);
     if (!foundJob) return res.status(404).json({ message: "Job Not Found" });
     if (foundJob.status !== "Open")
       return res
@@ -122,7 +122,7 @@ export const applyForJob = async (req, res) => {
         .json({ message: "The requested job is no more open for application" });
 
     const alreadyApplied = employee.appliedJobs.some(
-      (item) => item.toString() === req.query.jobId.toString()
+      (item) => item.toString() === req.params.jobId.toString()
     );
 
     if (alreadyApplied) {
@@ -134,7 +134,7 @@ export const applyForJob = async (req, res) => {
     foundJob.applicants.push(req.user.userId);
     await foundJob.save();
 
-    employee.appliedJobs.push(req.query.jobId);
+    employee.appliedJobs.push(req.params.jobId);
     await employee.save();
 
     return res

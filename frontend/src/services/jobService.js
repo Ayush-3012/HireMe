@@ -73,6 +73,7 @@ export const applyForJob = async (jobId) => {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_API_ROUTES}/jobs/apply${jobId}`,
+      null,
       { withCredentials: true }
     );
     const data = await res.data;
