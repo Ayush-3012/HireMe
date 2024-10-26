@@ -16,7 +16,7 @@ const ERDashboard = ({ employerJobs }) => {
   const progressPercentage = totalJobs > 0 ? (openJobs / totalJobs) * 100 : 0;
 
   return (
-    <div className="dashboard-container p-6 rounded-lg border-2">
+    <div className="p-6 rounded-lg border-2">
       <div className="jobs-overview flex justify-between items-center my-5">
         <div className="flex flex-col items-start">
           <h2 className="text-2xl font-bold">Jobs Overview</h2>
@@ -64,7 +64,7 @@ const ERDashboard = ({ employerJobs }) => {
           <div className="text-xl grid grid-cols-1 gap-6">
             {employerJobs?.map((job) => (
               <div className="flex flex-col gap-2" key={job._id}>
-                <JobItems job={job} showEditButton={true} showDeleteButton={true} />
+                <JobItems job={job} />
               </div>
             ))}
           </div>

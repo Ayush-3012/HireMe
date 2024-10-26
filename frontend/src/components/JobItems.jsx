@@ -9,7 +9,7 @@ const JobItems = ({ job }) => {
   const { jobs, auth } = useAllContext();
 
   return (
-    <div className="bg-cyan-300  rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200">
+    <div className="bg-red-500  rounded-md hover:shadow-[1px_1px_10px_rgb(256,256,256)] hover:-translate-y-1 transition ease-in-out duration-200">
       {auth.userType === "employer" && (
         <div className="flex justify-end">
           <button

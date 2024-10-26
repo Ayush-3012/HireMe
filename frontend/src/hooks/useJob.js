@@ -9,12 +9,17 @@ import {
   getSpecificJobs,
   saveCurrentJob,
   applyForJob,
+  unSaveCurrentJob,
+  getRecommendedJobs,
+  getAppliedJobs,
 } from "../services/jobService";
 
 export const useJob = () => {
   const [jobs, setJobs] = useState([]);
   const [employerJobs, setEmployerJobs] = useState([]);
+  const [appliedJobs, setAppliedJobs] = useState([]);
   const [specificJobs, setSpecificJobs] = useState([]);
+  const [recommendedJobs, setRecommendedJobs] = useState([]);
 
   const fetchJobs = async () => {
     try {
@@ -39,6 +44,15 @@ export const useJob = () => {
     try {
       const data = await getEmployerJobs(userId);
       setEmployerJobs(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAppliedJobs = async (userId) => {
+    try {
+      const data = await getAppliedJobs(userId);
+      setAppliedJobs(data);
     } catch (error) {
       console.log(error);
     }
@@ -74,9 +88,29 @@ export const useJob = () => {
     }
   };
 
+  const getRecommendation = async () => {
+    try {
+      const data = await getRecommendedJobs();
+      setRecommendedJobs(data);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
   const bookmarkJob = async (jobId) => {
     try {
       const data = await saveCurrentJob(jobId);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
+  const unSaveJob = async (jobId) => {
+    try {
+      const data = await unSaveCurrentJob(jobId);
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -108,14 +142,19 @@ export const useJob = () => {
     jobs,
     employerJobs,
     specificJobs,
+    recommendedJobs,
+    appliedJobs,
     fetchJobs,
     fetchJobDetails,
     createNewJob,
     fetchSpecificJobs,
     fetchEmployerJobs,
+    fetchAppliedJobs,
     updateExistingJob,
+    getRecommendation,
     deleteExisingJob,
     bookmarkJob,
+    unSaveJob,
     applyJob,
   };
 };

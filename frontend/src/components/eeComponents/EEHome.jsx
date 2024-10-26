@@ -1,12 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useNavigate } from "react-router-dom";
 import { useAllContext } from "../../context/AuthContext"; // Assuming you are using this hook for employee data
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EEDashboard from "./EEDashboard";
 
 const EEHome = () => {
   const { profile, jobs } = useAllContext();
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (jobs) {
+        await jobs?.getRecommendation();
+        await jobs?.fetchAppliedJobs(userId);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
@@ -15,12 +28,30 @@ const EEHome = () => {
   };
 
   return (
-    <div className="w-[90%] bg-yellow-800 px-4 py-2 rounded-xl">
-      <div className="welcome-section my-6">
-        <h1>Welcome, {profile?.userProfile?.fullName || "Job Seeker"}</h1>
+    <div className="w-[90%] bg-yellow-800 px-4 py-2 rounded-xl h-full">
+      <div className="flex justify-between items-center">
+        <div className="welcome-section my-6">
+          <h1>Welcome, {profile?.userProfile?.fullName || "Job Seeker"}</h1>
+        </div>
+        <div className="flex gap-4 p-2">
+          <Link
+            to={"/showAllJobs"}
+            className="bg-blue-500 text-white text-2xl py-1 px-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
+          >
+            Show All Job
+          </Link>
+          <Link
+            to={"/myAppliedJobs"}
+            className="bg-blue-500 text-white text-2xl py-1 px-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
+          >
+            My Applied Jobs
+          </Link>
+        </div>
       </div>
 
-      <div className="px-4 py-2 flex flex-col">
+      <hr />
+
+      <div className="px-4 py-2 mb-4 flex my-2 flex-col">
         <h2 className="text-xl font-semibold text-zinc-200">Search for Jobs</h2>
         <form
           onSubmit={handleSearchSubmit}
@@ -41,15 +72,6 @@ const EEHome = () => {
             Search
           </button>
         </form>
-      </div>
-
-      <div className="flex items-center justify-center my-2">
-        <Link
-          to={"/showAllJobs"}
-          className="bg-blue-500 w-1/2 text-white text-2xl py-1 px-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
-        >
-          Show All Job
-        </Link>
       </div>
 
       <EEDashboard />

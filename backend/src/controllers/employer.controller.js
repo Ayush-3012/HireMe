@@ -89,7 +89,7 @@ export const viewEmployerProfile = async (req, res) => {
 
 export const updateEmployerProfile = async (req, res) => {
   try {
-    const updates = req.body;
+    const updates = req.body.updatedProfile;
 
     const updatedEmployer = await Employer.findByIdAndUpdate(
       req.user.userId,

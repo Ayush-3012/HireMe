@@ -19,7 +19,7 @@ const AllJobs = () => {
 
   return (
     <>
-      <div className="grid gap-3 my-4">
+      <div className="flex flex-col gap-3 m-4">
         {jobs?.jobs?.map((job) => (
           <JobItems key={job._id} job={job} />
         ))}

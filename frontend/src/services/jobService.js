@@ -42,6 +42,19 @@ export const getEmployerJobs = async (employerId) => {
   }
 };
 
+export const getAppliedJobs = async (employeeId) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/viewAppliedJobs${employeeId}`,
+      { withCredentials: true }
+    );
+    const data = await res.data.jobs;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getJobDetails = async (jobId) => {
   try {
     const res = await axios.get(
@@ -98,10 +111,37 @@ export const updateJob = async (jobId, updateData) => {
   }
 };
 
+export const getRecommendedJobs = async () => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/getRecommendedJobs`,
+      { withCredentials: true }
+    );
+    const data = await res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const saveCurrentJob = async (jobId) => {
   try {
     const res = await axios.put(
       `${import.meta.env.VITE_API_ROUTES}/jobs/save`,
+      { jobId },
+      { withCredentials: true }
+    );
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unSaveCurrentJob = async (jobId) => {
+  try {
+    const res = await axios.put(
+      `${import.meta.env.VITE_API_ROUTES}/jobs/unSave`,
       { jobId },
       { withCredentials: true }
     );
