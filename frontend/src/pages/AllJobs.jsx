@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useAllContext } from "../context/AuthContext";
 import JobItems from "../components/JobItems";
+import { enqueueSnackbar } from "notistack";
 
 const AllJobs = () => {
   const { jobs } = useAllContext();
@@ -10,6 +11,7 @@ const AllJobs = () => {
     const fetchData = async () => {
       try {
         if (jobs) await jobs?.fetchJobs();
+        enqueueSnackbar("Found jobs", { variant: "success" });
       } catch (error) {
         console.log(error);
       }

@@ -129,13 +129,9 @@ export const useJob = () => {
   };
 
   const applyJob = async (jobId) => {
-    try {
-      const data = await applyForJob(jobId);
-      return data;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
+    const res = await applyForJob(jobId);
+    return res;
+    // return res.success ? {status: res.success, data: res.data} : {status: res.success, errorMessage: res.message};
   };
 
   return {

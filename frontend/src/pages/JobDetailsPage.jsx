@@ -5,9 +5,10 @@ import { useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
+import { enqueueSnackbar } from "notistack";
 
 const JobDetailsPage = () => {
-  const { jobs } = useAllContext();
+  const { jobs, auth } = useAllContext();
   const { jobId } = useParams();
   const [aboutJob, setAboutJob] = useState([]);
 
@@ -17,7 +18,7 @@ const JobDetailsPage = () => {
         const data = await jobs?.fetchJobDetails(jobId);
         setAboutJob(data);
       } catch (error) {
-        console.log(error);
+        console.log("error is :", error);
       }
     };
     fetchData();
@@ -26,7 +27,7 @@ const JobDetailsPage = () => {
   const handleJobApply = async (e) => {
     e.preventDefault();
     const res = await jobs?.applyJob(jobId);
-    console.log(res.data);
+    console.log(res);
   };
 
   const formatApplicationDeadline = (timestamp) => {
@@ -115,12 +116,14 @@ const JobDetailsPage = () => {
             </h2>
           </div>
         </div>
-        <button
-          className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-orange-200 px-4 py-2 rounded-xl w-96 justify-center"
-          onClick={(e) => handleJobApply(e)}
-        >
-          Apply
-        </button>
+        {auth?.userType === "employee" && (
+          <button
+            className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-orange-200 px-4 py-2 rounded-xl w-96 justify-center"
+            onClick={(e) => handleJobApply(e)}
+          >
+            Apply
+          </button>
+        )}
       </div>
     </>
   );

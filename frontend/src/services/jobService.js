@@ -89,10 +89,9 @@ export const applyForJob = async (jobId) => {
       null,
       { withCredentials: true }
     );
-    const data = await res.data;
-    return data;
+    return await res.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

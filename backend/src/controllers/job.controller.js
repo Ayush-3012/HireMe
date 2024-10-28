@@ -7,7 +7,7 @@ export const createJob = async (req, res) => {
     const employer = await Employer.findById(req.user.userId);
     if (!employer)
       return res
-        .status(400)
+        .status(404)
         .json({ message: "Cannot create job, Employer not found" });
 
     const {
@@ -132,7 +132,7 @@ export const applyForJob = async (req, res) => {
   try {
     const employee = await Employee.findById(req.user.userId);
     if (!employee)
-      return res.status(404).json({
+      return res.status(401).json({
         message: "The LoggedIn user is not an employee, cannot apply",
       });
 
@@ -149,7 +149,7 @@ export const applyForJob = async (req, res) => {
 
     if (alreadyApplied) {
       return res
-        .status(400)
+        .status(403)
         .json({ message: "You have already applied for this job." });
     }
 
@@ -172,7 +172,7 @@ export const updateJob = async (req, res) => {
     const employer = await Employer.findById(req.user.userId);
     if (!employer)
       return res
-        .status(400)
+        .status(404)
         .json({ message: "Cannot update job, Employer not found" });
 
     const foundJob = await Job.findById(req.params.jobId);
@@ -233,7 +233,7 @@ export const saveJob = async (req, res) => {
     );
 
     if (isAlreadySaved) {
-      return res.status(403).json({ message: "Already Saved" });
+      return res.status(403).json({ message: "Job already Saved" });
     }
 
     employee.savedJobs.push(req.body.jobId);
