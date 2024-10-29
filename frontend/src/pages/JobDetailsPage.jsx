@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
-import { enqueueSnackbar } from "notistack";
+// import { enqueueSnackbar } from "notistack";
 
 const JobDetailsPage = () => {
   const { jobs, auth } = useAllContext();
