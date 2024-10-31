@@ -11,6 +11,7 @@ import UpdateJob from "./components/erComponents/UpdateJob";
 import FoundJobs from "./components/eeComponents/FoundJobs";
 import AllJobs from "./pages/AllJobs";
 import AppliedJobs from "./components/eeComponents/AppliedJobs";
+import Chat from "./components/chatComponents/Chat";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/postJob" element={<PostJob />} />
+        <Route path="/chat/chatId" element={<Chat />} />
         <Route path="/searchResult" element={<FoundJobs />} />
         <Route path="/showAllJobs" element={<AllJobs />} />
         <Route path="/myAppliedJobs" element={<AppliedJobs />} />

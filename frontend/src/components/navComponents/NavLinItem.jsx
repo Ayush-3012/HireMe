@@ -14,6 +14,14 @@ const NavLinItem = () => {
             My Profile
           </p>
         </Link>
+        <Link
+          to={"/chat/chatId"}
+          className="bg-purple-300 px-8 py-1 rounded-md group cursor-pointer"
+        >
+          <p className="text-2xl group-hover:text-white group-hover:scale-110 transition duration-200 ease-in-out">
+            Chat
+          </p>
+        </Link>
         <div
           className="bg-green-200 px-8 py-1 rounded-md group cursor-pointer"
           onClick={async () => await auth?.logoutAuth()}
