@@ -9,7 +9,7 @@ export const getConversation = async (userId) => {
     const res = await axios.get(
       `${
         import.meta.env.VITE_API_ROUTES
-      }/conversation/getConversation/${userId}`,
+      }/conversations/getConversation/${userId}`,
       { withCredentials: true }
     );
     const data = res.data;
@@ -19,13 +19,15 @@ export const getConversation = async (userId) => {
   }
 };
 
-export const createConversation = async (userId, conversation) => {
+export const createConversation = async (
+  employeeId,
+  employerId,
+  firstMessage
+) => {
   try {
     const res = await axios.post(
-      `${
-        import.meta.env.VITE_API_ROUTES
-      }/conversation/createConversation/${userId}`,
-      { conversation },
+      `${import.meta.env.VITE_API_ROUTES}/conversations/createConversation`,
+      { employeeId, employerId, firstMessage },
       { withCredentials: true }
     );
     const data = res.data;

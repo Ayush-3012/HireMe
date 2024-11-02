@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { viewProfile, updateProfile } from "../services/profileService";
+import {
+  viewProfile,
+  updateProfile,
+  viewApplicantProfile,
+} from "../services/profileService";
 
 export const useProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -8,6 +12,11 @@ export const useProfile = () => {
   const fetchProfile = async (userType) => {
     const data = await viewProfile(storedUserType || userType);
     if (data) setUserProfile(data);
+  };
+
+  const fetchApplicantsProfile = async (applicants) => {
+    const data = await viewApplicantProfile(applicants);
+    return data;
   };
 
   const saveProfile = async (updatedProfile) => {
@@ -19,5 +28,11 @@ export const useProfile = () => {
     }
   };
 
-  return { userProfile, setUserProfile, fetchProfile, saveProfile };
+  return {
+    userProfile,
+    setUserProfile,
+    fetchProfile,
+    fetchApplicantsProfile,
+    saveProfile,
+  };
 };

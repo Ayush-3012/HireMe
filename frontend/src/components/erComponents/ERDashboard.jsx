@@ -16,11 +16,11 @@ const ERDashboard = ({ employerJobs }) => {
   const progressPercentage = totalJobs > 0 ? (openJobs / totalJobs) * 100 : 0;
 
   return (
-    <div className="p-6 rounded-lg border-2">
+    <div className="p-6 rounded-lg border-2 bg-slate-600 text-white">
       <div className="jobs-overview flex justify-between items-center my-5">
         <div className="flex flex-col items-start">
           <h2 className="text-2xl font-bold">Jobs Overview</h2>
-          <p className="text-gray-800">Track your job postings</p>
+          <p className="">Track your job postings</p>
         </div>
         <div className="flex gap-5">
           <div className="bg-blue-500 text-white p-4 rounded-lg">
@@ -47,13 +47,12 @@ const ERDashboard = ({ employerJobs }) => {
           height="20px"
           labelAlignment="center"
         />
-        <p className="mt-2 text-gray-700">
+        <p className="mt-2 ">
           {progressPercentage.toFixed(2)}% of your job postings are currently
           open.
         </p>
       </div>
 
-      {/* Manage Your Jobs Section */}
       <div className="my-10">
         <h2 className="text-xl font-semibold">Manage Your Jobs</h2>
         {employerJobs.length === 0 ? (
@@ -73,7 +72,7 @@ const ERDashboard = ({ employerJobs }) => {
 
       <div className="notifications my-8">
         <h2 className="text-xl font-semibold">Notifications</h2>
-        <p className="text-gray-600">You have no new notifications.</p>
+        <p className="">You have no new notifications.</p>
       </div>
     </div>
   );

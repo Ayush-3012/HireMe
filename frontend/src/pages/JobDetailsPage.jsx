@@ -1,22 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 // import { enqueueSnackbar } from "notistack";
 
 const JobDetailsPage = () => {
-  const { jobs, auth } = useAllContext();
+  const { jobs, auth, profile } = useAllContext();
   const { jobId } = useParams();
   const [aboutJob, setAboutJob] = useState([]);
+  const [applicants, setApplicants] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await jobs?.fetchJobDetails(jobId);
         setAboutJob(data);
+        if (data?.applicants?.length) {
+          const applicantsDetails = await profile?.fetchApplicantsProfile(
+            data.applicants
+          );
+          setApplicants(applicantsDetails);
+        }
       } catch (error) {
         console.log("error is :", error);
       }
@@ -124,6 +131,47 @@ const JobDetailsPage = () => {
             Apply
           </button>
         )}
+        {auth?.userType === "employer" &&
+          aboutJob?.applicants?.length !== 0 && (
+            <div className="flex flex-col text-3xl my-4 bg-orange-200 px-4 py-2 rounded-xl w-full">
+              <h2 className="my-2">Applied By: </h2>
+              <div className="flex gap-4">
+                {applicants?.map((applicant) => {
+                  return (
+                    <div
+                      key={applicant._id}
+                      className="mx-2 bg-red-300 px-4 py-2 w-fit text-2xl text-slate-800 rounded-md hover:-translate-y-1 duration-200 transition-all ease-in-out"
+                    >
+                      <Link
+                        to={`/profile/applicantProfile`}
+                        state={{ applicant }}
+                      >
+                        <div className="flex justify-start flex-col">
+                          <h2>Name: {applicant.fullName}</h2>
+                          <h2>Location: {applicant.location}</h2>
+                        </div>
+                        <div className="flex gap-2">
+                          Top skills:
+                          {applicant.skills.map((skill) => {
+                            return (
+                              <div key={skill}>
+                                <h2 className="px-2 bg-pink-600 text-slate-50 rounded-xl">
+                                  {skill}
+                                </h2>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        <div>
+                          {/* <h2>Experience: {applicant.experienceLevel}</h2> */}
+                        </div>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
       </div>
     </>
   );

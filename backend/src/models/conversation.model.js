@@ -5,7 +5,7 @@ const conversationSchema = new mongoose.Schema(
     participants: [
       {
         id: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
         },
         model: {
@@ -18,6 +18,10 @@ const conversationSchema = new mongoose.Schema(
     lastMessage: {
       type: String,
       default: "",
+    },
+    lastMessageSender: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
     },
     lastUpdated: {
       type: Date,

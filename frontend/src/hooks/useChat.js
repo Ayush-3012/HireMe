@@ -6,24 +6,16 @@ import {
   sendMessage,
 } from "../services/chatService";
 
-export const useAuth = () => {
-  //   const [user, setUser] = useState(null);
-  //   const [userType, setUserType] = useState(null);
-
+export const useChat = () => {
   useEffect(() => {}, []);
 
-  const fetchConversation = async (user) => {
-    const data = await getConversation(user);
-    if (data) {
-      console.log(data);
-    }
+  const fetchConversation = async (userId) => {
+    const data = await getConversation(userId);
+    if (data) return data.conversations;
   };
 
-  const buildConversatin = async (user, conversation) => {
-    const data = await createConversation(user, conversation);
-    if (data) {
-      console.log(data);
-    }
+  const createNewConversation = async (employee, employer, firstMessage) => {
+    await createConversation(employee, employer, firstMessage);
   };
 
   const fetchMessage = async (conversationId) => {
@@ -42,7 +34,7 @@ export const useAuth = () => {
 
   return {
     fetchConversation,
-    buildConversatin,
+    createNewConversation,
     fetchMessage,
     postMessage,
   };

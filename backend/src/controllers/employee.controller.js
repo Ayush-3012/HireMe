@@ -88,6 +88,24 @@ export const viewEmployeeProfile = async (req, res) => {
   }
 };
 
+export const viewApplicantProfile = async (req, res) => {
+  try {
+    const { applicants } = req.body;
+
+    if (!Array.isArray(applicants) || !applicants.length) {
+      return res.status(400).json({ message: "No applicants provided" });
+    }
+
+    const applicantDetails = await Employee.find({
+      _id: { $in: applicants },
+    });
+
+    res.status(200).json({ applicantDetails });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const updateEmployeeProfile = async (req, res) => {
   try {
     const updates = req.body.updatedProfile;

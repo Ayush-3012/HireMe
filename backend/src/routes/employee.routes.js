@@ -4,6 +4,7 @@ import {
   loginEmployee,
   viewEmployeeProfile,
   updateEmployeeProfile,
+  viewApplicantProfile,
   logoutEmployee,
 } from "../controllers/employee.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
@@ -18,6 +19,7 @@ employeeRouter.route("/auth-status").get(verifyToken, (req, res) => {
     .json({ message: "User is authenticated", userId: req.user.userId });
 });
 employeeRouter.route("/profile").get(verifyToken, viewEmployeeProfile);
+employeeRouter.route("/getApplicants").post(verifyToken, viewApplicantProfile);
 employeeRouter.route("/profile").put(verifyToken, updateEmployeeProfile);
 employeeRouter.route("/logout").get(verifyToken, logoutEmployee);
 
