@@ -14,21 +14,22 @@ export const useChat = () => {
     if (data) return data.conversations;
   };
 
-  const createNewConversation = async (employee, employer, firstMessage) => {
-    await createConversation(employee, employer, firstMessage);
+  const createNewConversation = async (newConversation) => {
+    await createConversation(newConversation);
   };
 
   const fetchMessage = async (conversationId) => {
     const data = await getMessage(conversationId);
+
     if (data) {
-      console.log(data);
+      return data.message;
     }
   };
 
-  const postMessage = async (conversationId, message) => {
-    const data = await sendMessage(conversationId, message);
+  const postMessage = async (messageData) => {
+    const data = await sendMessage(messageData);
     if (data) {
-      console.log(data);
+      return data.message;
     }
   };
 

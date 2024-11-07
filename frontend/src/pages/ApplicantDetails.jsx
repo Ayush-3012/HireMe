@@ -4,7 +4,7 @@ import ConnectMessage from "../components/ConnectMessage";
 
 const ApplicantDetails = () => {
   const location = useLocation();
-  const { applicant } = location.state || {};
+  const { applicant, jobTitle, employer } = location.state || {};
   const [showConnectComponent, setShowConnectComponent] = useState(false);
 
   return (
@@ -87,7 +87,7 @@ const ApplicantDetails = () => {
           className="text-3xl"
           onClick={() => setShowConnectComponent(true)}
         >
-          Connect With Applicant
+          Connect With {applicant.fullName}
         </button>
       </div>
       {showConnectComponent && (
@@ -95,6 +95,8 @@ const ApplicantDetails = () => {
           onClose={() => setShowConnectComponent(false)}
           employeeId={applicant._id}
           employeeName={applicant.fullName}
+          employerName={employer}
+          jobTitle={jobTitle}
         />
       )}
     </div>

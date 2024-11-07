@@ -7,7 +7,7 @@ import {
 
 const messageRouter = Router();
 
-messageRouter.route("/getMessage").get(getConversationMessage);
+messageRouter.route("/getMessage/:conversationId").get(getConversationMessage);
 messageRouter.route("/sendMessage").post(sendMessage);
 
 export default messageRouter;

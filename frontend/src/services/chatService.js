@@ -1,9 +1,5 @@
 import axios from "axios";
 
-// const getUserRoute = (userType) => {
-//   return userType === "employer" ? "employer" : "employee";
-// };
-
 export const getConversation = async (userId) => {
   try {
     const res = await axios.get(
@@ -19,15 +15,11 @@ export const getConversation = async (userId) => {
   }
 };
 
-export const createConversation = async (
-  employeeId,
-  employerId,
-  firstMessage
-) => {
+export const createConversation = async (newConversation) => {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_API_ROUTES}/conversations/createConversation`,
-      { employeeId, employerId, firstMessage },
+      { newConversation },
       { withCredentials: true }
     );
     const data = res.data;
@@ -52,13 +44,11 @@ export const getMessage = async (conversationId) => {
   }
 };
 
-export const sendMessage = async (conversationId, message) => {
+export const sendMessage = async (messageData) => {
   try {
     const res = await axios.post(
-      `${
-        import.meta.env.VITE_API_ROUTES
-      }/message/sendMessage/${conversationId}`,
-      { message },
+      `${import.meta.env.VITE_API_ROUTES}/messages/sendMessage`,
+      { messageData },
       { withCredentials: true }
     );
     const data = res.data;

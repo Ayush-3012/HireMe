@@ -2,19 +2,28 @@ import mongoose from "mongoose";
 
 const conversationSchema = new mongoose.Schema(
   {
-    participants: [
-      {
-        id: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-        },
-        model: {
-          type: String,
-          required: true,
-          enum: ["Employee", "Employer"],
-        },
-      },
-    ],
+    employeeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Employee",
+      required: true,
+    },
+    employerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Employer",
+      required: true,
+    },
+    employeeName: {
+      type: String,
+      required: true,
+    },
+    employerName: {
+      type: String,
+      required: true,
+    },
+    jobTitle: {
+      type: String,
+      required: true,
+    },
     lastMessage: {
       type: String,
       default: "",
@@ -31,6 +40,7 @@ const conversationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Update the `lastUpdated` timestamp before each save
 conversationSchema.pre("save", function (next) {
   this.lastUpdated = Date.now();
   next();

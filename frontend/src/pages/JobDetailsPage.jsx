@@ -144,7 +144,11 @@ const JobDetailsPage = () => {
                     >
                       <Link
                         to={`/profile/applicantProfile`}
-                        state={{ applicant }}
+                        state={{
+                          applicant: applicant,
+                          jobTitle: aboutJob.title,
+                          employer: aboutJob.companyName,
+                        }}
                       >
                         <div className="flex justify-start flex-col">
                           <h2>Name: {applicant.fullName}</h2>
@@ -155,7 +159,7 @@ const JobDetailsPage = () => {
                           {applicant.skills.map((skill) => {
                             return (
                               <div key={skill}>
-                                <h2 className="px-2 bg-pink-600 text-slate-50 rounded-xl">
+                                <h2 className="px-2 text-lg bg-pink-600 text-slate-50 rounded-xl">
                                   {skill}
                                 </h2>
                               </div>

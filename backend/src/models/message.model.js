@@ -6,16 +6,14 @@ const messageSchema = new mongoose.Schema({
     ref: "Conversation",
     required: true,
   },
-  sender: {
-    id: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-    },
-    model: {
-      type: String,
-      required: true,
-      enum: ["Employee", "Employer"],
-    },
+  senderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  senderModel: {
+    type: String,
+    required: true,
+    enum: ["Employee", "Employer"],
   },
   message: {
     type: String,
@@ -25,13 +23,6 @@ const messageSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
-
-messageSchema.pre("save", function (next) {
-  if (!this.timestamp) {
-    this.timestamp = Date.now();
-  }
-  next();
 });
 
 export const Message = mongoose.model("Message", messageSchema);

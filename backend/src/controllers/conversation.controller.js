@@ -2,25 +2,31 @@ import { Conversation } from "../models/conversation.model.js";
 import { Message } from "../models/message.model.js";
 
 export const createConversation = async (req, res) => {
-  const { employeeId, employerId, firstMessage } = req.body;
+  const {
+    employeeId,
+    employerId,
+    employeeName,
+    employerName,
+    jobTitle,
+    firstMessage,
+  } = req.body.newConversation;
+
   try {
-    const participants = [
-      { id: employeeId, model: "Employee" },
-      { id: employerId, model: "Employer" },
-    ];
-
     const existingConversation = await Conversation.findOne({
-      participants: {
-        $all: participants,
-      },
+      employeeId: employeeId,
+      employerId: employerId,
+      jobTitle: jobTitle,
     });
-
-    if (existingConversation) {
+    if (existingConversation)
       return res.status(400).json({ error: "Conversation already exists." });
-    }
 
     const conversation = new Conversation({
-      participants,
+      employeeId: employeeId,
+      employerId: employerId,
+      employeeName: employeeName,
+      employerName: employerName,
+      jobTitle: jobTitle,
+      lastMessage: firstMessage,
       lastMessageSender: employerId,
     });
     await conversation.save();
@@ -28,23 +34,21 @@ export const createConversation = async (req, res) => {
     if (firstMessage) {
       const message = new Message({
         conversationId: conversation._id,
-        sender: {
-          id: employerId,
-          model: "Employer",
-        },
+        senderId: employerId,
+        senderModel: "Employer",
         message: firstMessage,
+        timestamp: new Date(),
       });
-
       await message.save();
 
       conversation.lastMessage = firstMessage;
+      conversation.lastMessageSender = employerId;
       conversation.lastUpdated = new Date();
       await conversation.save();
     }
-
     return res.status(200).json({ conversation });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: "Error creating conversation" });
   }
 };
@@ -54,10 +58,10 @@ export const getUserConversation = async (req, res) => {
 
   try {
     const conversations = await Conversation.find({
-      participants: { $elemMatch: { id: userId } },
+      $or: [{ employeeId: userId }, { employerId: userId }],
     })
       .sort({ lastUpdated: -1 })
-      .populate("lastMessageSender", "fullName")
+      .select("employeeName employerName jobTitle lastMessage lastUpdated")
       .exec();
 
     res.status(200).json({ conversations });

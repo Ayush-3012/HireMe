@@ -4,7 +4,13 @@ import { useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { useAllContext } from "../context/AuthContext";
 
-const ConnectMessage = ({ onClose, employeeId, employeeName }) => {
+const ConnectMessage = ({
+  onClose,
+  employeeId,
+  employeeName,
+  employerName,
+  jobTitle,
+}) => {
   const [message, setMessage] = useState("");
   const employerId = localStorage.getItem("userId");
   const { chats } = useAllContext();
@@ -12,7 +18,15 @@ const ConnectMessage = ({ onClose, employeeId, employeeName }) => {
   const handleSend = async (e) => {
     e.preventDefault();
     if (message.length) {
-      await chats?.createNewConversation(employeeId, employerId, message);
+      const newConversation = {
+        employeeId,
+        employerId,
+        employeeName,
+        employerName,
+        jobTitle,
+        firstMessage: message,
+      };
+      await chats?.createNewConversation(newConversation);
       enqueueSnackbar({ message: "Message Sent", variant: "success" });
       setMessage("");
       onClose();
