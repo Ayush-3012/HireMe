@@ -12,16 +12,19 @@ const LoginPage = () => {
     const user = { email, password };
     try {
       await auth.loginAuth(user);
-      // await profile.fetchProfile(logingUser);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <>
-      <form onSubmit={handleLogin} method="post">
-        <div className=" flex justify-center gap-4 flex-col items-center py-4">
+    <div className="flex items-center justify-center w-full bg-gray-50">
+      <form
+        onSubmit={handleLogin}
+        method="post"
+        className="bg-purple-400 px-12 py-2 rounded-md my-2 w-2/5"
+      >
+        <div className=" flex justify-center gap-4 flex-col  items-center py-4">
           <input
             className="outline w-96 p-2 font-serif text-xl  "
             type="email"
@@ -46,7 +49,7 @@ const LoginPage = () => {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

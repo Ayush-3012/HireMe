@@ -31,7 +31,9 @@ const EEHome = () => {
     <div className="w-[90%] bg-yellow-800 px-4 py-2 rounded-xl h-full">
       <div className="flex justify-between items-center">
         <div className="welcome-section my-6">
-          <h1>Welcome, {profile?.userProfile?.fullName || "Job Seeker"}</h1>
+          <h1 className="text-slate-100">
+            Welcome, {profile?.userProfile?.fullName || "Job Seeker"}
+          </h1>
         </div>
         <div className="flex gap-4 p-2">
           <Link

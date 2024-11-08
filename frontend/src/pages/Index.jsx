@@ -9,9 +9,9 @@ const Index = () => {
   const { auth } = useAllContext();
   return (
     <>
-      {!auth.userType && (
-        <div className="flex items-center justify-center text-4xl text-white py-32">
-          THIS IS HIRE ME.. HIRE FROM HERE
+      {!auth.user && !auth.userType && (
+        <div className="flex items-center justify-center py-4 border-4 border-emerald-800 text-4xl ">
+          <img src="../../HomePageImage.png" className="bg-red-500 " />
         </div>
       )}
 

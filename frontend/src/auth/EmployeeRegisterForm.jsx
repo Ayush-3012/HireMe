@@ -3,6 +3,7 @@ import ExperienceInput from "./inputs/ExperienceInput";
 import SkillsInput from "./inputs/SkillsInput";
 import EducationInput from "./inputs/EducationInput";
 import { useAllContext } from "../context/AuthContext";
+import BasicInput from "./inputs/BasicInput";
 
 const EmployeeRegisterForm = () => {
   const { auth } = useAllContext();
@@ -17,6 +18,11 @@ const EmployeeRegisterForm = () => {
   const [skills, setSkills] = useState([""]);
   const [experience, setExperience] = useState([{}]);
   const [education, setEducation] = useState([{}]);
+
+  const [showSkillsPage, setShowSkillsPage] = useState(false);
+  const [showExperiencePage, setShowExperiencePage] = useState(false);
+  const [showEducationPage, setShowEducaionPage] = useState(false);
+  const [showBasicInfo, setShowBasicInfo] = useState(true);
 
   const handleEERegister = async (e) => {
     e.preventDefault();
@@ -33,7 +39,7 @@ const EmployeeRegisterForm = () => {
         education,
         experience,
       };
-    
+
       await auth?.registerAuth(user);
     } catch (error) {
       console.log(error);
@@ -41,96 +47,106 @@ const EmployeeRegisterForm = () => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-center w-full border-4">
-        <form method="post" onSubmit={handleEERegister}>
-          <div className="flex m-4 justify-center flex-col gap-4 p-4 border-4 border-black">
-            <div className=" flex justify-evenly gap-4">
-              <input
-                className="outline w-96 p-2 font-serif text-xl "
-                type="text"
-                placeholder="Full Name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
-              <input
-                className="outline w-96 p-2 font-serif text-xl "
-                type="email"
-                placeholder="Your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className=" flex justify-evenly gap-4">
-              <input
-                className="outline w-96 p-2 font-serif text-xl "
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-              <input
-                className="outline w-96 p-2 font-serif text-xl "
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className=" flex justify-evenly gap-4">
-              <input
-                className="outline w-96 p-2 font-serif text-xl  "
-                type="text"
-                placeholder="Contact Number"
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                required
-              />
-              <input
-                className="outline w-96 p-2 font-serif text-xl  "
-                type="text"
-                placeholder="Location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex justify-evenly gap-10">
-              <input
-                className="outline h-12 w-96 p-2 font-serif text-xl  "
-                type="text"
-                placeholder="Website"
-                value={resumeUrl}
-                onChange={(e) => setResumeUrl(e.target.value)}
-                required
-              />
-              <SkillsInput skills={skills} setSkills={setSkills} />
-            </div>
-            <div className="flex justify-evenly gap-4">
-              <EducationInput
-                education={education}
-                setEducation={setEducation}
-              />
-              <ExperienceInput
-                experience={experience}
-                setExperience={setExperience}
-              />
-            </div>
+    <div className="flex items-center justify-center w-full  bg-gray-100">
+      <form
+        method="post"
+        onSubmit={handleEERegister}
+        className="bg-gray-400 shadow-md rounded-lg w-[90%] p-8"
+      >
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
+          Employee Registration
+        </h2>
+        <div className="flex bg-blue-400 py-2 justify-evenly text-xl my-2 rounded-md font-serif">
+          <button
+            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            onClick={() => {
+              setShowBasicInfo(true);
+              setShowSkillsPage(false);
+              setShowExperiencePage(false);
+              setShowEducaionPage(false);
+            }}
+          >
+            My Profile
+          </button>
+          <button
+            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            onClick={() => {
+              setShowBasicInfo(false);
+              setShowSkillsPage(true);
+              setShowExperiencePage(false);
+              setShowEducaionPage(false);
+            }}
+          >
+            Skills
+          </button>
+          <button
+            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            onClick={() => {
+              setShowBasicInfo(false);
+              setShowSkillsPage(false);
+              setShowExperiencePage(false);
+              setShowEducaionPage(true);
+            }}
+          >
+            Education
+          </button>
+          <button
+            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            onClick={() => {
+              setShowBasicInfo(false);
+              setShowSkillsPage(false);
+              setShowExperiencePage(true);
+              setShowEducaionPage(false);
+            }}
+          >
+            Experience
+          </button>
+        </div>
 
-            <button
-              type="submit"
-              className="bg-blue-500 py-4 text-2xl font-serif text-white hover:text-3xl transition-all duration-150"
-            >
-              Register Me
-            </button>
-          </div>
-        </form>
-      </div>
-    </>
+        {showBasicInfo && (
+          <BasicInput
+            basicInfo={
+              (fullName,
+              setFullName,
+              email,
+              setEmail,
+              password,
+              setPassword,
+              confirmPassword,
+              setConfirmPassword,
+              contact,
+              setContact,
+              location,
+              setLocation,
+              resumeUrl,
+              setResumeUrl)
+            }
+          />
+        )}
+
+        {showSkillsPage && (
+          <SkillsInput skills={skills} setSkills={setSkills} />
+        )}
+
+        {showEducationPage && (
+          <EducationInput education={education} setEducation={setEducation} />
+        )}
+
+        {showExperiencePage && (
+          <ExperienceInput
+            experience={experience}
+            setExperience={setExperience}
+          />
+        )}
+
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg text-xl font-semibold transition duration-150 ease-in-out"
+        >
+          Register Me
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -8,17 +8,14 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex p-2 bg-green-400 rounded-md">
-        <div className="text-3xl flex items-center justify-center bg-red-400 font-serif w-2/5 text-center">
-          {auth?.user ? (
-            <Link to={"/home"}>HireMe</Link>
-          ) : (
-            <Link to={"/"}>HireMe</Link>
-          )}
+      <div className="flex justify-between bg-green-400 ">
+        <div className="text-2xl bg-red-300 flex-1 flex items-center justify-center  font-serif text-center">
+          {<Link to={auth?.user ? "/home" : "/"}>HireMe</Link>}
         </div>
 
-        {!auth.user && <NavLoutItem />}
-        {auth.user && <NavLinItem />}
+        <div className="flex-1 bg-blue-300">
+          {auth.user ? <NavLinItem /> : <NavLoutItem />}
+        </div>
       </div>
     </>
   );
