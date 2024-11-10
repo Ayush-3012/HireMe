@@ -1,13 +1,22 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
+import SkillsInput from "../auth/inputs/SkillsInput";
+import ExperienceInput from "../auth/inputs/ExperienceInput";
+import EducationInput from "../auth/inputs/EducationInput";
 
 const EmployeeProfile = ({ employeeProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(employeeProfile.fullName);
   const [email, setEmail] = useState(employeeProfile.email);
   const [contact, setContact] = useState(employeeProfile.contactNumber);
+  const [resumeUrl, setResumeUrl] = useState(employeeProfile.resumeUrl);
   const [location, setLocation] = useState(employeeProfile.location);
+  const [skills, setSkills] = useState(employeeProfile.skills || []);
+  const [experience, setExperience] = useState(
+    employeeProfile.experience || []
+  );
+  const [education, setEducation] = useState(employeeProfile.education || []);
 
   const { profile } = useAllContext();
 
@@ -24,9 +33,12 @@ const EmployeeProfile = ({ employeeProfile }) => {
         const user = {
           fullName,
           email,
-          // password,
+          resumeUrl,
           contactNumber: contact,
           location,
+          skills,
+          experience,
+          education,
         };
         await profile?.saveProfile(user);
       }
@@ -78,54 +90,41 @@ const EmployeeProfile = ({ employeeProfile }) => {
               </p>
             </div>
 
-            {/* <div className="flex py-2 my-1">
-              <h2 className="font-bold">Skills : </h2>
-              <ul className="flex gap-3 mx-4">
-                {employeeProfile.skills?.map((skill, index) => (
-                  <li
-                    className="rounded-xl cursor-pointer bg-zinc-900 px-3 "
-                    key={index}
-                  >
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div> */}
+            <div className="flex items-center gap-2 py-2 my-1 text-black">
+              <h2 className="font-bold text-slate-200">Skills: </h2>
+              <SkillsInput
+                skills={skills}
+                setSkills={setSkills}
+                fromEdit={true}
+              />
+            </div>
 
-            {/* <h2>Experience</h2>
-      {console.log(employeeProfile.experience)}
-      <ul>
-        {employeeProfile.experience?.map((exp, index) => (
-          <li key={index}>
-            <strong>Company:</strong> {exp.company} <br />
-            <strong>Role:</strong> {exp.role} <br />
-            <strong>Duration:</strong> {exp.duration}
-          </li>
-        ))}
-      </ul> */}
+            <div className="flex flex-col py-2 my-1">
+              <h2 className="font-bold">Experience : </h2>
+              <ExperienceInput
+                experience={experience}
+                setExperience={setExperience}
+                fromEdit={true}
+              />
+            </div>
 
-            {/* <h2>Education</h2>
-      <ul>
-        {employeeProfile.education?.map((edu, index) => (
-          <li key={index}>
-            <strong>Institution:</strong> {edu.institution} <br />
-            <strong>Degree:</strong> {edu.degree} <br />
-            <strong>Year:</strong> {edu.year}
-          </li>
-        ))}
-      </ul> */}
+            <div className="flex flex-col py-2 my-1">
+              <h2 className="font-bold">Education : </h2>
+              <EducationInput
+                education={education}
+                setEducation={setEducation}
+                fromEdit={true}
+              />
+            </div>
 
-            <div className="flex my-1 py-2">
-              <p>
-                <strong>Resume:</strong>{" "}
-                <a
-                  href={employeeProfile.resumeUrl}
-                  target="_blank"
-                  className="text-blue-400 hover:text-cyan-400"
-                >
-                  View Resume
-                </a>
-              </p>
+            <div className="flex my-1 items-center py-2 gap-2">
+              <strong>Resume:</strong>
+              <input
+                type="text"
+                value={resumeUrl}
+                onChange={(e) => setResumeUrl(e.target.value)}
+                className="text-blue-400 px-2 outline outline-white outlin w-3/6  focus:border  focus:text-white bg-inherit"
+              />
             </div>
             <div className="flex items-center justify-center">
               <button
@@ -157,40 +156,45 @@ const EmployeeProfile = ({ employeeProfile }) => {
 
           <div className="flex py-2 my-1">
             <h2 className="font-bold">Skills : </h2>
-            <ul className="flex gap-3 mx-4">
+            <div className="flex gap-3 mx-4">
               {employeeProfile.skills?.map((skill, index) => (
-                <li
+                <div
                   className="rounded-xl cursor-pointer bg-zinc-900 px-3 "
                   key={index}
                 >
                   {skill}
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* <h2>Experience</h2>
-      {console.log(employeeProfile.experience)}
-      <ul>
-        {employeeProfile.experience?.map((exp, index) => (
-          <li key={index}>
-            <strong>Company:</strong> {exp.company} <br />
-            <strong>Role:</strong> {exp.role} <br />
-            <strong>Duration:</strong> {exp.duration}
-          </li>
-        ))}
-      </ul> */}
+          <div className="flex flex-col py-2 my-1">
+            <h2 className="font-bold">Experience : </h2>
+            <div>
+              {employeeProfile?.experience?.map((exp, index) => (
+                <div key={index} className="mx-4">
+                  <div className="">Company: {exp.companyName}</div>
+                  <div className="">Title: {exp.jobTitle}</div>
+                  <div className="">Duration: {exp.duration}</div>
+                  <div className="">Description: {exp.description}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-          {/* <h2>Education</h2>
-      <ul>
-        {employeeProfile.education?.map((edu, index) => (
-          <li key={index}>
-            <strong>Institution:</strong> {edu.institution} <br />
-            <strong>Degree:</strong> {edu.degree} <br />
-            <strong>Year:</strong> {edu.year}
-          </li>
-        ))}
-      </ul> */}
+          <div className="flex flex-col py-2 my-1">
+            <h2 className="font-bold">Education : </h2>
+            <div>
+              {employeeProfile.education?.map((edu, index) => (
+                <div key={index} className="mx-4">
+                  <div className="">Degree: {edu.degree}</div>
+                  <div className="">Institute/Board: {edu.institution}</div>
+                  <div className="">Graduated In: {edu.yearOfGraduation}</div>
+                  <div className="">Grade: {edu.grade}</div>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="flex my-1 py-2">
             <p>

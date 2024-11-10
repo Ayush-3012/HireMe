@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
+import SkillsInput from "../../auth/inputs/SkillsInput";
 
 const PostJob = () => {
   const { jobs } = useAllContext();
-  // State for each form field
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -16,9 +17,9 @@ const PostJob = () => {
   const [remote, setRemote] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSkillsChange = (e) => {
-    setRequiredSkills(e.target.value.split(","));
-  };
+  // const handleSkillsChange = (e) => {
+  //   setRequiredSkills(e.target.value.split(","));
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +50,6 @@ const PostJob = () => {
       remote,
       status: "Open",
       postedDate: new Date(),
-      employer: "66d4bff468585badc4eaa113", // placeholder, will be dynamic
     };
 
     try {
@@ -163,14 +163,15 @@ const PostJob = () => {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
-            Required Skills (comma separated)
+            Required Skills
           </label>
-          <input
+          {/* <input
             type="text"
             className="w-full p-2 border border-gray-300 rounded-md"
             value={requiredSkills.join(",")}
             onChange={handleSkillsChange}
-          />
+          /> */}
+          <SkillsInput skills={requiredSkills} setSkills={setRequiredSkills} />
         </div>
 
         <div className="mb-4">
@@ -200,7 +201,6 @@ const PostJob = () => {
           />
         </div>
 
-        {/* Submit Button */}
         <div>
           <button
             type="submit"

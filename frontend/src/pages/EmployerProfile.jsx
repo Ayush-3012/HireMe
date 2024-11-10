@@ -9,6 +9,7 @@ const EmployerProfile = ({ employerProfile }) => {
   const [contact, setContact] = useState(employerProfile.contactNumber);
   const [location, setLocation] = useState(employerProfile.location);
   const [industry, setIndustry] = useState(employerProfile.industry);
+  const [website, setWebsite] = useState(employerProfile.website);
 
   const { profile } = useAllContext();
 
@@ -90,18 +91,16 @@ const EmployerProfile = ({ employerProfile }) => {
               </p>
             </div>
 
-            <div className="flex my-1 py-2">
-              <p>
-                <strong>Website:</strong>{" "}
-                <a
-                  href={employerProfile.website}
-                  target="_blank"
-                  className="text-blue-400 hover:text-cyan-400"
-                >
-                  Visit {employerProfile.companyName}
-                </a>
-              </p>
+            <div className="flex my-1 items-center py-2 gap-2">
+              <strong>Website:</strong>
+              <input
+                type="text"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                className="text-blue-400 px-2 outline outline-white outlin w-3/6  focus:border  focus:text-white bg-inherit"
+              />
             </div>
+
             <div className="flex items-center justify-center">
               <button
                 type="submit"

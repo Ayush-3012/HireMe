@@ -1,22 +1,20 @@
 /* eslint-disable react/prop-types */
-const BasicInput = ({ basicInfo }) => {
-  const {
-    fullName,
-    setFullName,
-    email,
-    setEmail,
-    password,
-    setPassword,
-    confirmPassword,
-    setConfirmPassword,
-    contact,
-    setContact,
-    location,
-    setLocation,
-    resumeUrl,
-    setResumeUrl,
-  } = basicInfo;
-
+const BasicInput = ({
+  fullName,
+  setFullName,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  confirmPassword,
+  setConfirmPassword,
+  contact,
+  setContact,
+  location,
+  setLocation,
+  resumeUrl,
+  setResumeUrl,
+}) => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

@@ -34,20 +34,20 @@ const EEDashboard = () => {
           )}
         </div>
 
-        {/* <div className="px-4">
+        <div className="px-4">
           <h2 className="text-2xl font-semibold text-amber-50">
             Application Status
           </h2>
-          {profile?.userProfile?.appliedJobs.length === 0 ? (
+          {profile?.userProfile?.appliedJobs?.length === 0 ? (
             <p className="text-white">Track the jobs you have applied to.</p>
           ) : (
-            <>
-              {profile?.userProfile?.appliedJobs.map((item) => (
-                <div key={item}>{item}</div>
+            <div className="text-white flex gap-4 bg-red-400 w-fit max-w-full rounded-md py-4 px-2 overflow-x-auto">
+              {profile?.userProfile?.appliedJobs?.map((jobId) => (
+                <JobCard key={jobId} jobId={jobId} />
               ))}
-            </>
+            </div>
           )}
-        </div> */}
+        </div>
 
         <div className="px-4">
           {jobs?.recommendedJobs?.length !== 0 && (

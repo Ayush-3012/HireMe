@@ -38,6 +38,8 @@ const employeeSchema = new mongoose.Schema(
         degree: String,
         institution: String,
         yearOfGraduation: String,
+        grade: String,
+        _id: false,
       },
     ],
     experience: [
@@ -46,6 +48,7 @@ const employeeSchema = new mongoose.Schema(
         companyName: String,
         duration: String,
         description: String,
+        _id: false,
       },
     ],
     resumeUrl: { type: String, trim: true },

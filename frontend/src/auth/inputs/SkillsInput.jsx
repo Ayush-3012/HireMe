@@ -1,64 +1,91 @@
 /* eslint-disable react/prop-types */
-import { MdDeleteForever } from "react-icons/md";
-import { IoAddCircle } from "react-icons/io5";
+import { useState } from "react";
+import { MdClose } from "react-icons/md";
 import skillsData from "../../partials/skillsData.js";
 
-const SkillsInput = ({ skills, setSkills }) => {
-  const addSkill = () => {
-    setSkills([...skills, ""]);
+const SkillsInput = ({ skills, setSkills, fromEdit }) => {
+  const [skillInput, setSkillInput] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleSkillInputChange = (e) => {
+    const value = e.target.value;
+    setSkillInput(value);
+
+    if (value) {
+      const filteredSuggestions = skillsData
+        .filter(
+          (skill) =>
+            skill.name.toLowerCase().includes(value.toLowerCase()) &&
+            !skills.includes(skill.name)
+        )
+        .slice(0, 5);
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
   };
 
-  const removeSkill = (index) => {
-    setSkills(skills.filter((_, i) => i !== index));
+  const addSkill = (skill) => {
+    setSkills([...skills, skill]);
+    setSkillInput("");
+    setSuggestions([]);
   };
 
-  const handleSkillChange = (index, e) => {
-    const newSkills = skills.slice();
-    newSkills[index] = e.target.value;
-    setSkills(newSkills);
+  const removeSkill = (skill) => {
+    setSkills(skills.filter((s) => s !== skill));
   };
 
   return (
-    <div className="flex flex-col gap-4 justify-center items-center w-full">
-      {skills.map((skill, index) => (
-        <div
-          key={index}
-          className="flex items-center justify-between p-4 border border-gray-300 rounded-lg shadow-md w-full md:w-3/4 lg:w-1/2 gap-4 bg-white"
-        >
-          <select
-            className="outline-none p-2 font-serif text-xl w-3/4 border-b-2 border-gray-300 focus:border-blue-500"
-            value={skill}
-            onChange={(e) => handleSkillChange(index, e)}
-          >
-            <option value="">Select Skill</option>
-            {skillsData.map((skillOption) => (
-              <option
-                key={skillOption.id}
-                value={skillOption.name}
-                disabled={skills.includes(skillOption.name) && skills[index] !== skillOption.name}
-              >
-                {skillOption.name}
-              </option>
-            ))}
-          </select>
-          <button
-            type="button"
-            onClick={() => removeSkill(index)}
-            title="Remove Skill"
-            className="text-red-600 text-3xl hover:text-red-800 transition duration-200 ease-in-out"
-          >
-            <MdDeleteForever />
-          </button>
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={addSkill}
-        title="Add Skill"
-        className="text-green-600 text-4xl mt-4 hover:text-green-800 transition duration-200 ease-in-out"
+    <div
+      className={`flex flex-col w-full  justify-center ${
+        !fromEdit && "items-center"
+      }`}
+    >
+      <div
+        className={`flex flex-wrap items-center gap-2 w-full p-2 mb-1 md:w-3/4 ${
+          fromEdit ? "bg-inherit" : "bg-white"
+        } border border-gray-300 rounded-lg shadow-sm`}
       >
-        <IoAddCircle />
-      </button>
+        {skills?.map((skill, index) => (
+          <div
+            key={index}
+            className="flex items-center bg-red-100 rounded-full px-3 py-1 font-serif text-lg"
+          >
+            {skill}
+            <button
+              type="button"
+              onClick={() => removeSkill(skill)}
+              className="ml-2 text-blue-800 hover:text-red-800"
+            >
+              <MdClose />
+            </button>
+          </div>
+        ))}
+
+        <input
+          type="text"
+          value={skillInput}
+          onChange={handleSkillInputChange}
+          placeholder="Add a skill"
+          className="flex-grow text-xl font-serif bg-transparent outline-none"
+        />
+      </div>
+
+      {suggestions.length > 0 && (
+        <div className="relative w-full md:w-3/4 lg:w-1/2">
+          <div className="absolute top-0 w-full bg-white border border-gray-300 rounded-lg shadow-md z-10">
+            {suggestions?.map((suggestion) => (
+              <div
+                key={suggestion.id}
+                onClick={() => addSkill(suggestion.name)}
+                className="cursor-pointer p-1 hover:bg-blue-100"
+              >
+                {suggestion.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

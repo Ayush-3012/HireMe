@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useAllContext } from "../context/AuthContext";
 
 const EmployerRegisterForm = () => {
+  const { auth } = useAllContext();
+
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,11 +14,33 @@ const EmployerRegisterForm = () => {
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
 
+  const handleERRegister = async (e) => {
+    e.preventDefault();
+
+    try {
+      const user = {
+        companyName,
+        email,
+        password,
+        contactNumber: contact,
+        location,
+        industry,
+        website,
+        companyDescription: description,
+      };
+
+      await auth?.registerAuth(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex items-center justify-center w-full bg-purple-300 py-6 px-4">
       <form
         method="post"
         className="w-full max-w-3xl bg-white shadow-md rounded-lg p-8"
+        onSubmit={handleERRegister}
       >
         <h2 className="text-3xl font-serif font-bold text-center mb-6">
           Register Your Company

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import EmployerProfile from "./EmployerProfile";
 import EmployeeProfile from "./EmployeeProfile";
 import { useAllContext } from "../context/AuthContext";
@@ -8,16 +9,18 @@ const UserProfile = () => {
   const { profile } = useAllContext();
 
   useEffect(() => {
-    if (profile) profile?.fetchProfile(currentUser);
+    const fetchData = async () => {
+      if (profile) await profile?.fetchProfile(currentUser);
+    };
+    fetchData();
   }, []);
 
   if (!profile?.userProfile) return <div>No Profile Found</div>;
   return (
     <>
-      {currentUser === "employee" && (
+      {currentUser === "employee" ? (
         <EmployeeProfile employeeProfile={profile.userProfile} />
-      )}
-      {currentUser === "employer" && (
+      ) : (
         <EmployerProfile employerProfile={profile.userProfile} />
       )}
     </>
