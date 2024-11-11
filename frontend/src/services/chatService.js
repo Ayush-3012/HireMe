@@ -29,6 +29,21 @@ export const createConversation = async (newConversation) => {
   }
 };
 
+export const checkConversationExists = async (employerId, employeeId) => {
+  try {
+    const res = await axios.get(
+      `${
+        import.meta.env.VITE_API_ROUTES
+      }/conversations/checkConversationExists?employerId=${employerId}&employeeId=${employeeId}`,
+      { withCredentials: true }
+    );
+    const data = res.data;
+    return data;
+  } catch (error) {
+    console.error("Error checking conversation status", error);
+  }
+};
+
 export const getMessage = async (conversationId) => {
   try {
     const res = await axios.get(

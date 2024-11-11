@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
+import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
 // import { enqueueSnackbar } from "notistack";
 
 const JobDetailsPage = () => {
@@ -12,6 +13,7 @@ const JobDetailsPage = () => {
   const { jobId } = useParams();
   const [aboutJob, setAboutJob] = useState([]);
   const [applicants, setApplicants] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +53,38 @@ const JobDetailsPage = () => {
     <>
       <div className="p-2 m-2 rounded-xl font-serif bg-blue-400 flex flex-col items-center justify-center">
         <div className=" bg-orange-200 rounded-xl p-4 w-full">
-          <div className="flex flex-col px-2 border-black">
-            <h2 className="text-3xl text-purple-700 font-black">
-              {aboutJob.title}
-            </h2>
-            <h1 className="text-2xl text-purple-600">{aboutJob.companyName}</h1>
+          <div className="flex items-center justify-between px-2">
+            <div>
+              <h2 className="text-3xl text-purple-700 font-black">
+                {aboutJob.title}
+              </h2>
+              <h1 className="text-2xl text-purple-600">
+                {aboutJob.companyName}
+              </h1>
+            </div>
+            {auth.userType === "employer" && (
+              <div>
+                <button
+                  className="bg-red-500 w-20 text-white px-2 py-2 text-lg rounded-md hover:bg-red-600"
+                  onClick={() => setShowModal(true)}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+            {auth?.userType === "employee" && (
+              <div className="flex justify-end">
+                <button
+                  className="bg-blue-500 w-20 text-white px-2 py-2 text-lg rounded-md hover:bg-blue-600"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    await jobs?.bookmarkJob(aboutJob._id);
+                  }}
+                >
+                  Save
+                </button>
+              </div>
+            )}
           </div>
           <div className="mx-4 my-2">
             <div className="text-xl">
@@ -122,6 +151,17 @@ const JobDetailsPage = () => {
               {aboutJob.description}
             </h2>
           </div>
+
+          {showModal && (
+            <ConfirmationModal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              onConfirm={async () => {
+                setShowModal(false);
+                await jobs?.deleteExisingJob(aboutJob._id);
+              }}
+            />
+          )}
         </div>
         {auth?.userType === "employee" && (
           <button
@@ -140,7 +180,7 @@ const JobDetailsPage = () => {
                   return (
                     <div
                       key={applicant._id}
-                      className="mx-2 bg-red-300 px-4 py-2 w-fit text-2xl text-slate-800 rounded-md hover:-translate-y-1 duration-200 transition-all ease-in-out"
+                      className="mx-2 bg-red-300  px-4 py-2 w-fit text-xl text-slate-800 rounded-md hover:-translate-y-1 duration-200 transition-all ease-in-out"
                     >
                       <Link
                         to={`/profile/applicantProfile`}
@@ -148,26 +188,34 @@ const JobDetailsPage = () => {
                           applicant: applicant,
                           jobTitle: aboutJob.title,
                           employer: aboutJob.companyName,
+                          employerId: aboutJob.employer,
                         }}
                       >
                         <div className="flex justify-start flex-col">
-                          <h2>Name: {applicant.fullName}</h2>
-                          <h2>Location: {applicant.location}</h2>
+                          <h2 className="font-bold">
+                            Name:{" "}
+                            <span className="font-light">
+                              {applicant.fullName}
+                            </span>
+                          </h2>
+                          <h2 className="font-bold">
+                            Location:{" "}
+                            <span className="font-light">
+                              {applicant.location}
+                            </span>
+                          </h2>
                         </div>
-                        <div className="flex gap-2">
-                          Top skills:
+                        <div className="flex gap-1 flex-col">
+                          <span className="font-bold">Top skills:</span>
                           {applicant.skills.map((skill) => {
                             return (
-                              <div key={skill}>
-                                <h2 className="px-2 text-lg bg-pink-600 text-slate-50 rounded-xl">
+                              <div key={skill} className="">
+                                <h2 className="px-2 text-lg font-light bg-pink-600 text-slate-50 rounded-xl">
                                   {skill}
                                 </h2>
                               </div>
                             );
                           })}
-                        </div>
-                        <div>
-                          {/* <h2>Experience: {applicant.experienceLevel}</h2> */}
                         </div>
                       </Link>
                     </div>

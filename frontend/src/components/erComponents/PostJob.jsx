@@ -10,7 +10,7 @@ const PostJob = () => {
   const [location, setLocation] = useState("");
   const [salaryRange, setSalaryRange] = useState("");
   const [employmentType, setEmploymentType] = useState("Full-Time");
-  const [companyName, setCompanyName] = useState("");
+
   const [applicationDeadline, setApplicationDeadline] = useState("");
   const [requiredSkills, setRequiredSkills] = useState([]);
   const [experienceLevel, setExperienceLevel] = useState("Senior");
@@ -29,7 +29,6 @@ const PostJob = () => {
       !description ||
       !location ||
       !salaryRange ||
-      !companyName ||
       !applicationDeadline ||
       requiredSkills.length === 0
     ) {
@@ -43,7 +42,7 @@ const PostJob = () => {
       location,
       salaryRange,
       employmentType,
-      companyName,
+
       applicationDeadline,
       requiredSkills,
       experienceLevel,
@@ -61,7 +60,6 @@ const PostJob = () => {
       setLocation("");
       setSalaryRange("");
       setEmploymentType("Full-Time");
-      setCompanyName("");
       setApplicationDeadline("");
       setRequiredSkills([]);
       setExperienceLevel("Senior");
@@ -90,13 +88,12 @@ const PostJob = () => {
           />
         </div>
 
-        {/* Job Description */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">
+          <label className="block text-sm font-semibold mb-2 ">
             Description
           </label>
           <textarea
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-gray-300 rounded-md resize-none"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -140,18 +137,6 @@ const PostJob = () => {
 
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
-            Company Name
-          </label>
-          <input
-            type="text"
-            className="w-full p-2 border border-gray-300 rounded-md"
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">
             Application Deadline
           </label>
           <input
@@ -165,12 +150,6 @@ const PostJob = () => {
           <label className="block text-sm font-semibold mb-2">
             Required Skills
           </label>
-          {/* <input
-            type="text"
-            className="w-full p-2 border border-gray-300 rounded-md"
-            value={requiredSkills.join(",")}
-            onChange={handleSkillsChange}
-          /> */}
           <SkillsInput skills={requiredSkills} setSkills={setRequiredSkills} />
         </div>
 
@@ -195,7 +174,7 @@ const PostJob = () => {
           </label>
           <input
             type="checkbox"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-5 h-5 p-2 border border-gray-300 rounded-md"
             checked={remote}
             onChange={(e) => setRemote(e.target.checked)}
           />

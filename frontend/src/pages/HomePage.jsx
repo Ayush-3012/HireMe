@@ -19,13 +19,13 @@ const HomePage = () => {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
+    auth.user && fetchData();
+  }, [auth.user, auth.userType]);
 
   return (
     <>
       {auth?.user && auth?.userType && (
-        <div className="flex flex-col text-4xl items-center justify-center font-serif">
+        <div className="flex flex-col font-serif">
           <Welcome />
           {currentUser === "employee" && <EEHome />}
           {currentUser === "employer" && <ERHome />}

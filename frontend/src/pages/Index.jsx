@@ -11,7 +11,7 @@ const Index = () => {
     <>
       {!auth.user && !auth.userType && (
         <div className="flex items-center justify-center py-4 border-4 border-emerald-800 text-4xl ">
-          {/* <img src="../../HomePageImage.png" className="bg-red-500 " /> */}
+          <img src="../../HomePageImage.png" className="bg-red-500 " />
           <h2>Hire Me</h2>
         </div>
       )}

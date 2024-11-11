@@ -16,7 +16,6 @@ export const createJob = async (req, res) => {
       location,
       salaryRange,
       employmentType,
-      companyName,
       applicationDeadline,
       requiredSkills,
       experienceLevel,
@@ -30,7 +29,7 @@ export const createJob = async (req, res) => {
       location,
       salaryRange,
       employmentType,
-      companyName,
+      companyName: employer.companyName,
       applicationDeadline,
       requiredSkills,
       experienceLevel,
@@ -74,6 +73,7 @@ export const getSpecificJobs = async (req, res) => {
         { location: { $regex: keywords, $options: "i" } },
         { companyName: { $regex: keywords, $options: "i" } },
         { description: { $regex: keywords, $options: "i" } },
+        { requiredSkills: { $regex: keywords, $options: "i" } },
       ];
     }
 

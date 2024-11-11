@@ -4,8 +4,8 @@ const ConfirmationModal = ({ show, onClose, onConfirm }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-md shadow-md">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+      <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-2xl">
         <h2 className="text-lg font-bold">Confirm Deletion</h2>
         <p className="mt-4">Are you sure you want to delete this job?</p>
         <div className="mt-6 flex justify-end space-x-4">

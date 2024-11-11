@@ -16,7 +16,7 @@ const NavLinItem = () => {
         </Link>
         <Link
           to={"/chat/chatId"}
-          className="bg-purple-300 px-8 py-1 rounded-md group cursor-pointer"
+          className="bg-purple-400 px-8 py-1 rounded-md group cursor-pointer"
         >
           <p className="text-xl group-hover:text-white group-hover:scale-110 transition duration-200 ease-in-out">
             Chat

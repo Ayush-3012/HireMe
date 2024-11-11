@@ -70,3 +70,17 @@ export const getUserConversation = async (req, res) => {
     res.status(500).json({ error: "Error fetching conversations" });
   }
 };
+
+export const checkConversationExists = async (req, res) => {
+  const { employerId, employeeId } = req.query;
+
+  try {
+    const conversation = await Conversation.findOne({
+      employerId,
+      employeeId,
+    });
+    res.status(200).json({ exists: !!conversation });
+  } catch (error) {
+    res.status(500).json({ message: "Error checking conversation" });
+  }
+};

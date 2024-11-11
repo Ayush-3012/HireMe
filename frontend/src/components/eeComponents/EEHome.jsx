@@ -24,7 +24,7 @@ const EEHome = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     await jobs?.fetchSpecificJobs(searchTerm);
-    navigate("/searchResult");
+    navigate("/searchResult", { state: { searchTerm } });
   };
 
   return (

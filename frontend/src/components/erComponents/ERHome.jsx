@@ -20,16 +20,18 @@ const ERHome = () => {
   }, []);
 
   return (
-    <div className="w-[95%] flex flex-col gap-4">
-      <div className="flex border-2 p-2 border-orange-800 justify-evenly">
+    <div className="bg-slate-400 py-2">
+      <div className="flex justify-evenly text-3xl">
         <p>Post a job and start finding the best talent for your company!</p>
-        <Link to="/postJob" className="px-4 bg-blue-400 rounded-xl">
+        <Link
+          to="/postJob"
+          className="px-4 bg-blue-400 rounded-full hover:text-white hover:scale-x-110 transition-all duration-200  hover:bg-blue-700"
+        >
           Post a Job
         </Link>
       </div>
 
-      <div className="flex flex-col border-2 p-2 border-green-600">
-        <h2>Your Dashboard</h2>
+      <div className="flex flex-col mt-2 text-2xl mx-4">
         <ERDashboard employerJobs={jobs?.employerJobs} />
       </div>
     </div>

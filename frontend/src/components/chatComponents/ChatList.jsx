@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
 
-const ChatList = ({ setActiveConversation }) => {
+const ChatList = ({ setActiveConversation, activeConversation }) => {
   const [conversation, setConversation] = useState([]);
   const userId = localStorage.getItem("userId");
   const currentUser = localStorage.getItem("userType");
@@ -22,12 +22,20 @@ const ChatList = ({ setActiveConversation }) => {
     const fetchData = async () => {
       const data = await chats?.fetchConversation(userId);
       if (data) {
-        setConversation(data);
-        setActiveConversation(data[0]);
+        const sortedConversations = data.sort(
+          (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
+        );
+        setConversation(sortedConversations);
+        setActiveConversation(sortedConversations[0]);
       }
     };
     fetchData();
   }, []);
+
+  const handleChatClick = (chat) => {
+    chat.isUnread = false;
+    setActiveConversation(chat);
+  };
 
   return (
     <div className="">
@@ -43,24 +51,27 @@ const ChatList = ({ setActiveConversation }) => {
             return (
               <div
                 key={item._id}
-                onClick={() => setActiveConversation(item)}
-                className="bg-green-500 py-2 cursor-pointer ax rounded-md font-serif"
+                onClick={() => handleChatClick(item)}
+                className={`bg-green-500 py-2 cursor-pointer ax rounded-md font-serif group text-gray-800 transition-all ease-in-out duration-200 hover:bg-green-800 hover:text-slate-200 ${
+                  activeConversation._id === item._id &&
+                  "bg-emerald-300 scale-110 -translate-x-2"
+                }`}
               >
                 <div className="flex justify-between gap-10 px-2">
-                  <h3 className="font-bold text-2xl flex items-center justify-start text-gray-800 ">
+                  <h3 className="font-bold text-2xl flex items-center justify-start  ">
                     {currentUser === "employer"
                       ? item?.employeeName
                       : item?.employerName}
                   </h3>
-                  <p className="flex items-center text-gray-800 justify-center ">
+                  <p className="flex items-center  justify-center ">
                     {formatDate(item?.lastUpdated)}
                   </p>
                 </div>
                 <div className="flex flex-col px-4">
-                  <h4 className="font-bold text-lg text-gray-600 ">
+                  <h4 className="font-bold text-lg text-gray-600 group-hover:text-slate-200 transition-all ease-in-out duration-200">
                     {item?.jobTitle}
                   </h4>
-                  <p className="text-gray-800 ">
+                  <p className=" ">
                     {item?.lastMessage
                       ? `${item?.lastMessage.slice(0, 20)}...`
                       : "No messages yet"}

@@ -16,8 +16,8 @@ const ERDashboard = ({ employerJobs }) => {
   const progressPercentage = totalJobs > 0 ? (openJobs / totalJobs) * 100 : 0;
 
   return (
-    <div className="p-6 rounded-lg border-2 bg-slate-600 text-white">
-      <div className="jobs-overview flex justify-between items-center my-5">
+    <div className="p-6 flex flex-col gap-2 rounded-lg bg-slate-600 text-white">
+      <div className="flex justify-between items-center">
         <div className="flex flex-col items-start">
           <h2 className="text-2xl font-bold">Jobs Overview</h2>
           <p className="">Track your job postings</p>
@@ -42,12 +42,12 @@ const ERDashboard = ({ employerJobs }) => {
         <h3 className="text-lg font-semibold mb-2">Job Posting Progress</h3>
         <ProgressBar
           completed={progressPercentage}
-          bgColor="#FFFED3"
-          labelColor="#000"
+          bgColor="cyan"
+          labelColor="#f00"
           height="20px"
           labelAlignment="center"
         />
-        <p className="mt-2 ">
+        <p className="mt-2">
           {progressPercentage.toFixed(2)}% of your job postings are currently
           open.
         </p>

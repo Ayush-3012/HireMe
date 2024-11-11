@@ -38,6 +38,7 @@ export const useAuth = () => {
   const loginAuth = async (user) => {
     const data = await loginUser(user, userType);
     if (data) {
+      setUser(data);
       setUserType(userType);
       localStorage.setItem("userType", userType);
       localStorage.setItem("userId", data.userId);

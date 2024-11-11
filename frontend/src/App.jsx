@@ -13,6 +13,7 @@ import AllJobs from "./pages/AllJobs";
 import AppliedJobs from "./components/eeComponents/AppliedJobs";
 import Chat from "./components/chatComponents/Chat";
 import ApplicantDetails from "./pages/ApplicantDetails";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/edit/job/:jobId" element={<UpdateJob />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </AuthContextProvider>
   );
 };

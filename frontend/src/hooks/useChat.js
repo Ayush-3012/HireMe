@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  checkConversationExists,
   createConversation,
   getConversation,
   getMessage,
@@ -16,6 +17,11 @@ export const useChat = () => {
 
   const createNewConversation = async (newConversation) => {
     await createConversation(newConversation);
+  };
+
+  const checkConversation = async (employerId, employeeId) => {
+    const data = await checkConversationExists(employerId, employeeId);
+    return data;
   };
 
   const fetchMessage = async (conversationId) => {
@@ -36,6 +42,7 @@ export const useChat = () => {
   return {
     fetchConversation,
     createNewConversation,
+    checkConversation,
     fetchMessage,
     postMessage,
   };
