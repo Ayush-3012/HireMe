@@ -8,25 +8,25 @@ const NavLinItem = () => {
       <div className="flex justify-evenly w-full font-serif py-1">
         <Link
           to={"/userProfile"}
-          className="bg-red-200 px-8 py-1 rounded-md group cursor-pointer"
+          className="bg-gray-900 text-yellow-300 px-8 py-1 rounded-md group cursor-pointer"
         >
-          <p className="text-xl group-hover:text-white group-hover:scale-110 transition duration-200 ease-in-out">
+          <p className="text-xl group-hover:text-yellow-500 group-hover:scale-110 transition duration-200 ease-in-out">
             My Profile
           </p>
         </Link>
         <Link
           to={"/chat/chatId"}
-          className="bg-purple-400 px-8 py-1 rounded-md group cursor-pointer"
+          className="bg-gray-900 text-yellow-300 px-8 py-1 rounded-md group cursor-pointer"
         >
-          <p className="text-xl group-hover:text-white group-hover:scale-110 transition duration-200 ease-in-out">
+          <p className="text-xl group-hover:text-yellow-500 group-hover:scale-110 transition duration-200 ease-in-out">
             Chat
           </p>
         </Link>
         <div
-          className="bg-green-400 px-8 py-1 rounded-md group cursor-pointer"
+          className="bg-gray-900 text-yellow-300 px-8 py-1 rounded-md group cursor-pointer"
           onClick={async () => await auth?.logoutAuth()}
         >
-          <p className="text-xl group-hover:text-white group-hover:scale-110 transition duration-200 ease-in-out">
+          <p className="text-xl group-hover:text-yellow-500 group-hover:scale-110 transition duration-200 ease-in-out">
             Logout
           </p>
         </div>

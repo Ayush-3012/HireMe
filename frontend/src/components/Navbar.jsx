@@ -8,12 +8,19 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex justify-between bg-green-400 ">
-        <div className="text-2xl bg-red-300 flex-1 flex items-center justify-center  font-serif text-center">
-          {<Link to={auth?.user ? "/home" : "/"}>HireMe</Link>}
+      <div className="flex justify-between mb-1">
+        <div className="text-2xl bg-gray-800 flex-1 flex items-center justify-center  font-serif text-center">
+          {
+            <Link
+              to={auth?.user ? "/home" : "/"}
+              className="text-yellow-400 font-bold"
+            >
+              HireMe
+            </Link>
+          }
         </div>
 
-        <div className="flex-1 bg-blue-300">
+        <div className="flex-1 bg-gray-700">
           {auth.user ? <NavLinItem /> : <NavLoutItem />}
         </div>
       </div>

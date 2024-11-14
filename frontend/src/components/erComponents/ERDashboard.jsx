@@ -16,22 +16,22 @@ const ERDashboard = ({ employerJobs }) => {
   const progressPercentage = totalJobs > 0 ? (openJobs / totalJobs) * 100 : 0;
 
   return (
-    <div className="p-6 flex flex-col gap-2 rounded-lg bg-slate-600 text-white">
+    <div className="p-6 flex flex-col gap-2 rounded-lg bg-slate-700 text-yellow-400">
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-start">
           <h2 className="text-2xl font-bold">Jobs Overview</h2>
-          <p className="">Track your job postings</p>
+          <p className="ml-4">Track your job postings</p>
         </div>
         <div className="flex gap-5">
-          <div className="bg-blue-500 text-white p-4 rounded-lg">
+          <div className="bg-slate-600 text-white px-4 py-2 rounded-lg">
             <h3 className="text-xl">{openJobs}</h3>
             <p>Open Jobs</p>
           </div>
-          <div className="bg-gray-800 text-white p-4 rounded-lg">
+          <div className="bg-slate-800 text-white px-4 py-2 rounded-lg">
             <h3 className="text-xl">{closedJobs}</h3>
             <p>Closed Jobs</p>
           </div>
-          <div className="bg-green-500 text-white p-4 rounded-lg">
+          <div className="bg-slate-950 text-white px-4 py-2 rounded-lg">
             <h3 className="text-xl">{totalJobs}</h3>
             <p>Total Jobs</p>
           </div>
@@ -42,8 +42,8 @@ const ERDashboard = ({ employerJobs }) => {
         <h3 className="text-lg font-semibold mb-2">Job Posting Progress</h3>
         <ProgressBar
           completed={progressPercentage}
-          bgColor="cyan"
-          labelColor="#f00"
+          bgColor="#E4D00A"
+          labelColor="gray"
           height="20px"
           labelAlignment="center"
         />
@@ -53,12 +53,10 @@ const ERDashboard = ({ employerJobs }) => {
         </p>
       </div>
 
-      <div className="my-10">
+      <div className="bg-slate-800 px-2 py-2 rounded-md">
         <h2 className="text-xl font-semibold">Manage Your Jobs</h2>
         {employerJobs.length === 0 ? (
-          <p className="text-gray-600">
-            No jobs posted yet. Post your first job.
-          </p>
+          <p className="">No jobs posted yet. Post your first job.</p>
         ) : (
           <div className="text-xl grid grid-cols-1 gap-6">
             {employerJobs?.map((job) => (

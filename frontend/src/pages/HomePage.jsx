@@ -25,10 +25,12 @@ const HomePage = () => {
   return (
     <>
       {auth?.user && auth?.userType && (
-        <div className="flex flex-col font-serif">
+        <div className="space-y-2 font-serif">
           <Welcome />
-          {currentUser === "employee" && <EEHome />}
-          {currentUser === "employer" && <ERHome />}
+          <div className="bg-gray-800  mx-2  px-4 py-2 rounded-md">
+            {currentUser === "employee" && <EEHome />}
+            {currentUser === "employer" && <ERHome />}
+          </div>
         </div>
       )}
     </>

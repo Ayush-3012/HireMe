@@ -20,12 +20,14 @@ const ERHome = () => {
   }, []);
 
   return (
-    <div className="bg-slate-400 py-2">
+    <>
       <div className="flex justify-evenly text-3xl">
-        <p>Post a job and start finding the best talent for your company!</p>
+        <p className="text-yellow-400">
+          Post a job and start finding the best talent for your company!
+        </p>
         <Link
           to="/postJob"
-          className="px-4 bg-blue-400 rounded-full hover:text-white hover:scale-x-110 transition-all duration-200  hover:bg-blue-700"
+          className="px-4 bg-gray-500 rounded-full text-yellow-300 hover:text-yellow-400 hover:bg-gray-700 hover:scale-x-110 transition-all duration-200"
         >
           Post a Job
         </Link>
@@ -34,7 +36,7 @@ const ERHome = () => {
       <div className="flex flex-col mt-2 text-2xl mx-4">
         <ERDashboard employerJobs={jobs?.employerJobs} />
       </div>
-    </div>
+    </>
   );
 };
 

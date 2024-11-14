@@ -98,16 +98,13 @@ export const getAppliedJobs = async (req, res) => {
   try {
     const { employeeId } = req.params;
 
-    // Fetch the employee to get the applied job IDs
     const employee = await Employee.findById(employeeId);
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
     }
 
-    // Get the applied job IDs
     const appliedJobIds = employee.appliedJobs;
 
-    // Fetch the jobs based on the applied job IDs
     const jobs = await Job.find({ _id: { $in: appliedJobIds } });
 
     return res.status(200).json({ jobs });

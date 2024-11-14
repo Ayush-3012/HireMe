@@ -21,7 +21,7 @@ const AllJobs = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-3 m-4">
+      <div className="flex flex-col gap-2 mx-2">
         {jobs?.jobs?.map((job) => (
           <JobItems key={job._id} job={job} />
         ))}

@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginPage from "../auth/LoginPage";
 import UserAction from "../components/UserAction";
 import RegisterPage from "../auth/RegisterPage";
 import { useAllContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
   const [currentAction, setCurrentAction] = useState("");
   const { auth } = useAllContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth?.user) {
+      navigate("/home");
+    }
+  }, [auth?.user, navigate]);
   return (
     <>
       {!auth.user && !auth.userType && (

@@ -21,9 +21,9 @@ const JobCard = ({ jobId, fromSavedJobs, refreshSavedJobs }) => {
   }, [jobId]);
 
   return (
-    <div className="relative flex flex-col min-w-96 gap-2 rounded-md py-2 pl-1 pr-4 bg-green-700 hover:scale-95 transition-all duration-150 ease-in-out">
+    <div className="relative flex flex-col min-w-96 gap-2 rounded-md py-2 pl-1 pr-4 bg-slate-700 hover:-translate-y-2 hover:shadow-md hover:shadow-yellow-400 transition-all duration-150 ease-in-out">
       <Link to={`/about/job/${jobId}`}>
-        <div className="text-xl flex flex-col gap-2 ">
+        <div className="text-xl flex flex-col gap-2 text-yellow-400">
           <div className="flex justify-between flex-col pl-2">
             <p className="text-2xl font-bold">{jobDetails.title}</p>
             <p className="text-xl font-semibold">{jobDetails.companyName}</p>
@@ -41,7 +41,7 @@ const JobCard = ({ jobId, fromSavedJobs, refreshSavedJobs }) => {
           </div>
         </div>
         {fromSavedJobs && (
-          <span className="absolute bottom-2 bg-white right-2 z-10 cursor-pointer">
+          <span className="absolute bottom-2 hover:scale-125 transition-all ease-in-out duration-150 right-2 z-10 cursor-pointer">
             <MdDelete
               className="text-red-600 text-4xl"
               onClick={async (e) => {

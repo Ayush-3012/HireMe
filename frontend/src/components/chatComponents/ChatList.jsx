@@ -54,7 +54,7 @@ const ChatList = ({ setActiveConversation, activeConversation }) => {
                 onClick={() => handleChatClick(item)}
                 className={`bg-green-500 py-2 cursor-pointer ax rounded-md font-serif group text-gray-800 transition-all ease-in-out duration-200 hover:bg-green-800 hover:text-slate-200 ${
                   activeConversation._id === item._id &&
-                  "bg-emerald-300 scale-110 -translate-x-2"
+                  "bg-yellow-300 scale-110 -translate-x-2"
                 }`}
               >
                 <div className="flex justify-between gap-10 px-2">

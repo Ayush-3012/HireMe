@@ -17,10 +17,6 @@ const PostJob = () => {
   const [remote, setRemote] = useState(false);
   const [error, setError] = useState(null);
 
-  // const handleSkillsChange = (e) => {
-  //   setRequiredSkills(e.target.value.split(","));
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -170,14 +166,20 @@ const PostJob = () => {
 
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">
-            Remote Work
+            Remote Work: {remote ? "Yes" : "No"}
           </label>
-          <input
-            type="checkbox"
-            className="w-5 h-5 p-2 border border-gray-300 rounded-md"
-            checked={remote}
-            onChange={(e) => setRemote(e.target.checked)}
-          />
+          <div
+            className={`relative w-12 h-6 flex items-center bg-gray-300 rounded-full cursor-pointer transition-colors ${
+              remote ? "bg-green-500" : "bg-red-500"
+            }`}
+            onClick={() => setRemote((prev) => !prev)}
+          >
+            <div
+              className={`absolute w-5 h-5 bg-white rounded-full shadow-md transition-transform ${
+                remote ? "translate-x-6" : "translate-x-1"
+              }`}
+            ></div>
+          </div>
         </div>
 
         <div>
