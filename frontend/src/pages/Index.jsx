@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
-import LoginPage from "../auth/LoginPage";
+import { useEffect } from "react";
 import UserAction from "../components/UserAction";
-import RegisterPage from "../auth/RegisterPage";
 import { useAllContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
-  const [currentAction, setCurrentAction] = useState("");
   const { auth } = useAllContext();
   const navigate = useNavigate();
 
@@ -15,24 +12,53 @@ const Index = () => {
       navigate("/home");
     }
   }, [auth?.user, navigate]);
+
   return (
-    <>
-      {!auth.user && !auth.userType && (
-        <div className="flex items-center justify-center py-4 border-4 border-emerald-800 text-4xl ">
-          <img src="../../HomePageImage.png" className="bg-red-500 " />
-          <h2>Hire Me</h2>
+    <div className="bg-gray-800 flex items-center flex-col justify-center ">
+      <div className="flex flex-col items-center justify-center text-white font-serif ">
+        <div className="text-center mb-2">
+          <h1 className="text-5xl font-bold mb-2">Welcome to HireMe</h1>
+          <p className="text-xl text-gray-300">
+            Your one-stop solution for job seekers and employers.
+          </p>
         </div>
-      )}
 
-      {auth.userType && !auth.user && (
-        <UserAction onActionChange={(action) => setCurrentAction(action)} />
-      )}
+        <div className="flex justify-evenly">
+          <div className="w-96 m-4 flex items-start justify-center">
+            <img
+              src="../../working_ill.jpg"
+              alt="Homepage Illustration"
+              className="w-full rounded-xl shadow-[2px_2px_20px] shadow-yellow-400"
+            />
+          </div>
+          <div className="w-2/6 m-4 text-4xl items-center justify-center flex">
+            <h2>
+              Empowering job seekers and employers to connect seamlessly. Find
+              your dream job or hire top talent with just a few clicks. Let us
+              build success together!
+            </h2>
+          </div>
+        </div>
+        <div className="flex justify-evenly">
+          <div className="w-2/6 m-4 text-4xl items-center justify-center flex">
+            <h2>
+              HireMe bridges the gap between opportunity and talent. Explore
+              limitless possibilities and take the first step toward your future
+              today.
+            </h2>
+          </div>
+          <div className="w-96 m-4 flex items-start justify-center">
+            <img
+              src="../../hand_shake_ill.jpg"
+              alt="Homepage Illustration"
+              className="w-full rounded-xl shadow-[2px_2px_20px] shadow-yellow-400"
+            />
+          </div>
+        </div>
+      </div>
 
-      {currentAction === "login" && <LoginPage logingUser={auth.userType} />}
-      {currentAction === "register" && (
-        <RegisterPage registeringUser={auth.userType} />
-      )}
-    </>
+      <div className="">{auth.userType && !auth.user && <UserAction />}</div>
+    </div>
   );
 };
 

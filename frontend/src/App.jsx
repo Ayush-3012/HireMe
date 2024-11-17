@@ -14,6 +14,9 @@ import AppliedJobs from "./components/eeComponents/AppliedJobs";
 import Chat from "./components/chatComponents/Chat";
 import ApplicantDetails from "./pages/ApplicantDetails";
 import Footer from "./components/Footer";
+import RegisterPage from "./auth/RegisterPage";
+import EmployeeRegisterForm from "./auth/EmployeeRegisterForm";
+import EmployerRegisterForm from "./auth/EmployerRegisterForm";
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register/employee" element={<EmployeeRegisterForm />} />
+        <Route path="/register/company" element={<EmployerRegisterForm />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/postJob" element={<PostJob />} />

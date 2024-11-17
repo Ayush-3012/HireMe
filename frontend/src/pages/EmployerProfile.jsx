@@ -32,6 +32,7 @@ const EmployerProfile = ({ employerProfile }) => {
           location,
         };
         await profile?.saveProfile(user);
+        setIsEditing(false);
       }
     } catch (error) {
       console.log(error);
@@ -39,85 +40,90 @@ const EmployerProfile = ({ employerProfile }) => {
   };
 
   return (
-    <>
-      {isEditing && (
-        <form method="post" onSubmit={handleSaveProfile}>
-          <div className="flex flex-col p-4 text-slate-200 bg-zinc-600 m-4  font-serif shadow-md shadow-cyan-300 rounded-xl">
-            <div className="flex items-center justify-center text-4xl font-bold">
-              <input
-                className="bg-inherit outline rounded-md text-center focus-outline outline-neutral-50"
-                type="text"
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-              />
-            </div>
-            <div className="flex justify-around items-center my-2 py-2">
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Contact Number:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                />
-              </p>
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Email:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </p>
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Location:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </p>
-
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Industry:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                />
-              </p>
-            </div>
-
-            <div className="flex my-1 items-center py-2 gap-2">
-              <strong>Website:</strong>
+    <div className="max-w-4xl mx-auto font-serif p-6">
+      {isEditing ? (
+        <form
+          method="post"
+          onSubmit={handleSaveProfile}
+          className="p-6 bg-gray-800 rounded-xl shadow-lg text-yellow-400 space-y-6"
+        >
+          <div className="text-center text-3xl font-bold mb-4">
+            <input
+              type="text"
+              className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+            />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block mb-1 font-semibold">Contact Number</label>
               <input
                 type="text"
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-                className="text-blue-400 px-2 outline outline-white outlin w-3/6  focus:border  focus:text-white bg-inherit"
+                className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
               />
             </div>
-
-            <div className="flex items-center justify-center">
-              <button
-                type="submit"
-                className="bg-blue-500 p-2 rounded-sm text-xl font-serif text-white hover:text-2xl transition-all duration-150"
-              >
-                Save Profile
-              </button>
+            <div>
+              <label className="block mb-1 font-semibold">Email</label>
+              <input
+                type="email"
+                className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
+            <div>
+              <label className="block mb-1 font-semibold">Location</label>
+              <input
+                type="text"
+                className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-1 font-semibold">Industry</label>
+              <input
+                type="text"
+                className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                value={industry}
+                onChange={(e) => setIndustry(e.target.value)}
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block mb-1 font-semibold">Website</label>
+            <input
+              type="text"
+              className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+            />
+          </div>
+          <div className="text-center flex gap-4 items-center justify-center">
+            <button
+              type="submit"
+              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+            >
+              Save Profile
+            </button>
+            <button
+              type="submit"
+              className="px-6 py-2 bg-red-500 text-yellow-300 rounded-md hover:bg-red-600 hover:scale-x-110 transition-all duration-150 ease-in-out"
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              Cancel
+            </button>
           </div>
         </form>
-      )}
-      {!isEditing && (
-        <div className="flex flex-col p-4 text-slate-200 bg-zinc-600 m-4  font-serif shadow-md shadow-cyan-300 rounded-xl">
-          <div className="flex items-center justify-center text-4xl font-bold">
-            <h1>{employerProfile.companyName}</h1>
+      ) : (
+        <div className="p-6 bg-gray-800 rounded-xl shadow-lg text-yellow-400">
+          <div className="text-center text-3xl font-bold mb-4">
+            {employerProfile.companyName}
           </div>
-          <div className="flex justify-around items-center my-2 py-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <p>
               <strong>Contact Number:</strong> {employerProfile.contactNumber}
             </p>
@@ -128,34 +134,33 @@ const EmployerProfile = ({ employerProfile }) => {
               <strong>Location:</strong> {employerProfile.location}
             </p>
             <p>
-              <strong>Location:</strong> {employerProfile.industry}
+              <strong>Industry:</strong> {employerProfile.industry}
             </p>
           </div>
-
-          <div className="flex my-1 py-2">
+          <div className="mt-4">
             <p>
               <strong>Website:</strong>{" "}
               <a
                 href={employerProfile.website}
                 target="_blank"
-                className="text-blue-400 hover:text-cyan-400"
+                rel="noreferrer"
+                className="text-blue-400 hover:underline"
               >
-                Visit {employerProfile.companyName}
+                {employerProfile.website}
               </a>
             </p>
           </div>
+          <div className="text-center mt-6">
+            <button
+              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit Profile
+            </button>
+          </div>
         </div>
       )}
-
-      {!isEditing && (
-        <button
-          className="bg-blue-700 p-2 w-fit rounded-md hover:bg-blue-900"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit Profile
-        </button>
-      )}
-    </>
+    </div>
   );
 };
 

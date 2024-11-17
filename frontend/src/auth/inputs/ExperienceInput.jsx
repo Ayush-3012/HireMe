@@ -19,21 +19,19 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full ">
+    <div className="flex flex-col items-center gap-4 ">
       {experience.map((exp, index) => (
         <div
           key={index}
-          className={`flex items-start p-4 border border-gray-300 rounded-lg shadow-md w-full md:w-3/4  gap-4 ${
-            fromEdit ? "bg-inherit" : "bg-white"
+          className={`flex items-start p-4 shadow-[2px_2px_10px] rounded-lg shadow-yellow-400 w-full gap-4 ${
+            fromEdit ? "bg-inherit" : "bg-slate-800"
           }`}
         >
           <div className="flex flex-col gap-3 w-full">
             <input
               type="text"
               name="jobTitle"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none`}
               value={exp.jobTitle || ""}
               onChange={(event) => handleExperienceChange(index, event)}
               placeholder="Job Role"
@@ -41,9 +39,7 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
             <input
               type="text"
               name="companyName"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={exp.companyName || ""}
               onChange={(event) => handleExperienceChange(index, event)}
               placeholder="Company"
@@ -52,9 +48,7 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
             <input
               type="text"
               name="duration"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={exp.duration || ""}
               onChange={(event) => handleExperienceChange(index, event)}
               placeholder="Duration"
@@ -62,9 +56,7 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
             <textarea
               type="text"
               name="description"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-gray-600 text-yellow-400 resize-none focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={exp.description || ""}
               onChange={(event) => handleExperienceChange(index, event)}
               placeholder="Description"
@@ -74,7 +66,7 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
             type="button"
             onClick={() => removeExperience(index)}
             title="Remove Experience"
-            className="text-white text-3xl hover:text-red-500 transition duration-200 ease-in-out"
+            className="text-yellow-500 text-4xl hover:text-red-500 transition duration-200 ease-in-out"
           >
             <MdDeleteForever />
           </button>
@@ -84,7 +76,7 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
         type="button"
         onClick={addExperience}
         title="Add New Experience"
-        className="text-white text-4xl hover:text-green-400 transition duration-200 ease-in-out"
+        className="text-yellow-500 text-4xl hover:text-green-400 transition duration-200 ease-in-out"
       >
         <IoAddCircle />
       </button>

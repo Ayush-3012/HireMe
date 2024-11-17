@@ -2,7 +2,7 @@
 import { IoAddCircle } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 
-const EducationInput = ({ education, setEducation, fromEdit }) => {
+const EducationInput = ({ education, setEducation }) => {
   const handleEducationChange = (index, event) => {
     const { name, value } = event.target;
     const newEducation = education.slice();
@@ -19,21 +19,18 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full ">
+    <div className="flex flex-col items-center gap-4">
       {education.map((edu, index) => (
         <div
           key={index}
-          className={`flex items-start p-4 border border-gray-300 rounded-lg shadow-md w-full md:w-3/4  gap-4 ${
-            fromEdit ? "bg-inherit" : "bg-white"
-          }`}
+          className={`flex items-start p-4 shadow-[2px_2px_10px] rounded-lg shadow-yellow-400 w-full gap-4 "bg-slate-800"
+          `}
         >
           <div className="flex flex-col gap-3 w-full ">
             <input
               type="text"
               name="degree"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={edu.degree || ""}
               onChange={(event) => handleEducationChange(index, event)}
               placeholder="Degree"
@@ -41,9 +38,7 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
             <input
               type="text"
               name="institution"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`text-yellow-400 bg-gray-600 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={edu.institution || ""}
               onChange={(event) => handleEducationChange(index, event)}
               placeholder="Institution/Board"
@@ -51,9 +46,7 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
             <input
               type="text"
               name="yearOfGraduation"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-slate-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={edu.yearOfGraduation || ""}
               onChange={(event) => handleEducationChange(index, event)}
               placeholder="Completion Year"
@@ -61,9 +54,7 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
             <input
               type="text"
               name="grade"
-              className={`p-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 ${
-                fromEdit && "bg-inherit"
-              }`}
+              className={`bg-slate-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-md p-3 w-full outline-none `}
               value={edu.grade || ""}
               onChange={(event) => handleEducationChange(index, event)}
               placeholder="Grade"
@@ -73,7 +64,7 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
             type="button"
             onClick={() => removeEducation(index)}
             title="Remove Education"
-            className="text-white-600 text-3xl hover:text-red-600 transition duration-200 ease-in-out"
+            className="text-yellow-500 text-4xl hover:text-red-500 transition duration-200 ease-in-out"
           >
             <MdDeleteForever />
           </button>
@@ -83,7 +74,7 @@ const EducationInput = ({ education, setEducation, fromEdit }) => {
         type="button"
         onClick={addEducation}
         title="Add New Education"
-        className="text-white text-4xl hover:text-green-400 transition duration-200 ease-in-out"
+        className="text-yellow-500 text-4xl hover:text-green-400 transition duration-200 ease-in-out"
       >
         <IoAddCircle />
       </button>

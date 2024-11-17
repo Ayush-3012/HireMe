@@ -4,13 +4,22 @@ import EEHome from "../components/eeComponents/EEHome";
 import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
 import { useAllContext } from "../context/AuthContext";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const currentUser = localStorage.getItem("userType");
   const userId = localStorage.getItem("userId");
   const { profile, jobs, auth } = useAllContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!auth?.user) {
+      enqueueSnackbar("Please Login/Register yourself.", {
+        variant: "info`",
+      });
+      navigate("/");
+    }
     const fetchData = async () => {
       try {
         if (profile) await profile.fetchProfile(currentUser);

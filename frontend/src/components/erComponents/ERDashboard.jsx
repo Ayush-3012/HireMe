@@ -23,15 +23,15 @@ const ERDashboard = ({ employerJobs }) => {
           <p className="ml-4">Track your job postings</p>
         </div>
         <div className="flex gap-5">
-          <div className="bg-slate-600 text-white px-4 py-2 rounded-lg">
+          <div className="bg-slate-600 text-yellow-400 px-4 py-2 rounded-lg">
             <h3 className="text-xl">{openJobs}</h3>
             <p>Open Jobs</p>
           </div>
-          <div className="bg-slate-800 text-white px-4 py-2 rounded-lg">
+          <div className="bg-slate-800 text-yellow-400 px-4 py-2 rounded-lg">
             <h3 className="text-xl">{closedJobs}</h3>
             <p>Closed Jobs</p>
           </div>
-          <div className="bg-slate-950 text-white px-4 py-2 rounded-lg">
+          <div className="bg-slate-950 text-yellow-400 px-4 py-2 rounded-lg">
             <h3 className="text-xl">{totalJobs}</h3>
             <p>Total Jobs</p>
           </div>

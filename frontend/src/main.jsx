@@ -8,7 +8,7 @@ createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <SnackbarProvider
       maxSnack={2}
-      autoHideDuration={1000}
+      autoHideDuration={2000}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "center",

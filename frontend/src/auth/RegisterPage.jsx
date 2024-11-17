@@ -1,10 +1,18 @@
 // import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
-import EmployerRegisterForm from "./EmployerRegisterForm";
 import EmployeeRegisterForm from "./EmployeeRegisterForm";
+import EmployerRegisterForm from "./EmployerRegisterForm";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const { auth } = useAllContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    auth?.userType === "employer" && navigate("/register/company");
+    auth?.userType === "employee" && navigate("/register/employee");
+  }, [auth?.userType, navigate]);
 
   return (
     <>

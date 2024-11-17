@@ -24,202 +24,205 @@ const EmployeeProfile = ({ employeeProfile }) => {
     e.preventDefault();
 
     try {
-      if (
-        employeeProfile.fullName !== fullName ||
-        employeeProfile.email !== email ||
-        employeeProfile.contactNumber !== contact ||
-        employeeProfile.location !== location
-      ) {
-        const user = {
-          fullName,
-          email,
-          resumeUrl,
-          contactNumber: contact,
-          location,
-          skills,
-          experience,
-          education,
-        };
-        await profile?.saveProfile(user);
-      }
+      const user = {
+        fullName,
+        email,
+        resumeUrl,
+        contactNumber: contact,
+        location,
+        skills,
+        experience,
+        education,
+      };
+      await profile?.saveProfile(user);
+      setIsEditing(false);
     } catch (error) {
-      console.log(error);
+      console.error("Error saving profile:", error);
     }
   };
 
   return (
-    <>
-      {isEditing && (
-        <form method="post" onSubmit={handleSaveProfile}>
-          <div className="flex flex-col p-4 text-slate-200 bg-zinc-600 m-4  font-serif shadow-md shadow-cyan-300 rounded-xl">
-            <div className="flex items-center justify-center text-4xl font-bold">
+    <div className=" mx-auto p-4 font-serif">
+      {isEditing ? (
+        <form
+          onSubmit={handleSaveProfile}
+          className="bg-gray-800 text-yellow-400 p-6 rounded-md shadow-lg"
+        >
+          <h2 className="text-2xl font-bold mb-4">Edit Profile</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm mb-2">Full Name</label>
               <input
-                className="bg-inherit outline rounded-md text-center focus-outline outline-neutral-50"
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
+                className="w-full bg-inherit px-3 py-2 border-yellow-300 border rounded focus:outline-none focus:ring"
               />
             </div>
-            <div className="flex justify-around items-center my-2 py-2">
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Contact Number:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={contact}
-                  onChange={(e) => setContact(e.target.value)}
-                />
-              </p>
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Email:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </p>
-              <p className="flex gap-2 py-1 items-center">
-                <strong>Location:</strong>
-                <input
-                  className="bg-inherit outline rounded-sm p-0.5 focus-outline outline-neutral-50"
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2 py-2 my-1 text-black">
-              <h2 className="font-bold text-slate-200">Skills: </h2>
-              <SkillsInput
-                skills={skills}
-                setSkills={setSkills}
-                fromEdit={true}
+            <div>
+              <label className="block text-sm mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3 py-2 bg-inherit border-yellow-300 border rounded focus:outline-none focus:ring"
               />
             </div>
-
-            <div className="flex flex-col py-2 my-1">
-              <h2 className="font-bold">Experience : </h2>
-              <ExperienceInput
-                experience={experience}
-                setExperience={setExperience}
-                fromEdit={true}
-              />
-            </div>
-
-            <div className="flex flex-col py-2 my-1">
-              <h2 className="font-bold">Education : </h2>
-              <EducationInput
-                education={education}
-                setEducation={setEducation}
-                fromEdit={true}
-              />
-            </div>
-
-            <div className="flex my-1 items-center py-2 gap-2">
-              <strong>Resume:</strong>
+            <div>
+              <label className="block text-sm mb-2">Contact Number</label>
               <input
                 type="text"
-                value={resumeUrl}
-                onChange={(e) => setResumeUrl(e.target.value)}
-                className="text-blue-400 px-2 outline outline-white outlin w-3/6  focus:border  focus:text-white bg-inherit"
+                value={contact}
+                onChange={(e) => setContact(e.target.value)}
+                className="w-full px-3 py-2 border border-yellow-300 bg-inherit rounded focus:outline-none focus:ring"
               />
             </div>
-            <div className="flex items-center justify-center">
-              <button
-                type="submit"
-                className="bg-blue-500 p-2 rounded-sm text-xl font-serif text-white hover:text-2xl transition-all duration-150"
-              >
-                Save Profile
-              </button>
+            <div>
+              <label className="block text-sm mb-2">Location</label>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="w-full px-3 py-2 border-yellow-300 border bg-inherit rounded focus:outline-none focus:ring"
+              />
             </div>
           </div>
-        </form>
-      )}
-      {!isEditing && (
-        <div className="flex flex-col p-4 text-slate-200 bg-zinc-600 m-4  font-serif shadow-md shadow-cyan-300 rounded-xl">
-          <div className="flex items-center justify-center text-4xl font-bold">
-            <h1>{employeeProfile.fullName}</h1>
+          <div className="mt-4">
+            <label className="block text-sm mb-2">Skills</label>
+            <SkillsInput skills={skills} setSkills={setSkills} fromEdit />
           </div>
-          <div className="flex justify-around items-center my-2 py-2">
-            <p>
-              <strong>Contact Number:</strong> {employeeProfile.contactNumber}
-            </p>
+          <div className="mt-4">
+            <label className="block text-sm mb-2">Experience</label>
+            <ExperienceInput
+              experience={experience}
+              setExperience={setExperience}
+              fromEdit
+            />
+          </div>
+          <div className="mt-4">
+            <label className="block text-sm mb-2">Education</label>
+            <EducationInput
+              education={education}
+              setEducation={setEducation}
+              fromEdit
+            />
+          </div>
+          <div className="mt-4">
+            <label className="block text-sm mb-2">Resume URL</label>
+            <input
+              type="text"
+              value={resumeUrl}
+              onChange={(e) => setResumeUrl(e.target.value)}
+              className="w-full px-3 bg-inherit py-2 border-yellow-300 border rounded focus:outline-none focus:ring"
+            />
+          </div>
+          <div className="mt-6 flex justify-end gap-4">
+            <button
+              type="button"
+              onClick={() => setIsEditing(false)}
+              className="px-6 py-2 bg-red-500 text-yellow-300 rounded-md hover:bg-red-600 hover:scale-x-110 transition-all duration-150 ease-in-out"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+            >
+              Save Changes
+            </button>
+          </div>
+        </form>
+      ) : (
+        <div className="bg-gray-800 text-yellow-400 font-serif p-6 rounded-md shadow-lg">
+          <h1 className="text-3xl font-bold text-center mb-4">
+            {employeeProfile.fullName}
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <p>
               <strong>Email:</strong> {employeeProfile.email}
+            </p>
+            <p>
+              <strong>Contact Number:</strong> {employeeProfile.contactNumber}
             </p>
             <p>
               <strong>Location:</strong> {employeeProfile.location}
             </p>
           </div>
-
-          <div className="flex py-2 my-1">
-            <h2 className="font-bold">Skills : </h2>
-            <div className="flex gap-3 mx-4">
+          <div className="mt-4">
+            <h2 className="font-bold text-lg">Skills:</h2>
+            <div className="flex flex-wrap gap-2 mt-2">
               {employeeProfile.skills?.map((skill, index) => (
-                <div
-                  className="rounded-xl cursor-pointer bg-zinc-900 px-3 "
+                <span
                   key={index}
+                  className="px-3 py-1 bg-slate-600 rounded-full text-sm"
                 >
                   {skill}
-                </div>
+                </span>
               ))}
             </div>
           </div>
-
-          <div className="flex flex-col py-2 my-1">
-            <h2 className="font-bold">Experience : </h2>
-            <div>
-              {employeeProfile?.experience?.map((exp, index) => (
-                <div key={index} className="mx-4">
-                  <div className="">Company: {exp.companyName}</div>
-                  <div className="">Title: {exp.jobTitle}</div>
-                  <div className="">Duration: {exp.duration}</div>
-                  <div className="">Description: {exp.description}</div>
-                </div>
-              ))}
-            </div>
+          <div className="mt-4">
+            <h2 className="font-bold text-lg">Experience:</h2>
+            {employeeProfile.experience?.map((exp, index) => (
+              <div key={index} className="mt-2">
+                <p>
+                  <strong>Company:</strong> {exp.companyName}
+                </p>
+                <p>
+                  <strong>Title:</strong> {exp.jobTitle}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {exp.duration}
+                </p>
+                <p>
+                  <strong>Description:</strong> {exp.description}
+                </p>
+              </div>
+            ))}
           </div>
-
-          <div className="flex flex-col py-2 my-1">
-            <h2 className="font-bold">Education : </h2>
-            <div>
-              {employeeProfile.education?.map((edu, index) => (
-                <div key={index} className="mx-4">
-                  <div className="">Degree: {edu.degree}</div>
-                  <div className="">Institute/Board: {edu.institution}</div>
-                  <div className="">Graduated In: {edu.yearOfGraduation}</div>
-                  <div className="">Grade: {edu.grade}</div>
-                </div>
-              ))}
-            </div>
+          <div className="mt-4">
+            <h2 className="font-bold text-lg">Education:</h2>
+            {employeeProfile.education?.map((edu, index) => (
+              <div key={index} className="mt-2">
+                <p>
+                  <strong>Degree:</strong> {edu.degree}
+                </p>
+                <p>
+                  <strong>Institute:</strong> {edu.institution}
+                </p>
+                <p>
+                  <strong>Year:</strong> {edu.yearOfGraduation}
+                </p>
+                <p>
+                  <strong>Grade:</strong> {edu.grade}
+                </p>
+              </div>
+            ))}
           </div>
-
-          <div className="flex my-1 py-2">
+          <div className="mt-4">
             <p>
               <strong>Resume:</strong>{" "}
               <a
                 href={employeeProfile.resumeUrl}
                 target="_blank"
-                className="text-blue-400 hover:text-cyan-400"
+                rel="noopener noreferrer"
+                className="text-blue-400 hover:underline"
               >
                 View Resume
               </a>
             </p>
           </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit Profile
+            </button>
+          </div>
         </div>
       )}
-
-      {!isEditing && (
-        <button
-          className="bg-blue-700 p-2 w-fit rounded-md hover:bg-blue-900"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit Profile
-        </button>
-      )}
-    </>
+    </div>
   );
 };
 

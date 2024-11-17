@@ -37,27 +37,27 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
 
   return (
     <div
-      className={`flex flex-col w-full  justify-center ${
+      className={`flex flex-col w-full justify-center ${
         !fromEdit && "items-center"
       }`}
     >
       <div
-        className={`flex flex-wrap items-center gap-2 w-full p-2 mb-1 md:w-3/4 ${
-          fromEdit ? "bg-inherit" : "bg-white"
-        } border border-gray-300 rounded-lg shadow-sm`}
+        className={`flex flex-wrap items-center text-yellow-400 gap-2 w-full  p-2 mb-1 ${
+          fromEdit ? "bg-inherit" : "bg-slate-800"
+        }  shadow-[2px_2px_10px] rounded-lg shadow-yellow-400`}
       >
         {skills?.map((skill, index) => (
           <div
             key={index}
-            className="flex items-center bg-red-100 rounded-full px-3 py-1 font-serif text-lg"
+            className="flex items-center bg-gray-500 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg"
           >
             {skill}
             <button
               type="button"
               onClick={() => removeSkill(skill)}
-              className="ml-2 text-blue-800 hover:text-red-800"
+              className="ml-2 text-yellow-400 hover:text-red-500"
             >
-              <MdClose />
+              <MdClose className="text-2xl" />
             </button>
           </div>
         ))}
@@ -72,13 +72,13 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
       </div>
 
       {suggestions.length > 0 && (
-        <div className="relative w-full md:w-3/4 lg:w-1/2">
-          <div className="absolute top-0 w-full bg-white border border-gray-300 rounded-lg shadow-md z-10">
+        <div className="relative w-full">
+          <div className="absolute top-0 w-3/5 bg-gray-700 rounded-md border border-yellow-400 p-2 text-yellow-400 z-10">
             {suggestions?.map((suggestion) => (
               <div
                 key={suggestion.id}
                 onClick={() => addSkill(suggestion.name)}
-                className="cursor-pointer p-1 hover:bg-blue-100"
+                className="cursor-pointer p-1 hover:bg-slate-500 rounded-md"
               >
                 {suggestion.name}
               </div>

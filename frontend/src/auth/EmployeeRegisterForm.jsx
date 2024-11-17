@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExperienceInput from "./inputs/ExperienceInput";
 import SkillsInput from "./inputs/SkillsInput";
 import EducationInput from "./inputs/EducationInput";
 import { useAllContext } from "../context/AuthContext";
 import BasicInput from "./inputs/BasicInput";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeRegisterForm = () => {
   const { auth } = useAllContext();
@@ -23,6 +25,8 @@ const EmployeeRegisterForm = () => {
   const [showExperiencePage, setShowExperiencePage] = useState(false);
   const [showEducationPage, setShowEducationPage] = useState(false);
   const [showBasicInfo, setShowBasicInfo] = useState(true);
+
+  const navigate = useNavigate();
 
   const showCurrentComponent = (e) => {
     e.preventDefault();
@@ -58,6 +62,12 @@ const EmployeeRegisterForm = () => {
     }
   };
 
+  useEffect(() => {
+    auth?.userType === "employer" && navigate("/register/company");
+    auth?.userType === "employee" &&
+      enqueueSnackbar("Registering as Employee", { variant: "info" });
+  }, [auth?.userType, navigate]);
+
   const handleEERegister = async (e) => {
     e.preventDefault();
 
@@ -81,18 +91,20 @@ const EmployeeRegisterForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full  bg-gray-100">
+    <div className="flex items-center justify-center font-serif py-6 px-4 w-full bg-gray-800">
       <form
         method="post"
         onSubmit={(e) => handleEERegister(e)}
-        className="bg-gray-400 shadow-md rounded-lg w-[90%] p-8"
+        className="w-full max-w-3xl shadow-[2px_2px_10px] shadow-yellow-400 rounded-lg p-8"
       >
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
-          Employee Registration
+        <h2 className="text-3xl text-yellow-400 font-bold text-center mb-6">
+          Register Yourself
         </h2>
-        <div className="flex bg-blue-400 py-2 justify-evenly text-xl my-2 rounded-md font-serif">
+        <div className="flex text-yellow-300 py-2 justify-evenly text-xl my-2 rounded-md font-serif">
           <button
-            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+              showBasicInfo ? "bg-yellow-900" : "bg-slate-700"
+            }`}
             onClick={(e) => {
               showCurrentComponent(e);
             }}
@@ -100,7 +112,9 @@ const EmployeeRegisterForm = () => {
             My Profile
           </button>
           <button
-            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+              showSkillsPage ? "bg-yellow-900" : "bg-slate-700"
+            }`}
             onClick={(e) => {
               showCurrentComponent(e);
             }}
@@ -108,7 +122,9 @@ const EmployeeRegisterForm = () => {
             Skills
           </button>
           <button
-            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+              showEducationPage ? "bg-yellow-900" : "bg-slate-700"
+            }`}
             onClick={(e) => {
               showCurrentComponent(e);
             }}
@@ -116,7 +132,9 @@ const EmployeeRegisterForm = () => {
             Education
           </button>
           <button
-            className="hover:bg-blue-600 py-1 px-2 rounded-md"
+            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+              showExperiencePage ? "bg-yellow-900" : "bg-slate-700"
+            }`}
             onClick={(e) => {
               showCurrentComponent(e);
             }}
@@ -124,47 +142,48 @@ const EmployeeRegisterForm = () => {
             Experience
           </button>
         </div>
+        <div className="flex flex-col gap-4">
+          {showBasicInfo && (
+            <BasicInput
+              fullName={fullName}
+              setFullName={setFullName}
+              email={email}
+              setEmail={setEmail}
+              password={password}
+              setPassword={setPassword}
+              confirmPassword={confirmPassword}
+              setConfirmPassword={setConfirmPassword}
+              contact={contact}
+              setContact={setContact}
+              location={location}
+              setLocation={setLocation}
+              resumeUrl={resumeUrl}
+              setResumeUrl={setResumeUrl}
+            />
+          )}
 
-        {showBasicInfo && (
-          <BasicInput
-            fullName={fullName}
-            setFullName={setFullName}
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            contact={contact}
-            setContact={setContact}
-            location={location}
-            setLocation={setLocation}
-            resumeUrl={resumeUrl}
-            setResumeUrl={setResumeUrl}
-          />
-        )}
+          {showSkillsPage && (
+            <SkillsInput skills={skills} setSkills={setSkills} />
+          )}
 
-        {showSkillsPage && (
-          <SkillsInput skills={skills} setSkills={setSkills} />
-        )}
+          {showEducationPage && (
+            <EducationInput education={education} setEducation={setEducation} />
+          )}
 
-        {showEducationPage && (
-          <EducationInput education={education} setEducation={setEducation} />
-        )}
+          {showExperiencePage && (
+            <ExperienceInput
+              experience={experience}
+              setExperience={setExperience}
+            />
+          )}
 
-        {showExperiencePage && (
-          <ExperienceInput
-            experience={experience}
-            setExperience={setExperience}
-          />
-        )}
-
-        <button
-          type="submit"
-          className="w-full mt-4 bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-lg text-xl font-semibold transition duration-150 ease-in-out"
-        >
-          Register Me
-        </button>
+          <button
+            type="submit"
+            className="bg-slate-500 mt-4 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400  transition-all ease-in-out hover:scale-x-105 duration-200"
+          >
+            Register Me
+          </button>
+        </div>
       </form>
     </div>
   );

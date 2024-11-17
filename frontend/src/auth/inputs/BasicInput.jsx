@@ -16,10 +16,10 @@ const BasicInput = ({
   setResumeUrl,
 }) => {
   return (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div className="shadow-[2px_2px_10px] rounded-lg shadow-yellow-400 flex flex-col gap-2 p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2  gap-4 ">
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="text"
           placeholder="Full Name"
           value={fullName}
@@ -27,7 +27,7 @@ const BasicInput = ({
           required
         />
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none "
           type="email"
           placeholder="Your Email"
           value={email}
@@ -36,9 +36,9 @@ const BasicInput = ({
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="password"
           placeholder="Password"
           value={password}
@@ -46,7 +46,7 @@ const BasicInput = ({
           required
         />
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="password"
           placeholder="Confirm Password"
           value={confirmPassword}
@@ -55,9 +55,9 @@ const BasicInput = ({
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="text"
           placeholder="Contact Number"
           value={contact}
@@ -65,7 +65,7 @@ const BasicInput = ({
           required
         />
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="text"
           placeholder="Location"
           value={location}
@@ -74,9 +74,9 @@ const BasicInput = ({
         />
       </div>
 
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center">
         <input
-          className="border border-gray-300 rounded-lg p-3 w-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 mr-4"
+          className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none"
           type="text"
           placeholder="Resume Link"
           value={resumeUrl}
@@ -84,7 +84,7 @@ const BasicInput = ({
           required
         />
       </div>
-    </>
+    </div>
   );
 };
 

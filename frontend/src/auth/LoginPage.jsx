@@ -18,15 +18,15 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full bg-gray-50">
+    <div className="flex items-center justify-center">
       <form
         onSubmit={handleLogin}
         method="post"
-        className="bg-purple-400 px-12 py-2 rounded-md my-2 w-2/5"
+        className="bg-slate-500 px-12 py-4 rounded-md my-2"
       >
-        <div className=" flex justify-center gap-4 flex-col  items-center py-4">
+        <div className="space-y-2 ">
           <input
-            className="outline w-96 p-2 font-serif text-xl  "
+            className="bg-slate-700 text-yellow-400 focus:outline-yellow-400 rounded-md border-none w-full p-2 font-serif text-xl  "
             type="email"
             placeholder="Your Email..."
             value={email}
@@ -34,7 +34,7 @@ const LoginPage = () => {
             required
           />
           <input
-            className="outline w-96 p-2 font-serif text-xl  "
+            className="bg-slate-700 text-yellow-400 focus:outline-yellow-400 rounded-md border-none w-full p-2 font-serif text-xl  "
             type="password"
             placeholder="Your Password..."
             value={password}
@@ -43,7 +43,7 @@ const LoginPage = () => {
           />
           <button
             type="submit"
-            className="border-2 hover:text-3xl duration-200 transition-all w-72 text-2xl font-serif border-black px-4 py-4 rounded-md"
+            className="shadow-[1px_1px_5px] text-xl shadow-yellow-400 text-yellow-400 bg-slate-800 hover:scale-x-110 duration-200 transition-all px-8 py-2 rounded-md"
           >
             Login
           </button>

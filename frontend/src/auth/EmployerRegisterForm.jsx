@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 const EmployerRegisterForm = () => {
   const { auth } = useAllContext();
@@ -13,6 +15,8 @@ const EmployerRegisterForm = () => {
   const [industry, setIndustry] = useState("");
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
+
+  const navigate = useNavigate();
 
   const handleERRegister = async (e) => {
     e.preventDefault();
@@ -35,20 +39,26 @@ const EmployerRegisterForm = () => {
     }
   };
 
+  useEffect(() => {
+    auth?.userType === "employee" && navigate("/register/employee");
+    auth?.userType === "employer" &&
+      enqueueSnackbar("Registering as Company", { variant: "info" });
+  }, [auth?.userType, navigate]);
+
   return (
-    <div className="flex items-center justify-center w-full bg-purple-300 py-6 px-4">
+    <div className="flex items-center font-serif justify-center w-full bg-gray-800 py-6 px-4">
       <form
         method="post"
-        className="w-full max-w-3xl bg-white shadow-md rounded-lg p-8"
+        className="w-full max-w-3xl shadow-[2px_2px_10px] shadow-yellow-400 rounded-lg p-8"
         onSubmit={handleERRegister}
       >
-        <h2 className="text-3xl font-serif font-bold text-center mb-6">
+        <h2 className="text-3xl text-yellow-400 font-bold text-center mb-6">
           Register Your Company
         </h2>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col md:flex-row gap-4">
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="text"
               placeholder="Company Name"
               value={companyName}
@@ -56,7 +66,7 @@ const EmployerRegisterForm = () => {
               required
             />
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] w-full p-3 rounded-md "
               type="email"
               placeholder="Company Email"
               value={email}
@@ -66,7 +76,7 @@ const EmployerRegisterForm = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-4">
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="password"
               placeholder="Password"
               value={password}
@@ -74,7 +84,7 @@ const EmployerRegisterForm = () => {
               required
             />
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
@@ -84,7 +94,7 @@ const EmployerRegisterForm = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-4">
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="text"
               placeholder="Contact Number"
               value={contact}
@@ -92,7 +102,7 @@ const EmployerRegisterForm = () => {
               required
             />
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="text"
               placeholder="Location"
               value={location}
@@ -102,7 +112,7 @@ const EmployerRegisterForm = () => {
           </div>
           <div className="flex flex-col md:flex-row gap-4">
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="text"
               placeholder="Industry"
               value={industry}
@@ -110,7 +120,7 @@ const EmployerRegisterForm = () => {
               required
             />
             <input
-              className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500"
+              className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
               type="text"
               placeholder="Website"
               value={website}
@@ -119,7 +129,7 @@ const EmployerRegisterForm = () => {
             />
           </div>
           <textarea
-            className="outline-none border border-gray-300 w-full p-3 rounded-md focus:border-blue-500 h-32 resize-none"
+            className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] h-32 resize-none"
             type="text"
             placeholder="Company Description"
             value={description}
@@ -128,7 +138,7 @@ const EmployerRegisterForm = () => {
           />
           <button
             type="submit"
-            className="bg-blue-500 py-3 rounded-md text-2xl font-serif text-white transition-transform transform hover:scale-105 duration-150"
+            className="bg-slate-500 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400  transition-all ease-in-out hover:scale-x-105 duration-200"
           >
             Register My Company
           </button>
