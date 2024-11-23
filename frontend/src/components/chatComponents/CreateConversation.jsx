@@ -17,6 +17,11 @@ const CreateConversation = ({
 
   const handleSend = async (e) => {
     e.preventDefault();
+    if (!message.length) {
+      enqueueSnackbar(`Invalid input field to connect with ${employeeName}`, {
+        variant: "error",
+      });
+    }
     if (message.length) {
       const newConversation = {
         employeeId,
@@ -37,7 +42,7 @@ const CreateConversation = ({
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
       <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-11/12 max-w-2xl">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg text-slate-100 font-bold">
+          <h2 className="text-lg text-yellow-400 font-bold">
             Connect with {employeeName}
           </h2>
           <button onClick={onClose}>
@@ -45,7 +50,7 @@ const CreateConversation = ({
           </button>
         </div>
         <textarea
-          className="w-full h-52 p-2 text-lg bg-zinc-600 text-white rounded-md border outline-none focus:ring focus:ring-white resize-none"
+          className="w-full h-52 p-2 text-lg bg-zinc-600 text-yellow-300 rounded-md outline-none focus:ring focus:ring-yellow-400 resize-none"
           placeholder="Type your message here..."
           required
           value={message}
@@ -53,7 +58,7 @@ const CreateConversation = ({
         />
         <button
           onClick={(e) => handleSend(e)}
-          className="mt-4 w-full bg-cyan-200 hover:text-slate-50 font-bold text-lg py-2 rounded-md hover:bg-cyan-500 hover:-translate-y-1 transition-all duration-200"
+          className="mt-4 w-full bg-slate-500  hover:text-slate-100 font-bold text-lg py-2 rounded-md hover:bg-yellow-500 hover:-translate-y-1 transition-all duration-200"
         >
           Send
         </button>

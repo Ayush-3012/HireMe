@@ -48,12 +48,12 @@ const MessageInput = ({ conversationId, senderId, setMessages }) => {
               handleSendMessage(e);
             }
           }}
-          className="py-2 px-1 w-full focus:outline"
+          className="py-2 px-1 bg-slate-800 rounded-md shadow-[1px_1px_5px] shadow-yellow-400 text-yellow-300  w-full focus:outline"
         />
         <button
           type="submit"
           onClick={handleSendMessage}
-          className={`bg-white p-1 text-gray-500 rounded-sm hover:bg-blue-300 px-4 text-3xl`}
+          className={`bg-slate-800 p-1 text-yellow-400 rounded-md hover:shadow-yellow-400 hover:shadow-[1px_1px_5px] hover:bg-slate-700 duration-200 transition-all ease-in-out px-4 text-3xl`}
         >
           <IoSend />
         </button>

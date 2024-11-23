@@ -32,6 +32,7 @@ export const useAuth = () => {
     if (data) {
       setUserType(userType);
       localStorage.setItem("userType", userType);
+      return data;
     }
   };
 

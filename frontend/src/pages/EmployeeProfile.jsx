@@ -4,6 +4,7 @@ import { useAllContext } from "../context/AuthContext";
 import SkillsInput from "../auth/inputs/SkillsInput";
 import ExperienceInput from "../auth/inputs/ExperienceInput";
 import EducationInput from "../auth/inputs/EducationInput";
+import { enqueueSnackbar } from "notistack";
 
 const EmployeeProfile = ({ employeeProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,6 +36,8 @@ const EmployeeProfile = ({ employeeProfile }) => {
         education,
       };
       await profile?.saveProfile(user);
+      enqueueSnackbar("Employee Profile Saved", { variant: "success" });
+      await profile?.fetchProfile("employee");
       setIsEditing(false);
     } catch (error) {
       console.error("Error saving profile:", error);

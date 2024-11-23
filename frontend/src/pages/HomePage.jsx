@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect} from "react";
 import EEHome from "../components/eeComponents/EEHome";
 import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
@@ -16,7 +16,7 @@ const HomePage = () => {
   useEffect(() => {
     if (!auth?.user) {
       enqueueSnackbar("Please Login/Register yourself.", {
-        variant: "info`",
+        variant: "info",
       });
       navigate("/");
     }

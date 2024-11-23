@@ -84,7 +84,13 @@ const EmployeeRegisterForm = () => {
         experience,
       };
 
-      await auth?.registerAuth(user);
+      const data = await auth?.registerAuth(user);
+      if (data) {
+        enqueueSnackbar("Employee registerd successfully, please login", {
+          variant: "success",
+        });
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }

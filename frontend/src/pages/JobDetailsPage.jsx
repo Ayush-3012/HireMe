@@ -6,6 +6,7 @@ import { FaHome } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
+import { enqueueSnackbar } from "notistack";
 // import { enqueueSnackbar } from "notistack";
 
 const JobDetailsPage = () => {
@@ -14,6 +15,7 @@ const JobDetailsPage = () => {
   const [aboutJob, setAboutJob] = useState([]);
   const [applicants, setApplicants] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  // const [isApplied, setIsApplied] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +38,17 @@ const JobDetailsPage = () => {
   const handleJobApply = async (e) => {
     e.preventDefault();
     const res = await jobs?.applyJob(jobId);
-    console.log(res);
+    res.status === 403
+      ? enqueueSnackbar(res.response.data.message, { variant: "error" })
+      : enqueueSnackbar(res.message, { variant: "success" });
+  };
+
+  const handleSaveJob = async (e, jobId) => {
+    e.preventDefault();
+    const res = await jobs?.bookmarkJob(jobId);
+    res.status === 403
+      ? enqueueSnackbar(res.response.data.message, { variant: "error" })
+      : enqueueSnackbar(res.message, { variant: "success" });
   };
 
   const formatApplicationDeadline = (timestamp) => {
@@ -75,12 +87,8 @@ const JobDetailsPage = () => {
             {auth?.userType === "employee" && (
               <div className="flex justify-end">
                 <button
-                  // className="bg-blue-500 w-20 text-white px-2 py-2 text-lg rounded-md hover:bg-blue-600"
                   className="bg-slate-800 w-20 text-white px-2 py-2 text-lg rounded-md transition-all ease-in-out duration-200 hover:bg-yellow-400"
-                  onClick={async (e) => {
-                    e.preventDefault();
-                    await jobs?.bookmarkJob(aboutJob._id);
-                  }}
+                  onClick={(e) => handleSaveJob(e, aboutJob._id)}
                 >
                   Save
                 </button>
@@ -167,7 +175,7 @@ const JobDetailsPage = () => {
         <div className="flex items-center flex-col text-3xl my-4 bg-gray-500 px-4 py-2 rounded-xl w-full">
           {auth?.userType === "employee" && (
             <button
-              className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-gray-700 text-yellow-300 px-4 py-2 rounded-xl w-96 justify-center"
+              className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-yellow-400 text-slate-800 px-4 py-2 rounded-xl w-96 justify-center"
               onClick={(e) => handleJobApply(e)}
             >
               Apply

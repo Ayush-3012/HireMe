@@ -20,6 +20,7 @@ export const registerEmployee = async (req, res) => {
     if (existingEmployee) {
       return res.status(400).json({ message: "Email already in use" });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newEmployee = new Employee({
       fullName,

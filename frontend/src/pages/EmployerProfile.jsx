@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
+import { enqueueSnackbar } from "notistack";
 
 const EmployerProfile = ({ employerProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,6 +33,8 @@ const EmployerProfile = ({ employerProfile }) => {
           location,
         };
         await profile?.saveProfile(user);
+        enqueueSnackbar("Employer Profile Saved", { variant: "success" });
+        await profile?.fetchProfile("employer");
         setIsEditing(false);
       }
     } catch (error) {

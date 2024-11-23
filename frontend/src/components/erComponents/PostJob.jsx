@@ -38,7 +38,6 @@ const PostJob = () => {
       location,
       salaryRange,
       employmentType,
-
       applicationDeadline,
       requiredSkills,
       experienceLevel,

@@ -38,20 +38,20 @@ const ChatConversation = ({ activeConversation }) => {
   return (
     <>
       {!activeConversation ? (
-        <div className="flex flex-1 flex-col rounded-xl justify-center items-center text-3xl px-4 py-2 gap-2 font-serif bg-slate-200">
+        <div className="flex flex-1 flex-col rounded-xl justify-center items-center text-3xl px-4 py-2 gap-2 font-serif text-yellow-400 bg-gray-600">
           No Active Conversation
         </div>
       ) : (
-        <div className="flex flex-1 flex-col rounded-xl px-4 py-2 gap-2 font-serif bg-slate-200">
-          <div className="border-b-2 border-slate-500 flex flex-col px-2 ">
+        <div className="flex flex-1 flex-col rounded-xl px-4 py-2 gap-2 font-serif bg-gray-600">
+          <div className="border-b-2 border-slate-500 text-yellow-400 flex flex-col px-2 ">
             <h2 className="text-2xl">
               {currentUser === "employer"
                 ? activeConversation?.employeeName
                 : activeConversation?.employerName}
             </h2>
-            <h3 className="text-xl">{activeConversation?.jobTitle}</h3>
+            <h3 className="text-xl mx-4">{activeConversation?.jobTitle}</h3>
           </div>
-          <div className="bg-slate-300 px-4 py-2 rounded-md h-[450px] overflow-y-auto ">
+          <div className="bg-slate-900 px-4 py-2 rounded-md h-[450px] overflow-y-auto ">
             {messages?.length > 0 ? (
               messages?.map((item, index) => (
                 <div
@@ -63,12 +63,12 @@ const ChatConversation = ({ activeConversation }) => {
                   <div
                     className={`max-w-[75%] px-4 py-2 flex flex-col rounded-lg ${
                       item.senderId === senderId
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-500 text-white"
+                        ? "bg-slate-600 text-yellow-400"
+                        : "bg-slate-700 text-yellow-400"
                     }`}
                   >
                     <p className="self-start text-lg">{item.message}</p>
-                    <span className="text-xs text-white self-end">
+                    <span className="text-xs text-slate-200 self-end">
                       {formatTimestamp(item.timestamp)}
                     </span>
                   </div>

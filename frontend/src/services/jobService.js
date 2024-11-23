@@ -133,7 +133,7 @@ export const saveCurrentJob = async (jobId) => {
     const data = res.data;
     return data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
