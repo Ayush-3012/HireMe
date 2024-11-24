@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect} from "react";
+import { useEffect } from "react";
 import EEHome from "../components/eeComponents/EEHome";
 import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
@@ -34,9 +34,9 @@ const HomePage = () => {
   return (
     <>
       {auth?.user && auth?.userType && (
-        <div className="space-y-2 font-serif">
+        <div className="font-serif bg-gray-800">
           <Welcome />
-          <div className="bg-gray-800  mx-2  px-4 py-2 rounded-md">
+          <div className="px-1">
             {currentUser === "employee" && <EEHome />}
             {currentUser === "employer" && <ERHome />}
           </div>

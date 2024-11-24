@@ -67,7 +67,7 @@ const PostJob = () => {
   };
 
   return (
-    <div className="w-3/4 mx-auto mt-8 p-4 border border-gray-300 rounded-md shadow-md">
+    <div className="w-3/4 text-yellow-400 mx-auto mt-8 p-4 border border-gray-300 rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">Post a New Job</h2>
 
       {error && <p className="text-red-500">{error}</p>}

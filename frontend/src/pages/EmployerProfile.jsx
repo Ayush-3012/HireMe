@@ -48,7 +48,7 @@ const EmployerProfile = ({ employerProfile }) => {
         <form
           method="post"
           onSubmit={handleSaveProfile}
-          className="p-6 bg-gray-800 rounded-xl shadow-lg text-yellow-400 space-y-6"
+          className="p-6 shadow-[1px_1px_10px] shadow-slate-400 rounded-xl text-yellow-400 space-y-6"
         >
           <div className="text-center text-3xl font-bold mb-4">
             <input
@@ -108,7 +108,7 @@ const EmployerProfile = ({ employerProfile }) => {
           <div className="text-center flex gap-4 items-center justify-center">
             <button
               type="submit"
-              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+              className="px-6 py-2 bg-slate-700 text-yellow-300 hover:shadow-[1px_1px_5px] hover:shadow-yellow-400 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
             >
               Save Profile
             </button>
@@ -122,11 +122,11 @@ const EmployerProfile = ({ employerProfile }) => {
           </div>
         </form>
       ) : (
-        <div className="p-6 bg-gray-800 rounded-xl shadow-lg text-yellow-400">
-          <div className="text-center text-3xl font-bold mb-4">
+        <div className="p-6 rounded-xl shadow-[1px_1px_10px] shadow-slate-400 text-yellow-400">
+          <div className="text-center text-3xl font-bold mb-4 max-sm:text-2xl">
             {employerProfile.companyName}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-sm:gap-2">
             <p>
               <strong>Contact Number:</strong> {employerProfile.contactNumber}
             </p>
@@ -140,7 +140,7 @@ const EmployerProfile = ({ employerProfile }) => {
               <strong>Industry:</strong> {employerProfile.industry}
             </p>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 max-sm:mt-2">
             <p>
               <strong>Website:</strong>{" "}
               <a
@@ -155,7 +155,7 @@ const EmployerProfile = ({ employerProfile }) => {
           </div>
           <div className="text-center mt-6">
             <button
-              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:scale-x-110 transition-all duration-150 ease-in-out"
+              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:shadow-[1px_1px_5px] hover:shadow-yellow-400 hover:scale-x-110 transition-all duration-150 ease-in-out"
               onClick={() => setIsEditing(true)}
             >
               Edit Profile

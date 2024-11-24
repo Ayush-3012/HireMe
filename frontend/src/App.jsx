@@ -24,17 +24,17 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
+        <Route path="/postJob" element={<PostJob />} />
+        <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/employee" element={<EmployeeRegisterForm />} />
         <Route path="/register/company" element={<EmployerRegisterForm />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/userProfile" element={<UserProfile />} />
-        <Route path="/postJob" element={<PostJob />} />
         <Route path="/chat/chatId" element={<Chat />} />
         <Route path="/searchResult" element={<FoundJobs />} />
         <Route path="/showAllJobs" element={<AllJobs />} />
         <Route path="/myAppliedJobs" element={<AppliedJobs />} />
-        <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
         <Route
           path="/profile/applicantProfile"
           element={<ApplicantDetails />}

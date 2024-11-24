@@ -6,14 +6,14 @@ const JobItems = ({ job }) => {
   const { auth } = useAllContext();
 
   return (
-    <div className="bg-gray-700 flex justify-between text-yellow-400 font-serif rounded-md hover:-translate-y-1 transition ease-in-out duration-200">
+    <div className="shadow-[2px_1px_10px] shadow-black flex justify-between text-yellow-400 rounded-md hover:-translate-y-2 hover:shadow-yellow-400 transition ease-in-out duration-150">
       <Link to={`/about/job/${job._id}`} className="w-full">
-        <div className="text-xl mx-4 py-2 flex flex-col gap-2">
+        <div className="text-xl ml-4 py-2 flex flex-col ">
           <div className="flex gap-4">
             <p>{job.title}!</p>
             <p>@ {job.companyName}</p>
           </div>
-          <div className="flex gap-12">
+          <div className="flex justify-evenly">
             <p>Location: {job.location}</p>
             <p>Salary Range: {job.salaryRange}</p>
             <p>Employment Type: {job.employmentType}</p>
