@@ -11,10 +11,9 @@ export const registerUser = async (user, userType) => {
       { user },
       { withCredentials: true }
     );
-    const data = res.data;
-    return data;
+    return res;
   } catch (error) {
-    throw new Error("Unable to Register" + error.message);
+    return error;
   }
 };
 
@@ -25,10 +24,9 @@ export const loginUser = async (user, userType) => {
       { user },
       { withCredentials: true }
     );
-    const data = await res.data;
-    return data;
+    return res;
   } catch (error) {
-    throw new Error("Unable to Login" + error.message);
+    return error;
   }
 };
 
@@ -46,18 +44,20 @@ export const checkAuthStatus = async (userType) => {
     if (error) {
       throw new Error("Unable to Authenticate" + error.message);
     }
+    return error;
   }
 };
 
 export const logoutUser = async (userType) => {
   try {
-    await axios.get(
+    const res = await axios.get(
       `${import.meta.env.VITE_API_ROUTES}/${getUserRoute(userType)}/logout`,
       {
         withCredentials: true,
       }
     );
+    return res;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };

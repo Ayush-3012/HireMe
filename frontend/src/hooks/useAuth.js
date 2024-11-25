@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   checkAuthStatus,
   loginUser,
@@ -10,7 +9,6 @@ import {
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUserType = localStorage.getItem("userType");
@@ -29,31 +27,33 @@ export const useAuth = () => {
 
   const registerAuth = async (user) => {
     const data = await registerUser(user, userType);
-    if (data) {
+    if (data.status === 201) {
       setUserType(userType);
       localStorage.setItem("userType", userType);
-      return data;
     }
+    return data;
   };
 
   const loginAuth = async (user) => {
     const data = await loginUser(user, userType);
-    if (data) {
+    if (data.status === 200) {
       setUser(data);
       setUserType(userType);
       localStorage.setItem("userType", userType);
-      localStorage.setItem("userId", data.userId);
-      navigate("/home");
+      localStorage.setItem("userId", data?.data?.userId);
     }
+    return data;
   };
 
   const logoutAuth = async () => {
-    await logoutUser(userType);
-    setUser(null);
-    setUserType(null);
-    localStorage.removeItem("userType");
-    localStorage.removeItem("userId");
-    navigate("/");
+    const data = await logoutUser(userType);
+    if (data.status === 200) {
+      setUser(null);
+      setUserType(null);
+      localStorage.removeItem("userType");
+      localStorage.removeItem("userId");
+    }
+    return data;
   };
 
   return {

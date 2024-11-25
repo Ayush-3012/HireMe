@@ -115,7 +115,9 @@ export const logoutEmployer = async (req, res) => {
       path: "/",
     });
 
-    return res.json({ message: "Employer Logged out successfully" });
+    return res
+      .status(200)
+      .json({ message: "Employer Logged out successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

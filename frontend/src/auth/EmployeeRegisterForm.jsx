@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ImProfile } from "react-icons/im";
 import ExperienceInput from "./inputs/ExperienceInput";
 import SkillsInput from "./inputs/SkillsInput";
 import EducationInput from "./inputs/EducationInput";
@@ -6,6 +7,9 @@ import { useAllContext } from "../context/AuthContext";
 import BasicInput from "./inputs/BasicInput";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
+import { FaBook } from "react-icons/fa6";
+import { RiUserStarFill } from "react-icons/ri";
+import { MdSelfImprovement } from "react-icons/md";
 
 const EmployeeRegisterForm = () => {
   const { auth } = useAllContext();
@@ -18,8 +22,8 @@ const EmployeeRegisterForm = () => {
   const [location, setLocation] = useState("");
   const [resumeUrl, setResumeUrl] = useState("");
   const [skills, setSkills] = useState([]);
-  const [experience, setExperience] = useState([{}]);
-  const [education, setEducation] = useState([{}]);
+  const [experience, setExperience] = useState([]);
+  const [education, setEducation] = useState([]);
 
   const [showSkillsPage, setShowSkillsPage] = useState(false);
   const [showExperiencePage, setShowExperiencePage] = useState(false);
@@ -31,45 +35,69 @@ const EmployeeRegisterForm = () => {
   const showCurrentComponent = (e) => {
     e.preventDefault();
     switch (e.target.innerText) {
-      case "My Profile": {
+      case "My Profile":
         setShowBasicInfo(true);
         setShowSkillsPage(false);
         setShowExperiencePage(false);
         setShowEducationPage(false);
         break;
-      }
-      case "Skills": {
+      case "Skills":
         setShowBasicInfo(false);
         setShowSkillsPage(true);
         setShowExperiencePage(false);
         setShowEducationPage(false);
         break;
-      }
-      case "Education": {
+      case "Education":
         setShowBasicInfo(false);
         setShowSkillsPage(false);
         setShowExperiencePage(false);
         setShowEducationPage(true);
         break;
-      }
-      case "Experience": {
+      case "Experience":
         setShowBasicInfo(false);
         setShowSkillsPage(false);
         setShowExperiencePage(true);
         setShowEducationPage(false);
         break;
-      }
     }
   };
 
   useEffect(() => {
     auth?.userType === "employer" && navigate("/register/company");
-    auth?.userType === "employee" &&
-      enqueueSnackbar("Registering as Employee", { variant: "info" });
   }, [auth?.userType, navigate]);
+
+  const validateForm = () => {
+    if (!fullName.trim()) return "Full name is required.";
+    if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email))
+      return "A valid email is required.";
+    if (!password.trim() || password.length < 6)
+      return "Password must be at least 6 characters.";
+    if (password !== confirmPassword) return "Passwords do not match.";
+    if (!contact.trim() || !/^\d{10}$/.test(contact))
+      return "A valid 10-digit contact number is required.";
+    if (!location.trim()) return "Location is required.";
+    if (!resumeUrl.trim() || !/^https?:\/\/.+/.test(resumeUrl))
+      return "A valid resume URL is required.";
+
+    if (skills.length === 0) return "At least one skill is required.";
+    if (education.length === 0)
+      return "At least one education entry is required.";
+    if (
+      experience.length > 0 &&
+      !experience.every((exp) => exp.title && exp.company)
+    )
+      return "All experience entries must have a title and company.";
+
+    return null;
+  };
 
   const handleEERegister = async (e) => {
     e.preventDefault();
+    const errorMessage = validateForm();
+    if (errorMessage) {
+      enqueueSnackbar(errorMessage, { variant: "error" });
+      return;
+    }
 
     try {
       const user = {
@@ -84,15 +112,19 @@ const EmployeeRegisterForm = () => {
         experience,
       };
 
-      const data = await auth?.registerAuth(user);
-      if (data) {
-        enqueueSnackbar("Employee registerd successfully, please login", {
-          variant: "success",
-        });
-        navigate("/");
-      }
+      const res = await auth?.registerAuth(user);
+
+      res?.status === 201
+        ? (enqueueSnackbar(res?.data?.message + "Please Login", {
+            variant: "success",
+          }),
+          navigate("/"))
+        : enqueueSnackbar(res.response.data.message, { variant: "error" });
     } catch (error) {
-      console.log(error);
+      enqueueSnackbar("Registration failed. Please try again.", {
+        variant: "error",
+      });
+      console.error(error);
     }
   };
 
@@ -101,51 +133,47 @@ const EmployeeRegisterForm = () => {
       <form
         method="post"
         onSubmit={(e) => handleEERegister(e)}
-        className="w-full max-w-3xl shadow-[2px_2px_10px] shadow-yellow-400 rounded-lg p-8"
+        className="w-full max-w-3xl shadow-[2px_2px_10px] shadow-yellow-400 rounded-lg p-8 max-md:p-6 max-sm:p-4"
       >
-        <h2 className="text-3xl text-yellow-400 font-bold text-center mb-6">
+        <h2 className="text-3xl text-yellow-400 font-bold text-center mb-6 max-md:text-2xl max-sm:text-xl">
           Register Yourself
         </h2>
-        <div className="flex text-yellow-300 py-2 justify-evenly text-xl my-2 rounded-md font-serif">
+        <div className="flex gap-1 text-yellow-300 justify-evenly text-xl my-3 rounded-md font-serif max-md:text-lg max-sm:text-sm ">
           <button
-            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+            className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showBasicInfo ? "bg-yellow-900" : "bg-slate-700"
             }`}
-            onClick={(e) => {
-              showCurrentComponent(e);
-            }}
+            onClick={(e) => showCurrentComponent(e)}
           >
-            My Profile
+            <ImProfile className="max-md:text-xl" />
+            <span className="max-sm:hidden">My Profile</span>
           </button>
           <button
-            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+            className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showSkillsPage ? "bg-yellow-900" : "bg-slate-700"
             }`}
-            onClick={(e) => {
-              showCurrentComponent(e);
-            }}
+            onClick={(e) => showCurrentComponent(e)}
           >
-            Skills
+            <MdSelfImprovement className="max-md:text-xl" />
+            <span className="max-sm:hidden">Skills</span>
           </button>
           <button
-            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+            className={`flex justify-center items-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showEducationPage ? "bg-yellow-900" : "bg-slate-700"
             }`}
-            onClick={(e) => {
-              showCurrentComponent(e);
-            }}
+            onClick={(e) => showCurrentComponent(e)}
           >
-            Education
+            <FaBook className="max-md:text-xl" />
+            <span className="max-sm:hidden">Education</span>
           </button>
           <button
-            className={`hover:bg-yellow-900 py-1 px-2 rounded-md ${
+            className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showExperiencePage ? "bg-yellow-900" : "bg-slate-700"
             }`}
-            onClick={(e) => {
-              showCurrentComponent(e);
-            }}
+            onClick={(e) => showCurrentComponent(e)}
           >
-            Experience
+            <RiUserStarFill className="max-md:text-xl" />
+            <span className="max-sm:hidden">Experience</span>
           </button>
         </div>
         <div className="flex flex-col gap-4">
@@ -167,27 +195,23 @@ const EmployeeRegisterForm = () => {
               setResumeUrl={setResumeUrl}
             />
           )}
-
           {showSkillsPage && (
             <SkillsInput skills={skills} setSkills={setSkills} />
           )}
-
           {showEducationPage && (
             <EducationInput education={education} setEducation={setEducation} />
           )}
-
           {showExperiencePage && (
             <ExperienceInput
               experience={experience}
               setExperience={setExperience}
             />
           )}
-
           <button
             type="submit"
-            className="bg-slate-500 mt-4 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400  transition-all ease-in-out hover:scale-x-105 duration-200"
+            className="bg-slate-500 mt-4 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400 transition-all ease-in-out hover:scale-105 max-md:text-xl max-sm:text-lg"
           >
-            Register Me
+            Register
           </button>
         </div>
       </form>

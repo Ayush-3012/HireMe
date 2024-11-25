@@ -4,7 +4,7 @@ import EEHome from "../components/eeComponents/EEHome";
 import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
 import { useAllContext } from "../context/AuthContext";
-import { enqueueSnackbar } from "notistack";
+// import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
@@ -15,9 +15,6 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!auth?.user) {
-      enqueueSnackbar("Please Login/Register yourself.", {
-        variant: "info",
-      });
       navigate("/");
     }
     const fetchData = async () => {

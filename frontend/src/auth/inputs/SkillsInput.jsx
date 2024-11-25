@@ -49,7 +49,7 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
         {skills?.map((skill, index) => (
           <div
             key={index}
-            className="flex items-center bg-gray-500 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg"
+            className="flex items-center bg-gray-500 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg max-md:px-2"
           >
             {skill}
             <button
@@ -57,7 +57,7 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
               onClick={() => removeSkill(skill)}
               className="ml-2 text-yellow-400 hover:text-red-500"
             >
-              <MdClose className="text-2xl" />
+              <MdClose className="text-2xl max-md:text-xl" />
             </button>
           </div>
         ))}
