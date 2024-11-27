@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useAllContext } from "../../context/AuthContext";
-import JobItems from "../JobItems";
 import { enqueueSnackbar } from "notistack";
+import JobCard from "../JobCard";
 
 const AppliedJobs = () => {
   const { jobs } = useAllContext();
@@ -21,23 +21,21 @@ const AppliedJobs = () => {
 
   return (
     <>
-      <div className="">
-        <div className="">
-          <h2 className="text-xl font-semibold">All Your Applied Jobs</h2>
-          {jobs?.appliedJobs?.length === 0 ? (
-            <p className="text-gray-600">
-              You have not applied to any Job, Apply Now.
-            </p>
-          ) : (
-            <div className="flex flex-col gap-2 mx-2">
-              {jobs?.appliedJobs?.map((job) => (
-                <div className="flex flex-col gap-2" key={job._id}>
-                  <JobItems job={job} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="font-serif">
+        <h2 className="text-4xl font-semibold my-4 text-yellow-400">
+          All Your Applied Jobs
+        </h2>
+        {jobs?.appliedJobs?.length === 0 ? (
+          <p className="text-gray-600">
+            You have not applied to any Job, Apply Now.
+          </p>
+        ) : (
+          <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">
+            {jobs?.appliedJobs?.map((job) => (
+              <JobCard key={job._id} foundJobs={job} />
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

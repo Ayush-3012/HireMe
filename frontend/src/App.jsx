@@ -42,7 +42,7 @@ const App = () => {
         <Route path="/edit/job/:jobId" element={<UpdateJob />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </AuthContextProvider>
   );
 };
