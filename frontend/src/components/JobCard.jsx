@@ -1,18 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdDeleteForever } from "react-icons/md";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { FaBusinessTime, FaUserGroup } from "react-icons/fa6";
 import { useAllContext } from "../context/AuthContext";
 import { FaLocationDot } from "react-icons/fa6";
 import { GrStatusUnknown } from "react-icons/gr";
 import { Link } from "react-router-dom";
+import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
 
 /* eslint-disable react/prop-types */
-const JobCard = ({ jobId, fromSavedJobs, refreshSavedJobs, foundJobs }) => {
+const JobCard = ({
+  jobId,
+  fromSavedJobs,
+  refreshSavedJobs,
+  foundJobs,
+  refreshDeletedJob,
+}) => {
   const currentUser = localStorage.getItem("userType");
-  const { jobs } = useAllContext();
+  const { jobs, auth } = useAllContext();
   const [jobDetails, setJobDetails] = useState({});
+  const [showModal, setShowModal] = useState(false);
   // const appliedJobs = jobs?.appliedJobs;
 
   useEffect(() => {
@@ -29,7 +37,7 @@ const JobCard = ({ jobId, fromSavedJobs, refreshSavedJobs, foundJobs }) => {
 
   return (
     <>
-      <div className="relative flex flex-col min-w-96 rounded-md py-2 shadow-[2px_2px_10px] shadow-slate-500 hover:-translate-y-2 hover:shadow-yellow-400 transition-all duration-150 ease-in-out max-sm:min-w-full max-sm:pr-4">
+      <div className="relative flex flex-col min-w-96 rounded-md pt-2 shadow-[2px_2px_10px] shadow-slate-500 hover:-translate-y-2 hover:shadow-yellow-400 transition-all duration-150 ease-in-out max-sm:min-w-full max-sm:pr-4">
         <Link to={`/about/job/${jobId}`}>
           <div className="flex flex-col gap-2 text-yellow-400 max-md:gap-1">
             <div className="flex gap-4 pl-2">
@@ -76,7 +84,37 @@ const JobCard = ({ jobId, fromSavedJobs, refreshSavedJobs, foundJobs }) => {
             </span>
           )}
         </Link>
+        {auth.userType === "employer" && (
+          <div className="flex items-center mt-4 rounded-b-md py-2 bg-slate-900 justify-center gap-2">
+            <Link
+              to={`/edit/job/${jobId}`}
+              className="bg-slate-500 text-yellow-400 text-xl transition-all ease-in-out duration-150 w-20 text-center px-2 py-1 rounded hover:scale-105"
+            >
+              Edit
+            </Link>
+            <button
+              className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
+              onClick={() => {
+                setShowModal(true);
+                refreshDeletedJob();
+              }}
+            >
+              <MdDeleteForever className="sm:hidden text-3xl text-red-500 transition-all ease-in-out duration-200 hover:scale-105" />
+              <span className="max-sm:hidden">Delete</span>
+            </button>
+          </div>
+        )}
       </div>
+      {showModal && (
+        <ConfirmationModal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          onConfirm={async () => {
+            setShowModal(false);
+            await jobs?.deleteExisingJob(jobId);
+          }}
+        />
+      )}
     </>
   );
 };

@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import PostJob from "./components/erComponents/PostJob";
 import NotFound from "./partials/NotFound";
 import JobDetailsPage from "./pages/JobDetailsPage";
-import UpdateJob from "./components/erComponents/UpdateJob";
 import FoundJobs from "./components/eeComponents/FoundJobs";
 import AllJobs from "./pages/AllJobs";
 import AppliedJobs from "./components/eeComponents/AppliedJobs";
@@ -26,7 +25,7 @@ const App = () => {
         <Route path="/" element={<Index />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
-        <Route path="/postJob" element={<PostJob />} />
+        <Route path="/postJob" element={<PostJob fromPostJob={true} />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/employee" element={<EmployeeRegisterForm />} />
@@ -39,7 +38,7 @@ const App = () => {
           path="/profile/applicantProfile"
           element={<ApplicantDetails />}
         />
-        <Route path="/edit/job/:jobId" element={<UpdateJob />} />
+        <Route path="/edit/job/:jobId" element={<PostJob />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

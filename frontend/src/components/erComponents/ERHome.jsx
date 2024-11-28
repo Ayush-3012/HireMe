@@ -1,23 +1,32 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
 import ERDashboard from "./ERDashboard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
 
 const ERHome = () => {
-  const { jobs } = useAllContext();
+  const { jobs, profile } = useAllContext();
   const userId = localStorage.getItem("userId");
+  const currentUser = localStorage.getItem("userType");
+
+  const [refresh, setRefresh] = useState(false);
+
+  const refreshDeletedJob = async () => {
+    await profile?.fetchProfile(currentUser);
+    setRefresh((prev) => !prev);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (jobs) await jobs?.fetchEmployerJobs(userId);
+        await profile?.fetchProfile(currentUser);
+        await jobs?.fetchEmployerJobs(userId);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [currentUser, jobs, profile, userId]);
 
   return (
     <>
@@ -34,7 +43,10 @@ const ERHome = () => {
       </div>
 
       <>
-        <ERDashboard employerJobs={jobs?.employerJobs} />
+        <ERDashboard
+          employerJobs={jobs?.employerJobs}
+          refreshDeletedJob={refreshDeletedJob}
+        />
       </>
     </>
   );

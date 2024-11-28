@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { Link, useParams } from "react-router-dom";
-import { FaHome } from "react-icons/fa";
+import { FaEdit, FaHome } from "react-icons/fa";
 import { FaBookmark, FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
@@ -66,7 +66,7 @@ const JobDetailsPage = () => {
     <>
       <div className="p-2 rounded-xl font-serif flex flex-col items-center justify-center gap-2">
         <div className="shadow-[1px_1px_10px] shadow-slate-400 rounded-xl p-4 w-full max-md:p-2">
-          <div className="relative px-2 flex max-md:flex-col">
+          <div className="relative px-2 flex">
             <div className="">
               <h2 className="text-2xl max-md:text-xl max-sm:text-lg text-yellow-400 font-black">
                 {aboutJob.title}
@@ -78,13 +78,26 @@ const JobDetailsPage = () => {
 
             <div className="absolute top-2 right-2 flex flex-col space-y-2 max-md:top-0 max-md:right-1 max-sm:right-0">
               {auth.userType === "employer" && (
-                <button
-                  className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
-                  onClick={() => setShowModal(true)}
-                >
-                  <MdDeleteForever className="sm:hidden text-3xl text-red-500 transition-all ease-in-out duration-200 hover:scale-105" />
-                  <span className="max-sm:hidden">Delete</span>
-                </button>
+                <div className="flex gap-2 max-sm:flex-col items-center justify-center">
+                  <div className="flex items-center justify-center">
+                    <button
+                      className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
+                      onClick={() => setShowModal(true)}
+                    >
+                      <MdDeleteForever className="sm:hidden text-3xl text-red-500 transition-all ease-in-out duration-200 hover:scale-105" />
+                      <span className="max-sm:hidden">Delete</span>
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-center ">
+                    <Link
+                      to={`/edit/job/${jobId}`}
+                      className="bg-yellow-400 flex items-center justify-center text-slate-700 text-xl max-sm:bg-inherit transition-all ease-in-out duration-150 px-2 py-1 rounded hover:scale-105"
+                    >
+                      <FaEdit className="sm:hidden text-2xl text-yellow-500 transition-all ease-in-out duration-200 hover:scale-105" />
+                      <span className="max-sm:hidden">Edit</span>
+                    </Link>
+                  </div>
+                </div>
               )}
 
               {auth?.userType === "employee" && (

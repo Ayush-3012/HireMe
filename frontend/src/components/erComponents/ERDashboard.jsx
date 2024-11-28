@@ -5,7 +5,7 @@ import { GoDotFill } from "react-icons/go";
 import JobCard from "../JobCard";
 import { useAllContext } from "../../context/AuthContext";
 
-const ERDashboard = ({ employerJobs }) => {
+const ERDashboard = ({ employerJobs, refreshDeletedJob }) => {
   const [openJobs, setOpenJobs] = useState(0);
   const [closedJobs, setClosedJobs] = useState(0);
 
@@ -93,7 +93,11 @@ const ERDashboard = ({ employerJobs }) => {
         ) : (
           <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">
             {profile?.userProfile?.jobsPosted?.map((jobId) => (
-              <JobCard key={jobId} jobId={jobId} />
+              <JobCard
+                key={jobId}
+                jobId={jobId}
+                refreshDeletedJob={refreshDeletedJob}
+              />
             ))}
           </div>
         )}

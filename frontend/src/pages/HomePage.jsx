@@ -9,23 +9,21 @@ import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const currentUser = localStorage.getItem("userType");
-  const userId = localStorage.getItem("userId");
-  const { profile, jobs, auth } = useAllContext();
+  const { auth } = useAllContext();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!auth?.user) {
       navigate("/");
     }
-    const fetchData = async () => {
-      try {
-        if (profile) await profile.fetchProfile(currentUser);
-        if (jobs) await jobs.fetchEmployerJobs(userId);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    auth.user && fetchData();
+    // const fetchData = async () => {
+    //   try {
+    //     if (profile) await profile.fetchProfile(currentUser);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // auth.user && fetchData();
   }, [auth.user, auth.userType]);
 
   return (
