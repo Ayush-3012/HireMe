@@ -23,6 +23,8 @@ const JobCard = ({
   const [showModal, setShowModal] = useState(false);
   // const appliedJobs = jobs?.appliedJobs;
 
+  console.log(jobId);
+
   useEffect(() => {
     const fetchData = async () => {
       if (!foundJobs) {
@@ -38,7 +40,7 @@ const JobCard = ({
   return (
     <>
       <div className="relative flex flex-col min-w-96 rounded-md pt-2 shadow-[2px_2px_10px] shadow-slate-500 hover:-translate-y-2 hover:shadow-yellow-400 transition-all duration-150 ease-in-out max-sm:min-w-full max-sm:pr-4">
-        <Link to={`/about/job/${jobId}`}>
+        <Link to={`/about/job/${foundJobs ? foundJobs._id : jobId}`}>
           <div className="flex flex-col gap-2 text-yellow-400 max-md:gap-1">
             <div className="flex gap-4 pl-2">
               <p className="text-2xl font-bold max-md:text-xl">

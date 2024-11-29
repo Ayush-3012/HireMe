@@ -77,6 +77,7 @@ export const createJob = async (jobData) => {
     );
     return res;
   } catch (error) {
+    console.log(error);
     return error;
   }
 };
@@ -88,7 +89,7 @@ export const applyForJob = async (jobId) => {
       null,
       { withCredentials: true }
     );
-    return await res.data;
+    return res;
   } catch (error) {
     return error;
   }
@@ -103,6 +104,7 @@ export const updateJob = async (jobId, updateData) => {
     );
     return res;
   } catch (error) {
+    console.log(error);
     return error;
   }
 };

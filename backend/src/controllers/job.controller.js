@@ -180,16 +180,12 @@ export const updateJob = async (req, res) => {
         .status(403)
         .json({ message: "Unauthorized to update this job" });
 
-    const updatedJob = await Job.findByIdAndUpdate(
-      req.params.jobId,
-      req.body.updateData,
-      {
-        new: true,
-      }
-    );
+    await Job.findByIdAndUpdate(req.params.jobId, req.body.updateData, {
+      new: true,
+    });
     return res.status(200).json({ message: "Job updated successfully" });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ error });
   }
 };
 
@@ -280,3 +276,20 @@ export const deleteJob = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+const updateJobStatuses = async () => {
+  try {
+    const currentDate = new Date();
+    await Job.updateMany(
+      { applicationDeadline: { $lt: currentDate }, status: "Open" },
+      { $set: { status: "Closed" } }
+    );
+  } catch (error) {
+    console.error("Error updating job statuses:", error.message);
+  }
+};
+
+setInterval(async () => {
+  console.log("Running job status updater...");
+  await updateJobStatuses();
+}, 86400000);

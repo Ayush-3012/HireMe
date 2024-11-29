@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
 import SkillsInput from "../../auth/inputs/SkillsInput";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
 const PostJob = ({ fromPostJob }) => {
   const { jobs } = useAllContext();
   const { jobId } = useParams();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -33,7 +34,9 @@ const PostJob = ({ fromPostJob }) => {
           setSalaryRange(data.salaryRange);
           setEmploymentType(data.employmentType);
           setCompanyName(data.companyName);
-          setApplicationDeadline(data.applicationDeadline);
+          setApplicationDeadline(
+            new Date(data.applicationDeadline).toISOString().split("T")[0] // Format fetched date for input
+          );
           setRequiredSkills(data.requiredSkills);
           setExperienceLevel(data.experienceLevel);
           setRemote(data.remote);
@@ -61,41 +64,29 @@ const PostJob = ({ fromPostJob }) => {
       return;
     }
 
+    const formattedDeadline = new Date(applicationDeadline).toISOString();
     const jobData = {
       title,
       description,
       location,
       salaryRange,
       employmentType,
-      applicationDeadline,
+      applicationDeadline: formattedDeadline,
       requiredSkills,
       experienceLevel,
       remote,
       status: "Open",
-      postedDate: new Date(),
     };
 
     try {
       const data = fromPostJob
-        ? await jobs.createNewJob(jobData)
+        ? await jobs?.createNewJob(jobData)
         : await jobs?.updateExistingJob(jobId, jobData);
 
       enqueueSnackbar(data.data.message, { variant: "success" });
-
-      {
-        fromPostJob && setTitle("");
-        fromPostJob && setDescription("");
-        fromPostJob && setLocation("");
-        fromPostJob && setSalaryRange("");
-        fromPostJob && setEmploymentType("Full-Time");
-        fromPostJob && setApplicationDeadline("");
-        fromPostJob && setRequiredSkills([]);
-        fromPostJob && setExperienceLevel("Senior");
-        fromPostJob && setRemote(false);
-        fromPostJob && setError(null);
-      }
+      navigate("/home");
     } catch (error) {
-      setError("Failed to post the job. Please try again.", error);
+      setError("Failed to post the job. Please try again.");
       console.log(error);
     }
   };
@@ -185,6 +176,7 @@ const PostJob = ({ fromPostJob }) => {
           </label>
           <input
             type="date"
+            min={new Date().toISOString().split("T")[0]}
             className="w-full p-2 bg-slate-500 outline-none rounded-md"
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}

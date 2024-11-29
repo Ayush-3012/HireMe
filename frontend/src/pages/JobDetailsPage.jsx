@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaEdit, FaHome } from "react-icons/fa";
 import { FaBookmark, FaLocationDot } from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
@@ -16,7 +16,7 @@ const JobDetailsPage = () => {
   const [aboutJob, setAboutJob] = useState([]);
   const [applicants, setApplicants] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  // const [isApplied, setIsApplied] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +39,7 @@ const JobDetailsPage = () => {
   const handleJobApply = async (e) => {
     e.preventDefault();
     const res = await jobs?.applyJob(jobId);
-    res.status === 403
+    res.status !== 200
       ? enqueueSnackbar(res.response.data.message, { variant: "error" })
       : enqueueSnackbar(res.message, { variant: "success" });
   };
@@ -47,7 +47,7 @@ const JobDetailsPage = () => {
   const handleSaveJob = async (e, jobId) => {
     e.preventDefault();
     const res = await jobs?.bookmarkJob(jobId);
-    res.status === 403
+    res.status !== 200
       ? enqueueSnackbar(res.response.data.message, { variant: "error" })
       : enqueueSnackbar(res.message, { variant: "success" });
   };
@@ -57,7 +57,7 @@ const JobDetailsPage = () => {
 
     const day = date.getDate();
     const month = date.toLocaleString("default", { month: "short" });
-    const year = date.getFullYear().toString().slice(-2);
+    const year = date.getFullYear().toString();
 
     return `${day} ${month} '${year}`;
   };
@@ -82,7 +82,9 @@ const JobDetailsPage = () => {
                   <div className="flex items-center justify-center">
                     <button
                       className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
-                      onClick={() => setShowModal(true)}
+                      onClick={() => {
+                        setShowModal(true);
+                      }}
                     >
                       <MdDeleteForever className="sm:hidden text-3xl text-red-500 transition-all ease-in-out duration-200 hover:scale-105" />
                       <span className="max-sm:hidden">Delete</span>
@@ -197,6 +199,10 @@ const JobDetailsPage = () => {
               onConfirm={async () => {
                 setShowModal(false);
                 await jobs?.deleteExisingJob(aboutJob._id);
+                enqueueSnackbar("Job Deleted Successfully", {
+                  variant: "success",
+                });
+                navigate("/home");
               }}
             />
           )}
@@ -204,12 +210,16 @@ const JobDetailsPage = () => {
         <div className="flex flex-col w-full items-center text-3xl shadow-[1px_1px_10px] shadow-slate-400 px-4 py-2 rounded-xl ">
           {auth?.userType === "employee" && (
             <button
-              className="flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-yellow-400 text-slate-800 px-4 py-2 rounded-xl w-96 justify-center"
+              className={`flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-yellow-400 text-slate-800 px-4 py-2 rounded-xl w-96 justify-center`}
               onClick={(e) => handleJobApply(e)}
             >
               Apply
             </button>
           )}
+          {auth?.userType === "employer" &&
+            aboutJob?.applicants?.length === 0 && (
+              <div className="text-yellow-400">No Applicantions Yet...</div>
+            )}
           {auth?.userType === "employer" &&
             aboutJob?.applicants?.length !== 0 && (
               <div className="self-start">

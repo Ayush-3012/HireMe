@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getAllJobs,
   createJob,
@@ -21,10 +21,14 @@ export const useJob = () => {
   const [specificJobs, setSpecificJobs] = useState([]);
   const [recommendedJobs, setRecommendedJobs] = useState([]);
 
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
   const fetchJobs = async () => {
     try {
       const data = await getAllJobs();
-      setJobs(data.jobs);
+      setJobs(data?.jobs);
     } catch (error) {
       console.log(error);
       return error;
@@ -73,7 +77,6 @@ export const useJob = () => {
       const data = await createJob(jobData);
       return data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   };

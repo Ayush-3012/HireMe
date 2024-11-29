@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   viewProfile,
   updateProfile,
@@ -9,9 +9,18 @@ export const useProfile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const storedUserType = localStorage.getItem("userType");
 
+  useEffect(() => {
+    if (!userProfile) fetchProfile(storedUserType); // Prevent repeated calls
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userProfile]);
+
   const fetchProfile = async (userType) => {
-    const data = await viewProfile(storedUserType || userType);
-    if (data) setUserProfile(data);
+    try {
+      const data = await viewProfile(storedUserType || userType);
+      setUserProfile(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchApplicantsProfile = async (applicants) => {

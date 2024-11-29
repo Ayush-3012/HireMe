@@ -62,7 +62,7 @@ const jobSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Open", "Closed", "Paused"],
+      enum: ["Open", "Closed"],
       default: "Open",
     },
     remote: {
@@ -75,7 +75,7 @@ const jobSchema = new mongoose.Schema(
 
 // Pre-save validation to ensure applicationDeadline is not before postedDate
 jobSchema.pre("save", function (next) {
-  if (this.applicationDeadline < this.postedDate) {
+  if (this.applicationDeadline > this.postedDate) {
     return next(
       new Error("Application deadline cannot be before the posted date.")
     );

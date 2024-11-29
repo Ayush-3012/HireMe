@@ -79,17 +79,24 @@ const ApplicantDetails = () => {
               <div key={index} className="mb-2 flex flex-col ">
                 <h2 className="font-bold">
                   Institution:{" "}
-                  <span className="font-light "> {edu.institution}</span>
+                  <span className="font-light ">
+                    {" "}
+                    {edu.institution || "NA"}
+                  </span>
                 </h2>
                 <h2 className="font-bold">
-                  Degree: <span className="font-light ">{edu.degree}</span>
+                  Degree:{" "}
+                  <span className="font-light ">{edu.degree || "NA"}</span>
                 </h2>
                 <h2 className="font-bold">
                   Year:{" "}
-                  <span className="font-light ">{edu.yearOfGraduation}</span>
+                  <span className="font-light ">
+                    {edu.yearOfGraduation || "NA"}
+                  </span>
                 </h2>
                 <h2 className="font-bold">
-                  Grade: <span className="font-light ">{edu.grade}</span>
+                  Grade:{" "}
+                  <span className="font-light ">{edu.grade || "NA"}</span>
                 </h2>
               </div>
             ))}
@@ -106,19 +113,23 @@ const ApplicantDetails = () => {
                 <div key={index} className="mb-2 flex flex-col gap-1">
                   <h2 className="font-bold">
                     Job Role:
-                    <span className="font-light "> {exp.jobTitle}</span>
+                    <span className="font-light "> {exp.jobTitle || "NA"}</span>
                   </h2>
                   <h2 className="font-bold">
                     Company:{" "}
-                    <span className="font-light ">{exp.companyName}</span>
+                    <span className="font-light ">
+                      {exp.companyName || "NA"}
+                    </span>
                   </h2>
                   <h2 className="font-bold">
-                    Duration:
-                    <span className="font-light ">{exp.duration}</span>
+                    Duration:{" "}
+                    <span className="font-light ">{exp.duration || "NA"}</span>
                   </h2>
                   <h2 className="font-bold">
                     Description:{" "}
-                    <span className="font-light ">{exp.description}</span>
+                    <span className="font-light ">
+                      {exp.description || "NA"}
+                    </span>
                   </h2>
                 </div>
               ))}
