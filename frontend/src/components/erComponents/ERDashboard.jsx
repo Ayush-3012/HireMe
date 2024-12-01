@@ -86,7 +86,7 @@ const ERDashboard = ({ employerJobs, refreshDeletedJob }) => {
         <h2 className="text-2xl font-semibold max-md:text-xl">
           Manage Your Jobs
         </h2>
-        {employerJobs.length === 0 ? (
+        {employerJobs?.length === 0 ? (
           <p className="text-yellow-400">
             No jobs posted yet. Post your first job.
           </p>

@@ -104,7 +104,7 @@ const PostJob = ({ fromPostJob }) => {
           <label className="block text-sm font-semibold mb-2">Job Title</label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 outline-none  rounded-md"
+            className="w-full p-2 bg-slate-500 outline-none focus:shadow-[1px_1px_10px]  rounded-md"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -115,7 +115,7 @@ const PostJob = ({ fromPostJob }) => {
             Description
           </label>
           <textarea
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -125,7 +125,7 @@ const PostJob = ({ fromPostJob }) => {
           <label className="block text-sm font-semibold mb-2">Location</label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
@@ -137,7 +137,7 @@ const PostJob = ({ fromPostJob }) => {
           </label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={salaryRange}
             onChange={(e) => setSalaryRange(e.target.value)}
           />
@@ -148,7 +148,7 @@ const PostJob = ({ fromPostJob }) => {
             Employment Type
           </label>
           <select
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={employmentType}
             onChange={(e) => setEmploymentType(e.target.value)}
           >
@@ -164,7 +164,7 @@ const PostJob = ({ fromPostJob }) => {
           </label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
           />
@@ -177,7 +177,7 @@ const PostJob = ({ fromPostJob }) => {
           <input
             type="date"
             min={new Date().toISOString().split("T")[0]}
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}
           />
@@ -195,7 +195,7 @@ const PostJob = ({ fromPostJob }) => {
             Experience Level
           </label>
           <select
-            className="w-full p-2 bg-slate-500 outline-none rounded-md"
+            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
             value={experienceLevel}
             onChange={(e) => setExperienceLevel(e.target.value)}
           >

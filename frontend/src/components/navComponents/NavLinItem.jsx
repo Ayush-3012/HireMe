@@ -17,7 +17,7 @@ const NavLinItem = () => {
           </p>
         </Link>
         <Link
-          to={"/chat/chatId"}
+          to={"/chats"}
           className="bg-gray-600 text-yellow-300 px-8 py-1 flex items-center justify-center rounded-md group cursor-pointer max-md:px-6 max-sm:px-4"
         >
           <p className="text-xl group-hover:text-yellow-500 group-hover:scale-110 transition duration-200 ease-in-out max-sm:text-sm">

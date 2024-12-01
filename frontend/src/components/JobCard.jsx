@@ -23,8 +23,6 @@ const JobCard = ({
   const [showModal, setShowModal] = useState(false);
   // const appliedJobs = jobs?.appliedJobs;
 
-  console.log(jobId);
-
   useEffect(() => {
     const fetchData = async () => {
       if (!foundJobs) {

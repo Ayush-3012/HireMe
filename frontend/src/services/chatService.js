@@ -44,6 +44,20 @@ export const checkConversationExists = async (employerId, employeeId) => {
   }
 };
 
+export const deleteCurrentConversation = async (conversationId) => {
+  try {
+    const res = await axios.delete(
+      `${
+        import.meta.env.VITE_API_ROUTES
+      }/conversations/deleteConversation/${conversationId}`,
+      { withCredentials: true }
+    );
+    return res;
+  } catch (error) {
+    throw new Error("Unable to Register" + error.message);
+  }
+};
+
 export const getMessage = async (conversationId) => {
   try {
     const res = await axios.get(
@@ -58,6 +72,7 @@ export const getMessage = async (conversationId) => {
     throw new Error("Unable to Register" + error.message);
   }
 };
+
 
 export const sendMessage = async (messageData) => {
   try {

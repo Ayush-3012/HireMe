@@ -5,6 +5,7 @@ import {
   getConversation,
   getMessage,
   sendMessage,
+  deleteCurrentConversation,
 } from "../services/chatService";
 
 export const useChat = () => {
@@ -32,6 +33,11 @@ export const useChat = () => {
     }
   };
 
+  const deleteConversation = async (conversationId) => {
+    const data = await deleteCurrentConversation(conversationId);
+    return data;
+  };
+
   const postMessage = async (messageData) => {
     const data = await sendMessage(messageData);
     if (data) {
@@ -45,5 +51,6 @@ export const useChat = () => {
     checkConversation,
     fetchMessage,
     postMessage,
+    deleteConversation,
   };
 };

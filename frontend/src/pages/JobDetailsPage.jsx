@@ -229,49 +229,46 @@ const JobDetailsPage = () => {
                 <div className="flex flex-wrap gap-2 max-md:justify-center">
                   {applicants?.map((applicant) => {
                     return (
-                      <div
+                      <Link
                         key={applicant._id}
+                        to={`/profile/applicantProfile`}
                         className="mx-2 shadow-[1px_1px_10px] max-sm:w-4/5 shadow-slate-300 px-4 py-2 w-fit text-xl text-yellow-300 rounded-md hover:-translate-y-2 hover:shadow-yellow-400 duration-200 transition-all ease-in-out"
+                        state={{
+                          applicant: applicant,
+                          jobTitle: aboutJob.title,
+                          employer: aboutJob.companyName,
+                          employerId: aboutJob.employer,
+                        }}
                       >
-                        <Link
-                          to={`/profile/applicantProfile`}
-                          state={{
-                            applicant: applicant,
-                            jobTitle: aboutJob.title,
-                            employer: aboutJob.companyName,
-                            employerId: aboutJob.employer,
-                          }}
-                        >
-                          <div className="flex justify-start flex-col">
-                            <h2 className="font-bold max-md:text-lg max-sm:text-sm">
-                              Name:{" "}
-                              <span className="font-light">
-                                {applicant.fullName}
-                              </span>
-                            </h2>
-                            <h2 className="font-bold max-md:text-lg max-sm:text-sm">
-                              Location:{" "}
-                              <span className="font-light">
-                                {applicant.location}
-                              </span>
-                            </h2>
-                          </div>
-                          <div className="flex gap-1 flex-col">
-                            <span className="font-bold max-md:text-lg max-sm:text-sm">
-                              Top skills:
+                        <div className="flex justify-start flex-col">
+                          <h2 className="font-bold max-md:text-lg max-sm:text-sm">
+                            Name:{" "}
+                            <span className="font-light">
+                              {applicant.fullName}
                             </span>
-                            {applicant.skills.map((skill) => {
-                              return (
-                                <div key={skill} className="">
-                                  <h2 className="px-2 text-lg max-sm:text-sm font-light bg-slate-600 text-yellow-300 rounded-xl">
-                                    {skill}
-                                  </h2>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </Link>
-                      </div>
+                          </h2>
+                          <h2 className="font-bold max-md:text-lg max-sm:text-sm">
+                            Location:{" "}
+                            <span className="font-light">
+                              {applicant.location}
+                            </span>
+                          </h2>
+                        </div>
+                        <div className="flex gap-1 flex-col">
+                          <span className="font-bold max-md:text-lg max-sm:text-sm">
+                            Top skills:
+                          </span>
+                          {applicant.skills.map((skill) => {
+                            return (
+                              <div key={skill} className="">
+                                <h2 className="px-2 text-lg max-sm:text-sm font-light bg-slate-600 text-yellow-300 rounded-xl">
+                                  {skill}
+                                </h2>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </Link>
                     );
                   })}
                 </div>

@@ -4,6 +4,7 @@ import {
   createConversation,
   getUserConversation,
   checkConversationExists,
+  deleteConversation,
 } from "../controllers/conversation.controller.js";
 
 const conversationRouter = Router();
@@ -14,6 +15,9 @@ conversationRouter
 conversationRouter
   .route("/createConversation")
   .post(verifyToken, createConversation);
+conversationRouter
+  .route("/deleteConversation/:conversationId")
+  .delete(verifyToken, deleteConversation);
 conversationRouter
   .route("/checkConversationExists")
   .get(verifyToken, checkConversationExists);
