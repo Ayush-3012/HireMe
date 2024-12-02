@@ -129,8 +129,7 @@ export const saveCurrentJob = async (jobId) => {
       { jobId },
       { withCredentials: true }
     );
-    const data = res.data;
-    return data;
+    return res;
   } catch (error) {
     return error;
   }
@@ -143,8 +142,8 @@ export const unSaveCurrentJob = async (jobId) => {
       { jobId },
       { withCredentials: true }
     );
-    const data = res.data;
-    return data;
+
+    return res;
   } catch (error) {
     console.log(error);
   }

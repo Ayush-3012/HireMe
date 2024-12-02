@@ -102,11 +102,6 @@ const ERDashboard = ({ employerJobs, refreshDeletedJob }) => {
           </div>
         )}
       </div>
-
-      <div className="">
-        <h2 className="text-2xl font-semibold">Notifications</h2>
-        <p className="ml-2 text-xl">You have no new notifications.</p>
-      </div>
     </div>
   );
 };

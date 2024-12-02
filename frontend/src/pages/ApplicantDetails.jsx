@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CreateConversation from "../components/chatComponents/CreateConversation.jsx";
 import { useAllContext } from "../context/AuthContext.jsx";
+import { enqueueSnackbar } from "notistack";
 
 const ApplicantDetails = () => {
   const location = useLocation();
@@ -148,14 +149,23 @@ const ApplicantDetails = () => {
             className={`text-3xl max-md:text-2xl max-sm:text-xl ${
               isConversationExists && "cursor-not-allowed"
             }`}
-            onClick={() => setShowConnectComponent(true)}
-            disabled={isConversationExists}
+            onClick={() => {
+              !isConversationExists
+                ? setShowConnectComponent(true)
+                : enqueueSnackbar(
+                    `You Both are connected, please check chat section`,
+                    {
+                      variant: "error",
+                    }
+                  );
+            }}
+            // disabled={isConversationExists}
           >
             Connect With {applicant.fullName}
           </button>
         </div>
       }
-      {showConnectComponent && (
+      {!isConversationExists && showConnectComponent && (
         <CreateConversation
           onClose={() => setShowConnectComponent(false)}
           employeeId={applicant._id}

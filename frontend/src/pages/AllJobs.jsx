@@ -11,7 +11,7 @@ const AllJobs = () => {
     const fetchData = async () => {
       try {
         if (jobs) await jobs?.fetchJobs();
-        enqueueSnackbar("Found jobs", { variant: "success" });
+        enqueueSnackbar("All Open jobs", { variant: "success" });
       } catch (error) {
         console.log(error);
       }
@@ -22,7 +22,7 @@ const AllJobs = () => {
   return (
     <>
       <div className="font-serif">
-        <h2 className="text-4xl font-semibold my-4 text-yellow-400">
+        <h2 className="text-4xl mx-4 font-semibold my-4 text-yellow-400">
           All Open Jobs
         </h2>
         <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">

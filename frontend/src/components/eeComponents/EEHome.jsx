@@ -66,7 +66,7 @@ const EEHome = () => {
             placeholder="Search jobs by title or location..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="py-1 px-2 w-full border text-xl bg-gray-500 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
+            className="py-1 px-2 w-full border focus:shadow-[1px_1px_5px] focus:shadow-yellow-400 text-xl bg-gray-500 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
             required
           />
           <button

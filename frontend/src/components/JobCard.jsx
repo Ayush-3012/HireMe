@@ -8,6 +8,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { GrStatusUnknown } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
+import { enqueueSnackbar } from "notistack";
 
 /* eslint-disable react/prop-types */
 const JobCard = ({
@@ -77,7 +78,9 @@ const JobCard = ({
                 className="text-red-600 text-4xl max-md:text-3xl max-sm:text-2xl"
                 onClick={async (e) => {
                   e.preventDefault();
-                  await jobs?.unSaveJob(jobId);
+                  const res = await jobs?.unSaveJob(jobId);
+                  res.status === 200 &&
+                    enqueueSnackbar(res.data.message, { variant: "success" });
                   refreshSavedJobs();
                 }}
               />

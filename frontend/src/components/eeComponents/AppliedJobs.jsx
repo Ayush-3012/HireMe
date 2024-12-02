@@ -12,7 +12,7 @@ const AppliedJobs = () => {
     const fetchData = async () => {
       if (jobs) {
         await jobs?.fetchAppliedJobs(userId);
-        enqueueSnackbar("Applied jobs", { variant: "success" });
+        enqueueSnackbar("All your Applied jobs", { variant: "success" });
       }
     };
 

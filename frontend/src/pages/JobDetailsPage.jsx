@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -16,11 +15,18 @@ const JobDetailsPage = () => {
   const [aboutJob, setAboutJob] = useState([]);
   const [applicants, setApplicants] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        profile?.userProfile?.appliedJobs?.includes(jobId) &&
+          setIsApplied(true);
+
+        profile?.userProfile?.savedJobs?.includes(jobId) && setIsSaved(true);
+
         const data = await jobs?.fetchJobDetails(jobId);
         setAboutJob(data);
         if (data?.applicants?.length) {
@@ -34,7 +40,7 @@ const JobDetailsPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [jobId, jobs, profile]);
 
   const handleJobApply = async (e) => {
     e.preventDefault();
@@ -47,9 +53,10 @@ const JobDetailsPage = () => {
   const handleSaveJob = async (e, jobId) => {
     e.preventDefault();
     const res = await jobs?.bookmarkJob(jobId);
+    
     res.status !== 200
       ? enqueueSnackbar(res.response.data.message, { variant: "error" })
-      : enqueueSnackbar(res.message, { variant: "success" });
+      : enqueueSnackbar(res.data.message, { variant: "success" });
   };
 
   const formatApplicationDeadline = (timestamp) => {
@@ -104,10 +111,20 @@ const JobDetailsPage = () => {
 
               {auth?.userType === "employee" && (
                 <button
-                  className="bg-slate-800 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:bg-yellow-400 hover:scale-105"
+                  className={`${
+                    isSaved
+                      ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
+                      : "bg-slate-800 text-white hover:text-slate-800 transition-all ease-in-out duration-200 sm:hover:bg-yellow-400 hover:scale-105"
+                  } max-sm:bg-inherit text-xl px-2  py-1 rounded-md `}
                   onClick={(e) => handleSaveJob(e, aboutJob._id)}
                 >
-                  <FaBookmark className="sm:hidden text-3xl text-slate-200 hover:text-yellow-400 bg-inherit transition-all ease-in-out duration-200 hover:scale-105" />
+                  <FaBookmark
+                    className={`${
+                      isSaved
+                        ? "text-slate-400 group cursor-not-allowed"
+                        : "text-slate-200 hover:text-yellow-400 transition-all ease-in-out duration-200 hover:scale-105"
+                    } sm:hidden text-3xl bg-inherit `}
+                  />
                   <span className="max-sm:hidden">Save</span>
                 </button>
               )}
@@ -210,10 +227,15 @@ const JobDetailsPage = () => {
         <div className="flex flex-col w-full items-center text-3xl shadow-[1px_1px_10px] shadow-slate-400 px-4 py-2 rounded-xl ">
           {auth?.userType === "employee" && (
             <button
-              className={`flex items-center text-3xl my-4 hover:scale-x-110 transition-all ease-in-out duration-300 bg-yellow-400 text-slate-800 px-4 py-2 rounded-xl w-96 justify-center`}
+              className={`${
+                isApplied
+                  ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
+                  : "bg-slate-200 hover:bg-yellow-400 hover:text-slate-800 hover:-translate-y-2 shadow-[1px_1px_10px] w-96 shadow-yellow-400 transition-all ease-in-out duration-300"
+              } flex items-center text-3xl my-4 px-4 py-2 rounded-xl justify-center`}
               onClick={(e) => handleJobApply(e)}
+              // disabled={isApplied}
             >
-              Apply
+              {isApplied ? "You have already applied for this job" : "Apply"}
             </button>
           )}
           {auth?.userType === "employer" &&

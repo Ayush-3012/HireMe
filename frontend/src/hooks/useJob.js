@@ -106,7 +106,6 @@ export const useJob = () => {
       const data = await saveCurrentJob(jobId);
       return data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   };
@@ -114,9 +113,8 @@ export const useJob = () => {
   const unSaveJob = async (jobId) => {
     try {
       const data = await unSaveCurrentJob(jobId);
-      console.log(data);
+      return data;
     } catch (error) {
-      console.log(error);
       return error;
     }
   };

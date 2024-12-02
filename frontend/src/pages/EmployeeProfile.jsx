@@ -7,6 +7,7 @@ import EducationInput from "../auth/inputs/EducationInput";
 import { enqueueSnackbar } from "notistack";
 
 const EmployeeProfile = ({ employeeProfile }) => {
+  console.log(employeeProfile)
   const [isEditing, setIsEditing] = useState(false);
   const [fullName, setFullName] = useState(employeeProfile.fullName);
   const [email, setEmail] = useState(employeeProfile.email);

@@ -23,7 +23,7 @@ const FoundJobs = () => {
           Search Result for {searchTerm}:
         </h2>
         {jobs?.specificJobs?.length === 0 ? (
-          <p className="text-gray-600">No jobs found.</p>
+          <p className="text-yellow-400 text-3xl">No jobs found.</p>
         ) : (
           <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">
             {jobs?.specificJobs?.map((job) => (

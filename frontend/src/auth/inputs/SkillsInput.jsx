@@ -59,25 +59,27 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
 
   return (
     <div
-      className={`flex flex-col w-full justify-center ${
-        !fromEdit && "items-center"
+      className={`flex flex-col w-full rounded-md justify-center ${
+        !fromEdit ? "items-center" : "shadow-[1px_1px_10px]"
       }`}
     >
       <div
         className={`flex flex-wrap items-center text-yellow-400 gap-1 w-full  p-2 mb-1 ${
-          fromEdit ? "bg-inherit" : "bg-slate-500"
+          !fromEdit && "bg-slate-500"
         } rounded-lg shadow-yellow-400`}
       >
         {skills?.map((skill, index) => (
           <div
             key={index}
-            className="flex items-center bg-gray-800 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg max-md:px-2"
+            className={`flex items-center bg-gray-800 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg max-md:px-2 ${
+              fromEdit && "bg-gray-400 text-yellow-800"
+            }`}
           >
             {skill}
             <button
               type="button"
               onClick={() => removeSkill(skill)}
-              className="ml-2 text-yellow-400 hover:text-red-500"
+              className={`ml-2 text-yellow-400 hover:text-red-500 ${fromEdit && 'text-yellow-700'}`}
             >
               <MdClose className="text-2xl max-md:text-xl" />
             </button>
