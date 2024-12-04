@@ -38,13 +38,13 @@ const EEHome = () => {
         <div className="flex gap-4 p-2 max-md:gap-2 max-md:p-1">
           <Link
             to={"/showAllJobs"}
-            className="bg-gray-600 text-yellow-300 text-2xl py-1 px-4 rounded-full hover:bg-gray-500 transition-all duration-200 ease-in-out flex items-center justify-center max-md:px-3 max-md:text-xl max-sm:text-sm"
+            className="bg-gray-600 text-yellow-300 text-2xl py-1 px-4 rounded-full hover:scale-105 hover:bg-gray-950 transition-all duration-200 ease-in-out flex items-center justify-center max-md:px-3 max-md:text-xl max-sm:text-sm"
           >
             Show All Job
           </Link>
           <Link
             to={"/myAppliedJobs"}
-            className="bg-gray-600 text-yellow-300 text-2xl py-1 px-4 rounded-full hover:bg-gray-500 transition-all duration-200 ease-in-out flex items-center justify-center max-md:px-3 max-md:text-xl max-sm:text-sm"
+            className="bg-gray-600 text-yellow-300 text-2xl py-1 px-4 rounded-full hover:scale-105 hover:bg-gray-950 transition-all duration-200 ease-in-out flex items-center justify-center max-md:px-3 max-md:text-xl max-sm:text-sm"
           >
             My Applied Jobs
           </Link>
@@ -66,12 +66,12 @@ const EEHome = () => {
             placeholder="Search jobs by title or location..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="py-1 px-2 w-full border focus:shadow-[1px_1px_5px] focus:shadow-yellow-400 text-xl bg-gray-500 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
+            className="py-1 px-2 w-full border shadow-[1px_1px_5px] focus:ring ring-slate-300 text-xl bg-gray-500 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
             required
           />
           <button
             type="submit"
-            className="bg-gray-500 text-yellow-300 text-xl py-1 px-2 rounded-lg hover:bg-gray-600"
+            className="bg-gray-500 text-yellow-300 hover:scale-110 text-xl py-1 px-2 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-900"
           >
             Search
           </button>

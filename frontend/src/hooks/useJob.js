@@ -20,10 +20,11 @@ export const useJob = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [specificJobs, setSpecificJobs] = useState([]);
   const [recommendedJobs, setRecommendedJobs] = useState([]);
+  const storedUserType = localStorage.getItem("userType");
 
   useEffect(() => {
-    fetchJobs();
-  }, []);
+    if (storedUserType && !jobs) fetchJobs(); 
+  }, [jobs, storedUserType]);
 
   const fetchJobs = async () => {
     try {

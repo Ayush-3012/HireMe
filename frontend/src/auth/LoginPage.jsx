@@ -20,7 +20,8 @@ const LoginPage = () => {
       res?.status === 200
         ? (enqueueSnackbar(res?.data?.message, { variant: "success" }),
           navigate("/home"))
-        : enqueueSnackbar(res.response.data.message, { variant: "error" });
+        // : enqueueSnackbar(res?.response?.data?.message, { variant: "error" });
+        : enqueueSnackbar("Invalid Credentials", { variant: "error" });
     } catch (error) {
       console.log(error);
     }

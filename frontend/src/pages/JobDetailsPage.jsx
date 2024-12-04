@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FaEdit, FaHome } from "react-icons/fa";
-import { FaBookmark, FaLocationDot } from "react-icons/fa6";
+import { FaEdit, FaHome, FaInfoCircle } from "react-icons/fa";
+import {
+  FaBookmark,
+  FaBusinessTime,
+  FaCalendarCheck,
+  FaLocationDot,
+} from "react-icons/fa6";
 import { GoDotFill } from "react-icons/go";
 import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
 import { enqueueSnackbar } from "notistack";
 import { MdDeleteForever } from "react-icons/md";
-// import { enqueueSnackbar } from "notistack";
+import { RiMoneyRupeeCircleFill, RiUserStarFill } from "react-icons/ri";
 
 const JobDetailsPage = () => {
   const { jobs, auth, profile } = useAllContext();
@@ -17,6 +22,7 @@ const JobDetailsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [canApply, setCanApply] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +35,12 @@ const JobDetailsPage = () => {
 
         const data = await jobs?.fetchJobDetails(jobId);
         setAboutJob(data);
+
+        const applicationDeadline = new Date(data?.applicationDeadline);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        applicationDeadline > today && setCanApply(true);
+
         if (data?.applicants?.length) {
           const applicantsDetails = await profile?.fetchApplicantsProfile(
             data.applicants
@@ -53,7 +65,7 @@ const JobDetailsPage = () => {
   const handleSaveJob = async (e, jobId) => {
     e.preventDefault();
     const res = await jobs?.bookmarkJob(jobId);
-    
+
     res.status !== 200
       ? enqueueSnackbar(res.response.data.message, { variant: "error" })
       : enqueueSnackbar(res.data.message, { variant: "success" });
@@ -79,7 +91,7 @@ const JobDetailsPage = () => {
                 {aboutJob.title}
               </h2>
               <h1 className="text-xl max-md:text-lg max-sm:text-sm text-yellow-300">
-                {aboutJob.companyName}
+                @{aboutJob.companyName}
               </h1>
             </div>
 
@@ -133,46 +145,52 @@ const JobDetailsPage = () => {
 
           <div className="mx-4 my-2 flex flex-col gap-2 max-md:items-center">
             <div className="text-2xl text-yellow-400 max-md:text-xl max-sm:text-lg">
-              {aboutJob.remote ? (
-                <span className="flex items-center gap-2">
-                  <FaHome /> Remote Job
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <FaLocationDot /> {aboutJob.location}
-                </span>
-              )}
+              <span className="flex items-center gap-1">
+                {aboutJob.remote ? (
+                  <>
+                    <FaHome /> Remote Job
+                  </>
+                ) : (
+                  <>
+                    <FaLocationDot /> {aboutJob.location}{" "}
+                  </>
+                )}
+              </span>
             </div>
             <div className="grid grid-cols-5 gap-3 p-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 ">
               <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
-                <span>Annual CTC</span>
-                <span className="text-lg font-semibold">
+                <span> Annual CTC</span>
+                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                  <RiMoneyRupeeCircleFill className="text-xl" />{" "}
                   {aboutJob.salaryRange}
                 </span>
               </div>
 
               <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
                 <span>Located In</span>
-                <span className="text-lg font-semibold">
-                  {aboutJob.location}
+                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                  <FaLocationDot className="text-xl" /> {aboutJob.location}
                 </span>
               </div>
               <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl ">
                 <span>Employment Type</span>
-                <span className="text-lg font-semibold">
+                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                  <FaBusinessTime className="text-xl" />{" "}
                   {aboutJob.employmentType}
                 </span>
               </div>
               <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
                 <span>Experience Level</span>
-                <span className="text-lg font-semibold">
+                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                  <RiUserStarFill className="text-xl" />{" "}
                   {aboutJob.experienceLevel}
                 </span>
               </div>
 
               <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
                 <span>Apply By</span>
-                <span className="text-lg font-semibold">
+                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                  <FaCalendarCheck className="text-xl" />{" "}
                   {formatApplicationDeadline(aboutJob.applicationDeadline)}
                 </span>
               </div>
@@ -188,7 +206,7 @@ const JobDetailsPage = () => {
               {aboutJob?.requiredSkills?.map((skill, index) => (
                 <div
                   key={index}
-                  className="flex items-center bg-zinc-700 rounded-xl shadow-md hover:scale-105 transition-transform duration-200"
+                  className="flex items-center bg-zinc-700 shadow-[1px_1px_10px] rounded-xl hover:shadow-slate-50 hover:scale-105 transition-transform duration-200"
                 >
                   <GoDotFill className="text-xl text-yellow-300" />
                   <h2 className="cursor-pointer text-lg  bg-slate-600 rounded-r-xl px-4 py-1">
@@ -201,11 +219,11 @@ const JobDetailsPage = () => {
 
           <hr />
           <div className="my-2 mx-4 text-yellow-400">
-            <h2 className="flex text-3xl font-bold max-md:text-2xl max-sm:text-xl">
-              About the Job :{" "}
+            <h2 className="flex text-3xl items-center gap-1 font-bold max-md:text-2xl max-sm:text-xl">
+            <FaInfoCircle className="text-2xl"/> About the Job :{" "}
             </h2>
             <h2 className="text-xl mx-2 flex items-center gap-1 max-md:text-lg">
-              {aboutJob.description}
+            {aboutJob.description}
             </h2>
           </div>
 
@@ -228,14 +246,18 @@ const JobDetailsPage = () => {
           {auth?.userType === "employee" && (
             <button
               className={`${
-                isApplied
+                isApplied || !canApply
                   ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
                   : "bg-slate-200 hover:bg-yellow-400 hover:text-slate-800 hover:-translate-y-2 shadow-[1px_1px_10px] w-96 shadow-yellow-400 transition-all ease-in-out duration-300"
               } flex items-center text-3xl my-4 px-4 py-2 rounded-xl justify-center`}
               onClick={(e) => handleJobApply(e)}
               // disabled={isApplied}
             >
-              {isApplied ? "You have already applied for this job" : "Apply"}
+              {isApplied && "You have already applied for this job"}
+              {!canApply &&
+                !isApplied &&
+                "The requested job is no more open for application"}
+              {!isApplied && canApply && "Apply"}
             </button>
           )}
           {auth?.userType === "employer" &&

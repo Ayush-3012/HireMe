@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { enqueueSnackbar } from "notistack";
+import { FaLocationDot } from "react-icons/fa6";
 
 const EmployerProfile = ({ employerProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -134,7 +135,7 @@ const EmployerProfile = ({ employerProfile }) => {
               <strong>Email:</strong> {employerProfile.email}
             </p>
             <p>
-              <strong>Location:</strong> {employerProfile.location}
+              <strong><FaLocationDot /> Location:</strong> {employerProfile.location}
             </p>
             <p>
               <strong>Industry:</strong> {employerProfile.industry}

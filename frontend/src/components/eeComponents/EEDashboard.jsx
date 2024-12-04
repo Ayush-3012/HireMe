@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { useAllContext } from "../../context/AuthContext";
 import JobCard from "../JobCard";
+import { BsFillQuestionSquareFill } from "react-icons/bs";
+import { FaBookmark } from "react-icons/fa6";
+import { MdRecommend } from "react-icons/md";
 
 const EEDashboard = () => {
   const { profile, jobs } = useAllContext();
@@ -17,8 +20,8 @@ const EEDashboard = () => {
     <div className="px-4">
       <div className="flex flex-col gap-4 text-xl">
         <div className="flex flex-col max-md:items-center">
-          <h2 className="text-2xl font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
-            Saved Jobs
+          <h2 className="text-2xl flex items-center gap-2 font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
+            <FaBookmark /> Saved Jobs
           </h2>
           {profile?.userProfile?.savedJobs?.length === 0 ? (
             <p className="text-yellow-400 ml-2">
@@ -39,8 +42,8 @@ const EEDashboard = () => {
         </div>
 
         <div className="flex flex-col max-md:items-center">
-          <h2 className="text-2xl font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
-            Application Status
+          <h2 className="text-2xl flex items-center gap-2 font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
+          <BsFillQuestionSquareFill /> Application Status
           </h2>
           {profile?.userProfile?.appliedJobs?.length === 0 ? (
             <p className="text-yellow-400">
@@ -63,8 +66,8 @@ const EEDashboard = () => {
           )}
           {jobs?.recommendedJobs?.length !== 0 && (
             <>
-              <h2 className="text-2xl font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
-                Recommended Jobs - Jobs tailored to your profile.
+              <h2 className="text-2xl flex items-center gap-2 font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
+              <MdRecommend className="text-3xl"/> Recommended Jobs - Jobs tailored to your profile.
               </h2>
 
               <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">

@@ -22,15 +22,24 @@ const JobCard = ({
   const { jobs, auth } = useAllContext();
   const [jobDetails, setJobDetails] = useState({});
   const [showModal, setShowModal] = useState(false);
-  // const appliedJobs = jobs?.appliedJobs;
+  const [isDatePassed, setIsDatePassed] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!foundJobs) {
         const data = await jobs?.fetchJobDetails(jobId);
+        const applicationDeadline = new Date(data?.applicationDeadline);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        applicationDeadline > today && setIsDatePassed(true);
+
         setJobDetails(data);
       } else {
         setJobDetails(foundJobs);
+        const applicationDeadline = new Date(foundJobs?.applicationDeadline);
+        const today = new Date().setHours(0, 0, 0, 0);
+
+        applicationDeadline > today && setIsDatePassed(true);
       }
     };
     fetchData();
@@ -38,9 +47,19 @@ const JobCard = ({
 
   return (
     <>
-      <div className="relative flex flex-col min-w-96 rounded-md pt-2 shadow-[2px_2px_10px] shadow-slate-500 hover:-translate-y-2 hover:shadow-yellow-400 transition-all duration-150 ease-in-out max-sm:min-w-full max-sm:pr-4">
+      <div
+        className={`${
+          !isDatePassed
+            ? "bg-slate-950"
+            : "hover:-translate-y-2 hover:shadow-yellow-400 transition-all duration-150 ease-in-out"
+        } relative flex flex-col min-w-96 rounded-md pt-2 shadow-[2px_2px_10px] shadow-slate-500  max-sm:min-w-full max-sm:pr-4`}
+      >
         <Link to={`/about/job/${foundJobs ? foundJobs._id : jobId}`}>
-          <div className="flex flex-col gap-2 text-yellow-400 max-md:gap-1">
+          <div
+            className={`${
+              !isDatePassed && "cursor-default"
+            } flex flex-col gap-2 text-yellow-400 max-md:gap-1`}
+          >
             <div className="flex gap-4 pl-2">
               <p className="text-2xl font-bold max-md:text-xl">
                 {jobDetails.title}
@@ -57,7 +76,12 @@ const JobCard = ({
                 <RiMoneyRupeeCircleFill /> {jobDetails?.salaryRange}
               </p>
               <p className="flex items-center text-xl w-fit justify-start gap-1 max-md:text-sm">
-                <FaBusinessTime /> Employment Type: {jobDetails?.employmentType}
+                <FaBusinessTime />{" "}
+                {isDatePassed ? (
+                  <> Employment Type : {jobDetails?.employmentType} </>
+                ) : (
+                  "No more accepting application"
+                )}
               </p>
               {currentUser === "employer" && (
                 <>
@@ -108,6 +132,7 @@ const JobCard = ({
           </div>
         )}
       </div>
+
       {showModal && (
         <ConfirmationModal
           show={showModal}

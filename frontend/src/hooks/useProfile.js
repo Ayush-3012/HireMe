@@ -10,9 +10,10 @@ export const useProfile = () => {
   const storedUserType = localStorage.getItem("userType");
 
   useEffect(() => {
-    if (!userProfile) fetchProfile(storedUserType); // Prevent repeated calls
+    if (storedUserType && !userProfile) fetchProfile(storedUserType);
+  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userProfile]);
+  }, [storedUserType, userProfile]);
 
   const fetchProfile = async (userType) => {
     try {
