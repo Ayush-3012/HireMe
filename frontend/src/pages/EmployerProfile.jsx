@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { useAllContext } from "../context/AuthContext";
 import { enqueueSnackbar } from "notistack";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaIndustry, FaLocationDot } from "react-icons/fa6";
+import { IoCall, IoMail } from "react-icons/io5";
+import { TbWorldWww } from "react-icons/tb";
+import { MdOutlineEditLocation } from "react-icons/md";
 
 const EmployerProfile = ({ employerProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -61,7 +64,9 @@ const EmployerProfile = ({ employerProfile }) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block mb-1 font-semibold">Contact Number</label>
+              <label className="flex gap-1 items-center mb-1 font-semibold">
+                <IoCall /> Contact Number
+              </label>
               <input
                 type="text"
                 className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -70,7 +75,9 @@ const EmployerProfile = ({ employerProfile }) => {
               />
             </div>
             <div>
-              <label className="block mb-1 font-semibold">Email</label>
+              <label className="flex gap-1 items-center mb-1 font-semibold">
+                <IoMail /> Email
+              </label>
               <input
                 type="email"
                 className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -79,7 +86,9 @@ const EmployerProfile = ({ employerProfile }) => {
               />
             </div>
             <div>
-              <label className="block mb-1 font-semibold">Location</label>
+              <label className="flex gap-1 items-center mb-1 font-semibold">
+                <MdOutlineEditLocation /> Location
+              </label>
               <input
                 type="text"
                 className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -88,7 +97,9 @@ const EmployerProfile = ({ employerProfile }) => {
               />
             </div>
             <div>
-              <label className="block mb-1 font-semibold">Industry</label>
+              <label className="mb-1 font-semibold flex gap-1 items-center">
+                <FaIndustry /> Industry
+              </label>
               <input
                 type="text"
                 className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -98,7 +109,9 @@ const EmployerProfile = ({ employerProfile }) => {
             </div>
           </div>
           <div>
-            <label className="block mb-1 font-semibold">Website</label>
+            <label className="flex gap-1 items-center mb-1 font-semibold">
+              <TbWorldWww /> Website
+            </label>
             <input
               type="text"
               className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -129,29 +142,45 @@ const EmployerProfile = ({ employerProfile }) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-sm:gap-2">
             <p>
-              <strong>Contact Number:</strong> {employerProfile.contactNumber}
+              <strong className="flex items-center gap-1">
+                <IoCall className="text-lg" /> Contact Number:{" "}
+                <span className="font-light">
+                  {employerProfile.contactNumber}
+                </span>
+              </strong>
             </p>
             <p>
-              <strong>Email:</strong> {employerProfile.email}
+              <strong className="flex items-center gap-1">
+                <IoMail className="text-lg" /> Email:{" "}
+                <span className="font-light">{employerProfile.email}</span>
+              </strong>
             </p>
             <p>
-              <strong><FaLocationDot /> Location:</strong> {employerProfile.location}
+              <strong className="flex items-center gap-1">
+                <FaLocationDot /> Location:{" "}
+                <span className="font-light">{employerProfile.location}</span>
+              </strong>
             </p>
             <p>
-              <strong>Industry:</strong> {employerProfile.industry}
+              <strong className="flex items-center gap-1">
+                <FaIndustry className="text-lg" /> Industry:{" "}
+                <span className="font-light">{employerProfile.industry}</span>
+              </strong>
             </p>
           </div>
           <div className="mt-4 max-sm:mt-2">
             <p>
-              <strong>Website:</strong>{" "}
-              <a
-                href={employerProfile.website}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-400 hover:underline"
-              >
-                {employerProfile.website}
-              </a>
+              <strong className="flex items-center gap-1">
+                <TbWorldWww /> Website:{" "}
+                <a
+                  href={employerProfile.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-400 hover:underline hover:text-yellow-200"
+                >
+                  {employerProfile.companyName}
+                </a>
+              </strong>
             </p>
           </div>
           <div className="text-center mt-6">

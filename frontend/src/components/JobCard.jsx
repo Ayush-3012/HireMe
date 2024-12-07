@@ -9,6 +9,7 @@ import { GrStatusUnknown } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
 import { enqueueSnackbar } from "notistack";
+import { FaEdit } from "react-icons/fa";
 
 /* eslint-disable react/prop-types */
 const JobCard = ({
@@ -112,15 +113,16 @@ const JobCard = ({
           )}
         </Link>
         {auth.userType === "employer" && (
-          <div className="flex items-center mt-4 rounded-b-md py-2 bg-slate-900 justify-center gap-2">
+          <div className="flex items-center mt-4 rounded-b-md py-2 bg-slate-900 justify-center gap-2 max-sm:gap-0 max-sm:mt-2">
             <Link
               to={`/edit/job/${jobId}`}
-              className="bg-slate-500 text-yellow-400 text-xl transition-all ease-in-out duration-150 w-20 text-center px-2 py-1 rounded hover:scale-105"
+              className="bg-slate-500 hover:bg-yellow-400 hover:text-slate-950 text-yellow-400 text-xl transition-all ease-in-out duration-150 w-20 max-sm:bg-inherit text-center px-2 py-1 rounded hover:scale-105 max-sm:w-10"
             >
-              Edit
+              <FaEdit className="sm:hidden text-2xl text-yellow-400 transition-all ease-in-out duration-200 hover:scale-105" />
+              <span className="max-sm:hidden">Edit</span>
             </Link>
             <button
-              className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
+              className="bg-red-400 hover:bg-red-600 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
               onClick={() => {
                 setShowModal(true);
                 refreshDeletedJob();

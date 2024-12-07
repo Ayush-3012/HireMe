@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import { AuthContextProvider } from "./context/AuthContext";
 import UserProfile from "./pages/UserProfile";
 import Index from "./pages/Index";
-import PostJob from "./components/erComponents/PostJob";
 import NotFound from "./partials/NotFound";
 import JobDetailsPage from "./pages/JobDetailsPage";
 import FoundJobs from "./components/eeComponents/FoundJobs";
@@ -16,6 +15,7 @@ import Footer from "./components/Footer";
 import RegisterPage from "./auth/RegisterPage";
 import EmployeeRegisterForm from "./auth/EmployeeRegisterForm";
 import EmployerRegisterForm from "./auth/EmployerRegisterForm";
+import ManageJob from "./components/erComponents/ManageJob";
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/" element={<Index />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/about/job/:jobId" element={<JobDetailsPage />} />
-        <Route path="/postJob" element={<PostJob fromPostJob={true} />} />
+        <Route path="/postJob" element={<ManageJob fromPostJob={true} />} />
         <Route path="/userProfile" element={<UserProfile />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/employee" element={<EmployeeRegisterForm />} />
@@ -38,7 +38,7 @@ const App = () => {
           path="/profile/applicantProfile"
           element={<ApplicantDetails />}
         />
-        <Route path="/edit/job/:jobId" element={<PostJob />} />
+        <Route path="/edit/job/:jobId" element={<ManageJob />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

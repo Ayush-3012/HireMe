@@ -98,6 +98,15 @@ const JobDetailsPage = () => {
             <div className="absolute top-2 right-2 flex flex-col space-y-2 max-md:top-0 max-md:right-1 max-sm:right-0">
               {auth.userType === "employer" && (
                 <div className="flex gap-2 max-sm:flex-col items-center justify-center">
+                  <div className="flex items-center justify-center ">
+                    <Link
+                      to={`/edit/job/${jobId}`}
+                      className="bg-slate-500 hover:bg-yellow-400 hover:text-slate-950 text-yellow-400 flex items-center justify-center text-xl max-sm:bg-inherit transition-all ease-in-out duration-150 px-2 py-1 rounded hover:scale-105"
+                    >
+                      <FaEdit className="sm:hidden text-2xl text-yellow-500 transition-all ease-in-out duration-200 hover:scale-105" />
+                      <span className="max-sm:hidden">Edit</span>
+                    </Link>
+                  </div>
                   <div className="flex items-center justify-center">
                     <button
                       className="bg-red-500 max-sm:bg-inherit text-xl px-2 text-white py-1 rounded-md transition-all ease-in-out duration-200 hover:scale-105"
@@ -108,15 +117,6 @@ const JobDetailsPage = () => {
                       <MdDeleteForever className="sm:hidden text-3xl text-red-500 transition-all ease-in-out duration-200 hover:scale-105" />
                       <span className="max-sm:hidden">Delete</span>
                     </button>
-                  </div>
-                  <div className="flex items-center justify-center ">
-                    <Link
-                      to={`/edit/job/${jobId}`}
-                      className="bg-yellow-400 flex items-center justify-center text-slate-700 text-xl max-sm:bg-inherit transition-all ease-in-out duration-150 px-2 py-1 rounded hover:scale-105"
-                    >
-                      <FaEdit className="sm:hidden text-2xl text-yellow-500 transition-all ease-in-out duration-200 hover:scale-105" />
-                      <span className="max-sm:hidden">Edit</span>
-                    </Link>
                   </div>
                 </div>
               )}
@@ -220,10 +220,10 @@ const JobDetailsPage = () => {
           <hr />
           <div className="my-2 mx-4 text-yellow-400">
             <h2 className="flex text-3xl items-center gap-1 font-bold max-md:text-2xl max-sm:text-xl">
-            <FaInfoCircle className="text-2xl"/> About the Job :{" "}
+              <FaInfoCircle className="text-2xl" /> About the Job :{" "}
             </h2>
             <h2 className="text-xl mx-2 flex items-center gap-1 max-md:text-lg">
-            {aboutJob.description}
+              {aboutJob.description}
             </h2>
           </div>
 

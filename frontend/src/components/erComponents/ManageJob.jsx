@@ -5,7 +5,7 @@ import SkillsInput from "../../auth/inputs/SkillsInput";
 import { useNavigate, useParams } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 
-const PostJob = ({ fromPostJob }) => {
+const ManageJob = ({ fromPostJob }) => {
   const { jobs } = useAllContext();
   const { jobId } = useParams();
   const navigate = useNavigate();
@@ -236,4 +236,4 @@ const PostJob = ({ fromPostJob }) => {
   );
 };
 
-export default PostJob;
+export default ManageJob;
