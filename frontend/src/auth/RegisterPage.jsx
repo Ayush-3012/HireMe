@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import EmployeeRegisterForm from "./EmployeeRegisterForm";
 import EmployerRegisterForm from "./EmployerRegisterForm";
 import { useEffect } from "react";

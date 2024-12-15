@@ -2,7 +2,7 @@
 import { enqueueSnackbar } from "notistack";
 import { useState } from "react";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const CreateConversation = ({
   onClose,

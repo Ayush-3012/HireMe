@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAllContext } from "../context/AuthContext.jsx";
+import { useAllContext } from "../context/HireMeContext.jsx";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -20,8 +20,8 @@ const LoginPage = () => {
       res?.status === 200
         ? (enqueueSnackbar(res?.data?.message, { variant: "success" }),
           navigate("/home"))
-        // : enqueueSnackbar(res?.response?.data?.message, { variant: "error" });
-        : enqueueSnackbar("Invalid Credentials", { variant: "error" });
+        : // : enqueueSnackbar(res?.response?.data?.message, { variant: "error" });
+          enqueueSnackbar("Invalid Credentials", { variant: "error" });
     } catch (error) {
       console.log(error);
     }

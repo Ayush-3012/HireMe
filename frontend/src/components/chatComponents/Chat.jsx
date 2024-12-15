@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ChatConversation from "./ChatConversation";
 import ChatList from "./ChatList";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const Chat = () => {
   const [activeConversation, setActiveConversation] = useState(null);

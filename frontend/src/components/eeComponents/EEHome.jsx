@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, useNavigate } from "react-router-dom";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 import { useEffect, useState } from "react";
 import EEDashboard from "./EEDashboard";
 

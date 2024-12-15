@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import ERDashboard from "./ERDashboard";
 import { useEffect, useState } from "react";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const ERHome = () => {
   const { jobs, profile } = useAllContext();

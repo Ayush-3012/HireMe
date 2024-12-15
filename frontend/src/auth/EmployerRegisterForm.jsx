@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa6";

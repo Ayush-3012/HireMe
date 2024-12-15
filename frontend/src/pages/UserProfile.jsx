@@ -1,27 +1,47 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/prop-types */
 import EmployerProfile from "./EmployerProfile";
 import EmployeeProfile from "./EmployeeProfile";
-import { useAllContext } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useAllContext } from "../context/HireMeContext";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const UserProfile = () => {
+const UserProfile = ({ fromViewEmployerProfile }) => {
+  const location = useLocation();
   const currentUser = localStorage.getItem("userType");
+  const { companyId } = location.state || {};
+  const [companyProfile, setCompanyProfile] = useState([]);
   const { profile } = useAllContext();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (profile) await profile?.fetchProfile(currentUser);
+      try {
+        const data = await profile?.fetchCompanyProfile(companyId);
+        setCompanyProfile(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
-    fetchData();
-  }, []);
+    fromViewEmployerProfile && fetchData();
+  }, [companyId, fromViewEmployerProfile, profile]);
 
   if (!profile?.userProfile) return <div>No Profile Found</div>;
   return (
     <>
-      {currentUser === "employee" ? (
-        <EmployeeProfile employeeProfile={profile.userProfile} />
+      {!fromViewEmployerProfile ? (
+        <>
+          {currentUser === "employee" ? (
+            <EmployeeProfile employeeProfile={profile.userProfile} />
+          ) : (
+            <EmployerProfile employerProfile={profile.userProfile} />
+          )}
+        </>
       ) : (
-        <EmployerProfile employerProfile={profile.userProfile} />
+        <>
+          <EmployerProfile
+            employerProfile={companyProfile}
+            fromViewEmployerProfile={fromViewEmployerProfile}
+          />
+        </>
       )}
     </>
   );

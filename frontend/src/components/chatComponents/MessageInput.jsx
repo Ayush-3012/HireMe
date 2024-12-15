@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { IoSend, IoHappy } from "react-icons/io5";
 // import EmojiPicker from "emoji-picker-react";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const MessageInput = ({ conversationId, senderId, setMessages }) => {
   const [newMessage, setNewMessage] = useState("");

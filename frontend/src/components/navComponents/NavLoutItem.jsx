@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const NavLoutItem = () => {
   const [showEmployer, setShowEmployer] = useState(true);

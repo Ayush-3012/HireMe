@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import { AuthContextProvider } from "./context/AuthContext";
+import { HireMeContextProvider } from "./context/HireMeContext";
 import UserProfile from "./pages/UserProfile";
 import Index from "./pages/Index";
 import NotFound from "./partials/NotFound";
@@ -19,7 +19,7 @@ import ManageJob from "./components/erComponents/ManageJob";
 
 const App = () => {
   return (
-    <AuthContextProvider>
+    <HireMeContextProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Index />} />
@@ -35,6 +35,10 @@ const App = () => {
         <Route path="/showAllJobs" element={<AllJobs />} />
         <Route path="/myAppliedJobs" element={<AppliedJobs />} />
         <Route
+          path="/company-profile"
+          element={<UserProfile fromViewEmployerProfile={true} />}
+        />
+        <Route
           path="/profile/applicantProfile"
           element={<ApplicantDetails />}
         />
@@ -42,7 +46,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
-    </AuthContextProvider>
+    </HireMeContextProvider>
   );
 };
 

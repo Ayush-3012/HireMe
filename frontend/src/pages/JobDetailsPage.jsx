@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaEdit, FaHome, FaInfoCircle } from "react-icons/fa";
 import {
@@ -16,6 +16,7 @@ import { RiMoneyRupeeCircleFill, RiUserStarFill } from "react-icons/ri";
 
 const JobDetailsPage = () => {
   const { jobs, auth, profile } = useAllContext();
+  const currentUser = localStorage.getItem("userType");
   const { jobId } = useParams();
   const [aboutJob, setAboutJob] = useState([]);
   const [applicants, setApplicants] = useState([]);
@@ -90,9 +91,19 @@ const JobDetailsPage = () => {
               <h2 className="text-2xl max-md:text-xl max-sm:text-lg text-yellow-400 font-black">
                 {aboutJob.title}
               </h2>
-              <h1 className="text-xl max-md:text-lg max-sm:text-sm text-yellow-300">
-                @{aboutJob.companyName}
-              </h1>
+              {currentUser === "employee" ? (
+                <Link
+                  to={"/company-profile"}
+                  state={{ companyId: aboutJob.employer }}
+                  className="text-xl hover:text-slate-100 max-md:text-lg max-sm:text-sm text-slate-200"
+                >
+                  @{aboutJob.companyName}
+                </Link>
+              ) : (
+                <p className="text-xl max-md:text-lg max-sm:text-sm text-yellow-400">
+                  @{aboutJob.companyName}
+                </p>
+              )}
             </div>
 
             <div className="absolute top-2 right-2 flex flex-col space-y-2 max-md:top-0 max-md:right-1 max-sm:right-0">

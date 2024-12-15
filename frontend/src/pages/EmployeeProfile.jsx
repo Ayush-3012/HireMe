@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import SkillsInput from "../auth/inputs/SkillsInput";
 import ExperienceInput from "../auth/inputs/ExperienceInput";
 import EducationInput from "../auth/inputs/EducationInput";
@@ -196,7 +196,7 @@ const EmployeeProfile = ({ employeeProfile }) => {
             </div>
           </div>
           <div className="flex gap-4 max-md:flex-col">
-          <div className="mt-4 flex-1 hover:shadow-yellow-400 hover:shadow-[2px_2px_10px] p-2 transition duration-300 hover:scale-y-105 ease-in-out rounded-md">
+            <div className="mt-4 flex-1 hover:shadow-yellow-400 hover:shadow-[2px_2px_10px] p-2 transition duration-300 hover:scale-y-105 ease-in-out rounded-md">
               <h2 className="font-bold text-lg flex items-center gap-1">
                 <RiUserStarFill className="text-xl" /> Experience:
               </h2>

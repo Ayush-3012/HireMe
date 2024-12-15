@@ -17,6 +17,19 @@ export const viewProfile = async (userType) => {
   }
 };
 
+export const viewEmployerProfile = async (companyId) => {
+  try {
+    const res = await axios.get(
+      `${import.meta.env.VITE_API_ROUTES}/employer/compayProfile${companyId}`,
+      { withCredentials: true }
+    );
+    const data = res.data.foundCompany;
+    return data;
+  } catch (error) {
+    throw new Error("Unable to View Profile" + error.message);
+  }
+};
+
 export const viewApplicantProfile = async (applicants) => {
   try {
     const res = await axios.post(

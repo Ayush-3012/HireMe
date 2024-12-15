@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import EEHome from "../components/eeComponents/EEHome";
 import ERHome from "../components/erComponents/ERHome";
 import Welcome from "../components/Welcome";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 // import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 

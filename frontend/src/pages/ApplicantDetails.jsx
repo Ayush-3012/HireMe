@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CreateConversation from "../components/chatComponents/CreateConversation.jsx";
-import { useAllContext } from "../context/AuthContext.jsx";
+import { useAllContext } from "../context/HireMeContext.jsx";
 import { enqueueSnackbar } from "notistack";
 
 const ApplicantDetails = () => {

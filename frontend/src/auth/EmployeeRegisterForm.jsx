@@ -3,7 +3,7 @@ import { ImProfile } from "react-icons/im";
 import ExperienceInput from "./inputs/ExperienceInput";
 import SkillsInput from "./inputs/SkillsInput";
 import EducationInput from "./inputs/EducationInput";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import BasicInput from "./inputs/BasicInput";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";

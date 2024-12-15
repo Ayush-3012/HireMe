@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   checkConversationExists,
   createConversation,
@@ -9,8 +8,6 @@ import {
 } from "../services/chatService";
 
 export const useChat = () => {
-  useEffect(() => {}, []);
-
   const fetchConversation = async (userId) => {
     const data = await getConversation(userId);
     if (data) return data.conversations;

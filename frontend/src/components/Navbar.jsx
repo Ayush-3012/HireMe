@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import NavLoutItem from "./navComponents/NavLoutItem";
 import NavLinItem from "./navComponents/NavLinItem";
 

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { MdDelete, MdDeleteForever } from "react-icons/md";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
 import { FaBusinessTime, FaUserGroup } from "react-icons/fa6";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import { FaLocationDot } from "react-icons/fa6";
 import { GrStatusUnknown } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ConfirmationModal from "./erComponents/DeleteConfirmationModal";
 import { enqueueSnackbar } from "notistack";
 import { FaEdit } from "react-icons/fa";
@@ -24,6 +24,7 @@ const JobCard = ({
   const [jobDetails, setJobDetails] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [isDatePassed, setIsDatePassed] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,9 +66,24 @@ const JobCard = ({
               <p className="text-2xl font-bold max-md:text-xl">
                 {jobDetails.title}
               </p>
-              <p className="text-xl font-semibold max-md:text-sm">
-                @{jobDetails.companyName}
-              </p>
+              {currentUser === "employee" ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/company-profile", {
+                      state: { companyId: jobDetails.employer },
+                    });
+                  }}
+                  to={"/company-profile"}
+                  className="text-xl hover:text-slate-100 max-md:text-lg max-sm:text-sm text-slate-200"
+                >
+                  @{jobDetails.companyName}
+                </button>
+              ) : (
+                <p className="text-xl max-md:text-lg max-sm:text-sm text-yellow-400">
+                  @{jobDetails.companyName}
+                </p>
+              )}
             </div>
             <div className="flex justify-between flex-col pl-2">
               <p className="flex items-center text-xl w-fit justify-start gap-1 max-md:text-sm">

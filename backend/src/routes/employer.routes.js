@@ -4,6 +4,7 @@ import {
   logoutEmployer,
   registerEmployer,
   updateEmployerProfile,
+  viewCompanyProfile,
   viewEmployerProfile,
 } from "../controllers/employer.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
@@ -18,6 +19,7 @@ employerRouter.route("/auth-status").get(verifyToken, (req, res) => {
     .json({ message: "User is authenticated", userId: req.user.userId });
 });
 employerRouter.route("/profile").get(verifyToken, viewEmployerProfile);
+employerRouter.route("/compayProfile:companyId").get(verifyToken, viewCompanyProfile);
 employerRouter.route("/profile").put(verifyToken, updateEmployerProfile);
 employerRouter.route("/logout").get(verifyToken, logoutEmployer);
 

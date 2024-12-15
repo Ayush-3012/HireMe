@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { GoDotFill } from "react-icons/go";
 import JobCard from "../JobCard";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 
 const ERDashboard = ({ employerJobs, refreshDeletedJob }) => {
   const [openJobs, setOpenJobs] = useState(0);

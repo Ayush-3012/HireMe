@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import MessageInput from "./MessageInput";
 import { HiDotsVertical } from "react-icons/hi";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 
 const ChatConversation = ({ activeConversation }) => {

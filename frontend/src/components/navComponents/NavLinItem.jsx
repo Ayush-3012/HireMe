@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 import { BsChatSquareDotsFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";

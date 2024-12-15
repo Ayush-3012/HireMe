@@ -290,6 +290,5 @@ const updateJobStatuses = async () => {
 };
 
 setInterval(async () => {
-  console.log("Running job status updater...");
   await updateJobStatuses();
 }, 86400000);

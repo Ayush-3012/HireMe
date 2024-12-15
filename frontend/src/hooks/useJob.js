@@ -23,7 +23,16 @@ export const useJob = () => {
   const storedUserType = localStorage.getItem("userType");
 
   useEffect(() => {
-    if (storedUserType && !jobs) fetchJobs(); 
+    const fectchData = async () => {
+      try {
+        const data = await getAllJobs();
+        setJobs(data?.jobs);
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    };
+    storedUserType && !jobs && fectchData();
   }, [jobs, storedUserType]);
 
   const fetchJobs = async () => {

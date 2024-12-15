@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import { useAllContext } from "../../context/AuthContext";
+import { useAllContext } from "../../context/HireMeContext";
 import JobCard from "../JobCard";
 import { BsFillQuestionSquareFill } from "react-icons/bs";
 import { FaBookmark } from "react-icons/fa6";
@@ -43,7 +43,7 @@ const EEDashboard = () => {
 
         <div className="flex flex-col max-md:items-center">
           <h2 className="text-2xl flex items-center gap-2 font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
-          <BsFillQuestionSquareFill /> Application Status
+            <BsFillQuestionSquareFill /> Application Status
           </h2>
           {profile?.userProfile?.appliedJobs?.length === 0 ? (
             <p className="text-yellow-400">
@@ -67,7 +67,8 @@ const EEDashboard = () => {
           {jobs?.recommendedJobs?.length !== 0 && (
             <>
               <h2 className="text-2xl flex items-center gap-2 font-semibold text-yellow-300 max-md:self-start max-md:text-xl">
-              <MdRecommend className="text-3xl"/> Recommended Jobs - Jobs tailored to your profile.
+                <MdRecommend className="text-3xl" /> Recommended Jobs - Jobs
+                tailored to your profile.
               </h2>
 
               <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">

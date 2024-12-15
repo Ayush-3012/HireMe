@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import UserAction from "../components/UserAction";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {

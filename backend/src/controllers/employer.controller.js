@@ -81,9 +81,23 @@ export const viewEmployerProfile = async (req, res) => {
   try {
     const foundUser = await Employer.findById(req.user.userId);
 
-    return res.json({ message: "This is a protected route", foundUser });
+    return res
+      .status(200)
+      .json({ message: "This is a protected route", foundUser });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+export const viewCompanyProfile = async (req, res) => {
+  try {
+    const foundCompany = await Employer.findById(req.params.companyId);
+
+    return res
+      .status(200)
+      .json({ message: "This is a protected route", foundCompany });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 

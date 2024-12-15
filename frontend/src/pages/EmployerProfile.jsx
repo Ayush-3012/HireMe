@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useAllContext } from "../context/AuthContext";
+import { useAllContext } from "../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 import { FaIndustry, FaLocationDot } from "react-icons/fa6";
 import { IoCall, IoMail } from "react-icons/io5";
 import { TbWorldWww } from "react-icons/tb";
+import { TiBriefcase } from "react-icons/ti";
 import { MdOutlineEditLocation } from "react-icons/md";
+import JobCard from "../components/JobCard";
 
-const EmployerProfile = ({ employerProfile }) => {
+const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [companyName, setCompanyName] = useState(employerProfile.companyName);
   const [email, setEmail] = useState(employerProfile.email);
@@ -167,8 +169,6 @@ const EmployerProfile = ({ employerProfile }) => {
                 <span className="font-light">{employerProfile.industry}</span>
               </strong>
             </p>
-          </div>
-          <div className="mt-4 max-sm:mt-2">
             <p>
               <strong className="flex items-center gap-1">
                 <TbWorldWww /> Website:{" "}
@@ -182,15 +182,66 @@ const EmployerProfile = ({ employerProfile }) => {
                 </a>
               </strong>
             </p>
+            <p>
+              <strong className="flex items-center gap-1">
+                <TiBriefcase /> Total Jobs Posted:{" "}
+                <span className="font-light">
+                  {employerProfile?.jobsPosted?.length}
+                </span>
+              </strong>
+            </p>
           </div>
-          <div className="text-center mt-6">
-            <button
-              className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:shadow-[1px_1px_5px] hover:shadow-yellow-400 hover:scale-x-110 transition-all duration-150 ease-in-out"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Profile
-            </button>
-          </div>
+          {/* <div className="mt-4 max-sm:mt-2">
+            <p>
+              <strong className="flex items-center gap-1">
+                <TbWorldWww /> Website:{" "}
+                <span className="font-light">{employerProfile.industry}</span>
+              </strong>
+            </p>
+            <p>
+              <strong className="flex items-center gap-1">
+                <TbWorldWww /> Total Jobs Posted:{" "}
+                <a
+                  href={employerProfile.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-400 hover:underline hover:text-yellow-200"
+                >
+                  {employerProfile.companyName}
+                </a>
+              </strong>
+            </p>
+          </div> */}
+          {fromViewEmployerProfile && (
+            <>
+              <div>
+                <h2 className="text-lg font-semibold text-center my-4 max-md:text-xl">
+                  All Jobs by {employerProfile.companyName}
+                </h2>
+                {employerProfile?.jobsPosted?.length === 0 ? (
+                  <p className="text-yellow-400">
+                    No jobs posted yet. Post your first job.
+                  </p>
+                ) : (
+                  <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">
+                    {employerProfile?.jobsPosted?.map((jobId) => (
+                      <JobCard key={jobId} jobId={jobId} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+          {!fromViewEmployerProfile && (
+            <div className="text-center mt-6">
+              <button
+                className="px-6 py-2 bg-slate-700 text-yellow-300 rounded-md hover:bg-slate-900 hover:shadow-[1px_1px_5px] hover:shadow-yellow-400 hover:scale-x-110 transition-all duration-150 ease-in-out"
+                onClick={() => setIsEditing(true)}
+              >
+                Edit Profile
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
