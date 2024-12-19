@@ -22,6 +22,7 @@ const BasicInput = ({
   const [viewConfirmPassword, setViewConfirmPassword] = useState(false);
   return (
     <div className="shadow-[2px_2px_10px] rounded-lg shadow-yellow-400 flex flex-col gap-2 p-4 max-md:p-2 max-md:gap-1">
+    <h1 className="text-xl text-yellow-400 font-medium self-start">Profile - </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-md:gap-1">
         <input
           className="bg-gray-600 text-yellow-400 focus:shadow-yellow-400 focus:shadow-[1px_1px_5px] rounded-lg p-3 w-full outline-none max-md:p-2"

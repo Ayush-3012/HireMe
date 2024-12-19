@@ -59,19 +59,20 @@ const SkillsInput = ({ skills, setSkills, fromEdit }) => {
 
   return (
     <div
-      className={`flex flex-col w-full rounded-md justify-center ${
+      className={`flex flex-col w-full shadow-yellow-400 shadow-[2px_2px_10px] p-4 rounded-md justify-center ${
         !fromEdit ? "items-center" : "shadow-[1px_1px_10px]"
       }`}
     >
+    <h1 className="text-xl text-yellow-400 font-medium self-start mb-1">Skills - </h1>
       <div
         className={`flex flex-wrap items-center text-yellow-400 gap-1 w-full  p-2 mb-1 ${
-          !fromEdit && "bg-slate-500"
+          !fromEdit && "bg-slate-950"
         } rounded-lg shadow-yellow-400`}
       >
         {skills?.map((skill, index) => (
           <div
             key={index}
-            className={`flex items-center bg-gray-600 text-yellow-300 rounded-full px-3 py-1 font-serif text-lg max-md:px-2 ${
+            className={`flex items-center bg-gray-700 text-slate-50 rounded-full px-3 py-1 font-serif text-lg max-md:px-2 ${
               fromEdit && "bg-gray-400 text-yellow-400"
             }`}
           >

@@ -19,7 +19,8 @@ const ExperienceInput = ({ experience, setExperience, fromEdit }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 ">
+    <div className="flex flex-col items-center gap-4 shadow-yellow-400 shadow-[2px_2px_10px] p-4">
+    <h1 className="text-xl text-yellow-400 font-medium self-start">Experience -  </h1>
       {experience.map((exp, index) => (
         <div
           key={index}

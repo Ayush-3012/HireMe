@@ -14,20 +14,29 @@ import {
   updateJob,
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 const jobRouter = Router();
 
-jobRouter.route("/create").post(verifyToken, createJob);
+jobRouter.route("/create").post(upload.fields([{}]), verifyToken, createJob);
+jobRouter
+  .route("/update/:jobId")
+  .put(upload.fields([{}]), verifyToken, updateJob);
+jobRouter.route("/delete/:jobId").delete(verifyToken, deleteJob);
+
 jobRouter.route("/view").get(verifyToken, getAllJobs);
-jobRouter.route("/viewMyJobs:employerId").get(verifyToken, getJobsByEmployer);
-jobRouter.route("/viewAppliedJobs:employeeId").get(verifyToken, getAppliedJobs);
+jobRouter.route("/view/:jobId").get(verifyToken, getJobDetails);
+jobRouter.route("/viewMyJobs/:employerId").get(verifyToken, getJobsByEmployer);
+jobRouter
+  .route("/viewAppliedJobs/:employeeId")
+  .get(verifyToken, getAppliedJobs);
 jobRouter.route("/getSpecificJobs").get(verifyToken, getSpecificJobs);
-jobRouter.route("/view:jobId").get(verifyToken, getJobDetails);
-jobRouter.route("/apply:jobId").post(verifyToken, applyForJob);
-jobRouter.route("/update:jobId").put(verifyToken, updateJob);
-jobRouter.route("/save").put(verifyToken, saveJob);
-jobRouter.route("/unSave").put(verifyToken, unSaveJob);
 jobRouter.route("/getRecommendedJobs").get(verifyToken, getRecommendedJobs);
-jobRouter.route("/delete:jobId").delete(verifyToken, deleteJob);
+
+jobRouter
+  .route("/apply/:jobId")
+  .post(upload.fields([{}]), verifyToken, applyForJob);
+jobRouter.route("/save").post(verifyToken, saveJob);
+jobRouter.route("/unSave").post(verifyToken, unSaveJob);
 
 export default jobRouter;

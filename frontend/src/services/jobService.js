@@ -32,7 +32,7 @@ export const getSpecificJobs = async (keywords) => {
 export const getEmployerJobs = async (employerId) => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/viewMyJobs${employerId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/viewMyJobs/${employerId}`,
       { withCredentials: true }
     );
     const data = await res.data.jobs;
@@ -45,7 +45,7 @@ export const getEmployerJobs = async (employerId) => {
 export const getAppliedJobs = async (employeeId) => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/viewAppliedJobs${employeeId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/viewAppliedJobs/${employeeId}`,
       { withCredentials: true }
     );
     const data = await res.data.jobs;
@@ -58,7 +58,7 @@ export const getAppliedJobs = async (employeeId) => {
 export const getJobDetails = async (jobId) => {
   try {
     const res = await axios.get(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/view${jobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/view/${jobId}`,
       { withCredentials: true }
     );
     const data = await res.data;
@@ -85,7 +85,7 @@ export const createJob = async (jobData) => {
 export const applyForJob = async (jobId) => {
   try {
     const res = await axios.post(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/apply${jobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/apply/${jobId}`,
       null,
       { withCredentials: true }
     );
@@ -98,7 +98,7 @@ export const applyForJob = async (jobId) => {
 export const updateJob = async (jobId, updateData) => {
   try {
     const res = await axios.put(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/update${jobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/update/${jobId}`,
       { updateData },
       { withCredentials: true }
     );
@@ -124,7 +124,7 @@ export const getRecommendedJobs = async () => {
 
 export const saveCurrentJob = async (jobId) => {
   try {
-    const res = await axios.put(
+    const res = await axios.post(
       `${import.meta.env.VITE_API_ROUTES}/jobs/save`,
       { jobId },
       { withCredentials: true }
@@ -137,7 +137,7 @@ export const saveCurrentJob = async (jobId) => {
 
 export const unSaveCurrentJob = async (jobId) => {
   try {
-    const res = await axios.put(
+    const res = await axios.post(
       `${import.meta.env.VITE_API_ROUTES}/jobs/unSave`,
       { jobId },
       { withCredentials: true }
@@ -152,7 +152,7 @@ export const unSaveCurrentJob = async (jobId) => {
 export const deleteJob = async (jobId) => {
   try {
     const res = await axios.delete(
-      `${import.meta.env.VITE_API_ROUTES}/jobs/delete${jobId}`,
+      `${import.meta.env.VITE_API_ROUTES}/jobs/delete/${jobId}`,
       { withCredentials: true }
     );
     const data = await res.data;
