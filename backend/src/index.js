@@ -1,10 +1,9 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import app from "./app.js";
 import { connectDB } from "./db/connect.js";
 
 const startServer = () => {
-  dotenv.config();
-  
+  // dotenv.config();
   connectDB()
     .then(() => {
       app.listen(process.env.PORT, () => {
