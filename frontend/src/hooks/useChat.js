@@ -14,11 +14,12 @@ export const useChat = () => {
   };
 
   const createNewConversation = async (newConversation) => {
-    await createConversation(newConversation);
+    const data = await createConversation(newConversation);
+    return data;
   };
 
-  const checkConversation = async (employerId, employeeId) => {
-    const data = await checkConversationExists(employerId, employeeId);
+  const checkConversation = async (employerId, employeeId, jobId) => {
+    const data = await checkConversationExists(employerId, employeeId, jobId);
     return data;
   };
 

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useAllContext } from "../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
@@ -6,12 +7,15 @@ import { FaIndustry, FaLocationDot } from "react-icons/fa6";
 import { IoCall, IoMail } from "react-icons/io5";
 import { TbWorldWww } from "react-icons/tb";
 import { TiBriefcase } from "react-icons/ti";
-import { MdOutlineEditLocation } from "react-icons/md";
+import { MdDescription, MdOutlineEditLocation } from "react-icons/md";
 import JobCard from "../components/JobCard";
 
 const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [companyName, setCompanyName] = useState(employerProfile.companyName);
+  const [description, setDescription] = useState(
+    employerProfile.companyDescription
+  );
   const [email, setEmail] = useState(employerProfile.email);
   const [contact, setContact] = useState(employerProfile.contactNumber);
   const [location, setLocation] = useState(employerProfile.location);
@@ -20,8 +24,30 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
 
   const { profile } = useAllContext();
 
+  const validateForm = () => {
+    if (!companyName) return "Company name is required.";
+    if (!email) return "Email is required.";
+    if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email))
+      return "Invalid email format.";
+    if (!contact) return "Contact number is required.";
+    if (!/^\d{10}$/.test(contact)) return "Contact number must be 10 digits.";
+    if (!location) return "Location is required.";
+    if (!industry) return "Industry is required.";
+    if (!website) return "Website is required.";
+    if (!/^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/.test(website))
+      return "Invalid website URL.";
+    if (!description) return "Company description is required.";
+    return null;
+  };
+
   const handleSaveProfile = async (e) => {
     e.preventDefault();
+
+    const error = validateForm();
+    if (error) {
+      enqueueSnackbar(error, { variant: "error" });
+      return;
+    }
 
     try {
       if (
@@ -51,10 +77,13 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
   return (
     <div className="max-w-4xl mx-auto font-serif p-6">
       {isEditing ? (
-        <form
+        <motion.form
           method="post"
           onSubmit={handleSaveProfile}
           className="p-6 shadow-[1px_1px_10px] shadow-slate-400 rounded-xl text-yellow-400 space-y-6"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
         >
           <div className="text-center text-3xl font-bold mb-4">
             <input
@@ -121,6 +150,17 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
               onChange={(e) => setWebsite(e.target.value)}
             />
           </div>
+          <div>
+            <label className="flex gap-1 items-center mb-1 font-semibold">
+              <MdDescription /> Description
+            </label>
+            <input
+              type="text"
+              className="w-full p-2 rounded-md bg-gray-700 text-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
           <div className="text-center flex gap-4 items-center justify-center">
             <button
               type="submit"
@@ -136,13 +176,18 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
               Cancel
             </button>
           </div>
-        </form>
+        </motion.form>
       ) : (
-        <div className="p-6 rounded-xl shadow-[1px_1px_10px] shadow-slate-400 text-yellow-400">
+        <motion.div
+          className="p-6 rounded-xl shadow-[1px_1px_10px] shadow-slate-400 text-yellow-400"
+          initial={{ scale: 0, y: 100 }}
+          animate={{ scale: 1, y: 0 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+        >
           <div className="text-center text-3xl font-bold mb-4 max-sm:text-2xl">
             {employerProfile.companyName}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-sm:gap-2">
+          <div className="grid grid-cols- sm:grid-cols-2 gap-4 max-sm:gap-2">
             <p>
               <strong className="flex items-center gap-1">
                 <IoCall className="text-lg" /> Contact Number:{" "}
@@ -184,34 +229,25 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
             </p>
             <p>
               <strong className="flex items-center gap-1">
-                <TiBriefcase /> Total Jobs Posted:{" "}
-                <span className="font-light">
+                <TiBriefcase className="text-xl" /> Total Jobs Posted:{" "}
+                <span className="font-light text-xl">
                   {employerProfile?.jobsPosted?.length}
                 </span>
               </strong>
             </p>
           </div>
-          {/* <div className="mt-4 max-sm:mt-2">
-            <p>
-              <strong className="flex items-center gap-1">
-                <TbWorldWww /> Website:{" "}
-                <span className="font-light">{employerProfile.industry}</span>
+          <div className="border-b-2 border-yellow-400">
+            <p className="">
+              <strong className="flex flex-col my-2 gap-1">
+                <div className="flex">
+                  <MdDescription className="text-xl" /> Description:{" "}
+                </div>
+                <span className="font-light text-xl mx-10">
+                  {employerProfile?.companyDescription}
+                </span>
               </strong>
             </p>
-            <p>
-              <strong className="flex items-center gap-1">
-                <TbWorldWww /> Total Jobs Posted:{" "}
-                <a
-                  href={employerProfile.website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-400 hover:underline hover:text-yellow-200"
-                >
-                  {employerProfile.companyName}
-                </a>
-              </strong>
-            </p>
-          </div> */}
+          </div>
           {fromViewEmployerProfile && (
             <>
               <div>
@@ -242,7 +278,7 @@ const EmployerProfile = ({ employerProfile, fromViewEmployerProfile }) => {
               </button>
             </div>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );

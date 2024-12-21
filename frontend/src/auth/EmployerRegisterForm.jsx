@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useAllContext } from "../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
@@ -77,16 +78,26 @@ const EmployerRegisterForm = () => {
   }, [auth?.userType, navigate]);
 
   return (
-    <div className="flex items-center font-serif justify-center w-full bg-gray-800 py-6 px-4">
+    <motion.div
+      className="flex items-center font-serif justify-center w-full bg-gray-800 py-6 px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 2 }}
+    >
       <form
         method="post"
-        className="w-full max-w-3xl shadow-[2px_2px_10px] shadow-yellow-400 rounded-lg p-8"
+        className="w-full max-w-3xl hover:shadow-[2px_2px_10px] hover:shadow-yellow-400 rounded-lg p-8"
         onSubmit={handleERRegister}
       >
-        <h2 className="text-3xl text-yellow-400 font-bold text-center mb-6 max-md:text-2xl">
+        <h2 className="text-3xl underline text-yellow-400 font-bold text-center mb-6 max-md:text-2xl">
           Register Your Company
         </h2>
-        <div className="flex flex-col gap-4">
+        <motion.div
+          className="flex flex-col gap-4"
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+        >
           <div className="flex flex-col md:flex-row gap-4">
             <input
               className="outline-none bg-gray-600 text-yellow-400 w-full p-3 rounded-md focus:shadow-yellow-400 focus:shadow-[1px_1px_5px]"
@@ -186,13 +197,13 @@ const EmployerRegisterForm = () => {
           />
           <button
             type="submit"
-            className="bg-slate-500 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400  transition-all ease-in-out hover:scale-x-105 duration-200 max-md:text-xl max-sm:text-lg"
+            className="bg-slate-900 py-3 rounded-md text-2xl text-yellow-400 shadow-[2px_2px_10px] shadow-yellow-400  transition-all ease-in-out hover:scale-x-105 duration-200 max-md:text-xl max-sm:text-lg"
           >
             Register My Company
           </button>
-        </div>
+        </motion.div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

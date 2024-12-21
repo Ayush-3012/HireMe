@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/HireMeContext";
 import SkillsInput from "../../auth/inputs/SkillsInput";
@@ -92,7 +93,11 @@ const ManageJob = ({ fromPostJob }) => {
   };
 
   return (
-    <div className=" mx-4 p-4 bg-slate-700  font-serif text-yellow-400 rounded-lg">
+    <motion.div
+      className=" mx-4 p-4 bg-slate-700 my-4  font-serif text-yellow-400 rounded-lg"
+      animate={{ x: [300, 200, 100, 0, -20, 0] }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+    >
       <h2 className="text-2xl font-bold mb-4">
         {fromPostJob ? "Post New Job" : "Edit Job"}
       </h2>
@@ -104,7 +109,7 @@ const ManageJob = ({ fromPostJob }) => {
           <label className="block text-sm font-semibold mb-2">Job Title</label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 outline-none focus:shadow-[1px_1px_10px]  rounded-md"
+            className="w-full p-2 bg-slate-900 outline-none focus:ring ring-white  rounded-md"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -115,7 +120,7 @@ const ManageJob = ({ fromPostJob }) => {
             Description
           </label>
           <textarea
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -125,7 +130,7 @@ const ManageJob = ({ fromPostJob }) => {
           <label className="block text-sm font-semibold mb-2">Location</label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
@@ -137,7 +142,7 @@ const ManageJob = ({ fromPostJob }) => {
           </label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={salaryRange}
             onChange={(e) => setSalaryRange(e.target.value)}
           />
@@ -148,7 +153,7 @@ const ManageJob = ({ fromPostJob }) => {
             Employment Type
           </label>
           <select
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={employmentType}
             onChange={(e) => setEmploymentType(e.target.value)}
           >
@@ -164,7 +169,7 @@ const ManageJob = ({ fromPostJob }) => {
           </label>
           <input
             type="text"
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
           />
@@ -177,7 +182,7 @@ const ManageJob = ({ fromPostJob }) => {
           <input
             type="date"
             min={new Date().toISOString().split("T")[0]}
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}
           />
@@ -187,7 +192,11 @@ const ManageJob = ({ fromPostJob }) => {
           <label className="block text-sm font-semibold mb-2">
             Required Skills
           </label>
-          <SkillsInput skills={requiredSkills} setSkills={setRequiredSkills} />
+          <SkillsInput
+            skills={requiredSkills}
+            setSkills={setRequiredSkills}
+            fromEdit={true}
+          />
         </div>
 
         <div className="mb-4">
@@ -195,7 +204,7 @@ const ManageJob = ({ fromPostJob }) => {
             Experience Level
           </label>
           <select
-            className="w-full p-2 bg-slate-500 focus:shadow-[1px_1px_10px] outline-none rounded-md"
+            className="w-full p-2 bg-slate-900 focus:ring ring-white outline-none rounded-md"
             value={experienceLevel}
             onChange={(e) => setExperienceLevel(e.target.value)}
           >
@@ -211,7 +220,7 @@ const ManageJob = ({ fromPostJob }) => {
           </label>
           <div
             className={`relative w-12 h-6 flex items-center bg-gray-300 rounded-full cursor-pointer transition-colors ${
-              remote ? "bg-yellow-400" : "bg-slate-500"
+              remote ? "bg-yellow-400" : "bg-slate-900"
             }`}
             onClick={() => setRemote((prev) => !prev)}
           >
@@ -223,16 +232,22 @@ const ManageJob = ({ fromPostJob }) => {
           </div>
         </div>
 
-        <div>
-          <button
+        <div className="flex items-center justify-center">
+          <motion.button
             type="submit"
-            className="bg-slate-500 p-2 rounded-md font-bold hover:bg-slate-600"
+            className="px-12 py-2 text-xl bg-slate-900 text-yellow-300  rounded-md hover:bg-black"
+            whileHover={{
+              translateY: "-5px",
+              boxShadow: "0px 0px 10px white",
+              scaleX: 1.04,
+              transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+            }}
           >
             {fromPostJob ? "Post Job" : "Update Job"}
-          </button>
+          </motion.button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

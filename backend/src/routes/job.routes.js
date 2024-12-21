@@ -14,14 +14,11 @@ import {
   updateJob,
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../utils/token-manager.js";
-import { upload } from "../middlewares/multer.middleware.js";
 
 const jobRouter = Router();
 
-jobRouter.route("/create").post(upload.fields([{}]), verifyToken, createJob);
-jobRouter
-  .route("/update/:jobId")
-  .put(upload.fields([{}]), verifyToken, updateJob);
+jobRouter.route("/create").post(verifyToken, createJob);
+jobRouter.route("/update/:jobId").put(verifyToken, updateJob);
 jobRouter.route("/delete/:jobId").delete(verifyToken, deleteJob);
 
 jobRouter.route("/view").get(verifyToken, getAllJobs);
@@ -33,9 +30,7 @@ jobRouter
 jobRouter.route("/getSpecificJobs").get(verifyToken, getSpecificJobs);
 jobRouter.route("/getRecommendedJobs").get(verifyToken, getRecommendedJobs);
 
-jobRouter
-  .route("/apply/:jobId")
-  .post(upload.fields([{}]), verifyToken, applyForJob);
+jobRouter.route("/apply/:jobId").post(verifyToken, applyForJob);
 jobRouter.route("/save").post(verifyToken, saveJob);
 jobRouter.route("/unSave").post(verifyToken, unSaveJob);
 

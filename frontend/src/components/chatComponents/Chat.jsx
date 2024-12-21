@@ -31,7 +31,12 @@ const Chat = () => {
           setActiveConversation={setActiveConversation}
           activeConversation={activeConversation}
         />
-        <ChatConversation activeConversation={activeConversation} />
+        <ChatConversation
+          activeConversation={activeConversation}
+          conversation={conversation}
+          setConversation={setConversation}
+          setActiveConversation={setActiveConversation}
+        />
       </div>
     </>
   );

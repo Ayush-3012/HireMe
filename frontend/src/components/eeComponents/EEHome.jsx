@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useAllContext } from "../../context/HireMeContext";
 import { useEffect, useState } from "react";
@@ -28,7 +29,11 @@ const EEHome = () => {
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.8, type: "spring" }}
+    >
       <div className="flex justify-between items-center max-md:flex-col">
         <div className="">
           <h1 className="text-yellow-400 text-3xl max-sm:text-xl">
@@ -66,12 +71,12 @@ const EEHome = () => {
             placeholder="Search jobs by title or location..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="py-1 px-2 w-full border shadow-[1px_1px_5px] focus:ring ring-slate-300 text-xl bg-gray-500 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
+            className="py-1 px-2 w-full border focus:ring ring-slate-300 text-xl bg-gray-950 text-yellow-300 border-none outline-none rounded-lg max-sm:text-sm max-md:rounded-md"
             required
           />
           <button
             type="submit"
-            className="bg-gray-500 text-yellow-300 hover:scale-110 text-xl py-1 px-2 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-900"
+            className="bg-gray-500 text-yellow-300 hover:scale-110 text-xl py-1 px-2 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-900 hover:-translate-y-1"
           >
             Search
           </button>
@@ -79,7 +84,7 @@ const EEHome = () => {
       </div>
 
       <EEDashboard />
-    </>
+    </motion.div>
   );
 };
 

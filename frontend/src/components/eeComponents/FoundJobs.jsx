@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { useAllContext } from "../../context/HireMeContext";
 import { useEffect } from "react";
@@ -25,11 +26,16 @@ const FoundJobs = () => {
         {jobs?.specificJobs?.length === 0 ? (
           <p className="text-yellow-400 text-3xl">No jobs found.</p>
         ) : (
-          <div className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1">
+          <motion.div
+            className="flex gap-4 w-fit max-w-full px-2 py-3 overflow-x-auto max-md:gap-2 max-md:px-1"
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+          >
             {jobs?.specificJobs?.map((job) => (
               <JobCard key={job._id} foundJobs={job} />
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     </>

@@ -22,19 +22,22 @@ export const createConversation = async (newConversation) => {
       { newConversation },
       { withCredentials: true }
     );
-    const data = res.data;
-    return data;
+    return res;
   } catch (error) {
     throw new Error("Unable to Register" + error.message);
   }
 };
 
-export const checkConversationExists = async (employerId, employeeId) => {
+export const checkConversationExists = async (
+  employerId,
+  employeeId,
+  jobId
+) => {
   try {
     const res = await axios.get(
       `${
         import.meta.env.VITE_API_ROUTES
-      }/conversations/checkConversationExists?employerId=${employerId}&employeeId=${employeeId}`,
+      }/conversations/checkConversationExists?employerId=${employerId}&employeeId=${employeeId}&jobId=${jobId}`,
       { withCredentials: true }
     );
     const data = res.data;
@@ -72,7 +75,6 @@ export const getMessage = async (conversationId) => {
     throw new Error("Unable to Register" + error.message);
   }
 };
-
 
 export const sendMessage = async (messageData) => {
   try {

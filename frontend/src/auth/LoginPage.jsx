@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useAllContext } from "../context/HireMeContext.jsx";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const { auth } = useAllContext();
+
+  let currentUser = auth.userType === "employer" ? "Company" : "Job Seeker";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -28,11 +31,17 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full">
+    <motion.div
+      key={`action-buttons-${currentUser}`}
+      className="flex items-center justify-center w-full"
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+    >
       <form
         onSubmit={handleLogin}
         method="post"
-        className="bg-slate-500 w-full px-12 py-4 rounded-md my-2 max-md:px-8 max-md:py-2 max-sm:px-2"
+        className="hover:bg-slate-500 w-full px-12 py-4 rounded-md my-2 max-md:px-8 max-md:py-2 max-sm:px-2"
       >
         <div className="space-y-2 max-md:space-y-1">
           <input
@@ -66,13 +75,13 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="shadow-[1px_1px_5px] text-xl shadow-yellow-400 text-yellow-400 bg-slate-800 hover:scale-x-110 duration-200 transition-all px-8 py-2 rounded-md max-md:text-lg max-sm:text-sm max-md:px-6 max-sm:px-4 max-sm:py-1"
+            className="shadow-[1px_1px_5px] text-xl shadow-yellow-400 text-yellow-400 bg-slate-900 hover:scale-x-110 duration-200 transition-all px-8 py-2 rounded-md max-md:text-lg max-sm:text-sm max-md:px-6 max-sm:px-4 max-sm:py-1"
           >
             Login
           </button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

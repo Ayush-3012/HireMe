@@ -7,25 +7,28 @@ export const createConversation = async (req, res) => {
     employerId,
     employeeName,
     employerName,
+    jobId,
     jobTitle,
     firstMessage,
   } = req.body.newConversation;
 
   try {
     const existingConversation = await Conversation.findOne({
-      employeeId: employeeId,
-      employerId: employerId,
-      jobTitle: jobTitle,
+      employeeId,
+      employerId,
+      jobId,
+      jobTitle,
     });
     if (existingConversation)
       return res.status(400).json({ error: "Conversation already exists." });
 
     const conversation = new Conversation({
-      employeeId: employeeId,
-      employerId: employerId,
-      employeeName: employeeName,
-      employerName: employerName,
-      jobTitle: jobTitle,
+      employeeId,
+      employerId,
+      employeeName,
+      employerName,
+      jobId,
+      jobTitle,
       lastMessage: firstMessage,
       lastMessageSender: employerId,
     });
@@ -72,12 +75,13 @@ export const getUserConversation = async (req, res) => {
 };
 
 export const checkConversationExists = async (req, res) => {
-  const { employerId, employeeId } = req.query;
+  const { employerId, employeeId, jobId } = req.query;
 
   try {
     const conversation = await Conversation.findOne({
       employerId,
       employeeId,
+      jobId,
     });
     return res.status(200).json({ exists: !!conversation });
   } catch (error) {
@@ -95,7 +99,9 @@ export const deleteConversation = async (req, res) => {
 
     await Conversation.findByIdAndDelete(conversationId);
     await Message.deleteMany({ conversationId });
-    return res.status(200).json({ message: "Conversation and messages deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "Conversation and messages deleted successfully" });
   } catch (error) {
     return res
       .status(500)

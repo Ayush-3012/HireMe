@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import ERDashboard from "./ERDashboard";
 import { useEffect, useState } from "react";
 import { useAllContext } from "../../context/HireMeContext";
@@ -29,7 +30,11 @@ const ERHome = () => {
   }, [currentUser, jobs, profile, userId]);
 
   return (
-    <>
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.5, type: "spring" }}
+    >
       <div className="flex justify-evenly items-center my-4 text-2xl max-md:text-xl max-sm:text-sm max-md:flex-col">
         <p className="text-yellow-400 text-3xl max-md:text-2xl max-sm:text-xl">
           Post a job and start finding the best talent for your company!
@@ -48,7 +53,7 @@ const ERHome = () => {
           refreshDeletedJob={refreshDeletedJob}
         />
       </>
-    </>
+    </motion.div>
   );
 };
 

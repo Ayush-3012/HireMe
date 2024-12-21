@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAllContext } from "../context/HireMeContext";
+import { motion } from "framer-motion";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaEdit, FaHome, FaInfoCircle } from "react-icons/fa";
 import {
@@ -8,7 +9,7 @@ import {
   FaCalendarCheck,
   FaLocationDot,
 } from "react-icons/fa6";
-import { GoDotFill } from "react-icons/go";
+import { GoBookmarkSlashFill, GoDotFill } from "react-icons/go";
 import ConfirmationModal from "../components/erComponents/DeleteConfirmationModal";
 import { enqueueSnackbar } from "notistack";
 import { MdDeleteForever } from "react-icons/md";
@@ -25,6 +26,8 @@ const JobDetailsPage = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [canApply, setCanApply] = useState(false);
   const navigate = useNavigate();
+
+  const MotionLink = motion(Link);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,9 +70,8 @@ const JobDetailsPage = () => {
     e.preventDefault();
     const res = await jobs?.bookmarkJob(jobId);
 
-    res.status !== 200
-      ? enqueueSnackbar(res.response.data.message, { variant: "error" })
-      : enqueueSnackbar(res.data.message, { variant: "success" });
+    res.status === 200 &&
+      enqueueSnackbar(res.data.message, { variant: "success" });
   };
 
   const formatApplicationDeadline = (timestamp) => {
@@ -84,7 +86,11 @@ const JobDetailsPage = () => {
 
   return (
     <>
-      <div className="p-2 rounded-xl font-serif flex flex-col items-center justify-center gap-2">
+      <motion.div
+        className="p-2 rounded-xl font-serif flex flex-col items-center justify-center gap-2"
+        animate={{ x: [-100, -50, 0, 10, 0] }}
+        transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+      >
         <div className="shadow-[1px_1px_10px] shadow-slate-400 rounded-xl p-4 w-full max-md:p-2">
           <div className="relative px-2 flex">
             <div className="">
@@ -92,13 +98,16 @@ const JobDetailsPage = () => {
                 {aboutJob.title}
               </h2>
               {currentUser === "employee" ? (
-                <Link
+                <MotionLink
                   to={"/company-profile"}
                   state={{ companyId: aboutJob.employer }}
                   className="text-xl hover:text-slate-100 max-md:text-lg max-sm:text-sm text-slate-200"
+                  whileHover={{
+                    color: "#f0f",
+                  }}
                 >
                   @{aboutJob.companyName}
-                </Link>
+                </MotionLink>
               ) : (
                 <p className="text-xl max-md:text-lg max-sm:text-sm text-yellow-400">
                   @{aboutJob.companyName}
@@ -133,23 +142,35 @@ const JobDetailsPage = () => {
               )}
 
               {auth?.userType === "employee" && (
-                <button
-                  className={`${
-                    isSaved
-                      ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
-                      : "bg-slate-800 text-white hover:text-slate-800 transition-all ease-in-out duration-200 sm:hover:bg-yellow-400 hover:scale-105"
-                  } max-sm:bg-inherit text-xl px-2  py-1 rounded-md `}
-                  onClick={(e) => handleSaveJob(e, aboutJob._id)}
-                >
-                  <FaBookmark
-                    className={`${
-                      isSaved
-                        ? "text-slate-400 group cursor-not-allowed"
-                        : "text-slate-200 hover:text-yellow-400 transition-all ease-in-out duration-200 hover:scale-105"
-                    } sm:hidden text-3xl bg-inherit `}
-                  />
-                  <span className="max-sm:hidden">Save</span>
-                </button>
+                <>
+                  {!isSaved ? (
+                    <button
+                      className="bg-slate-800 text-white transition-all ease-in-out duration-200 hover:bg-yellow-400 hover:scale-105 hover:text-yellow-600
+                      max-sm:bg-inherit p-2 rounded-md"
+                      onClick={(e) => {
+                        handleSaveJob(e, aboutJob._id);
+                        setIsSaved(true);
+                      }}
+                    >
+                      <FaBookmark className="text-3xl max-md:text-2xl max-sm:text-xl" />
+                    </button>
+                  ) : (
+                    <button
+                      className="bg-slate-800 transition-all ease-in-out duration-200 hover:bg-red-400 hover:scale-105 max-sm:bg-inherit p-1.5 rounded-md"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const res = await jobs?.unSaveJob(jobId);
+                        res.status === 200 &&
+                          enqueueSnackbar(res.data.message, {
+                            variant: "success",
+                          });
+                        setIsSaved(false);
+                      }}
+                    >
+                      <GoBookmarkSlashFill className="text-red-600 text-4xl max-md:text-3xl max-sm:text-2xl" />
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -169,42 +190,87 @@ const JobDetailsPage = () => {
               </span>
             </div>
             <div className="grid grid-cols-5 gap-3 p-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 ">
-              <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
+              <motion.div
+                className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl"
+                whileHover={{
+                  translateY: "-10px",
+                  boxShadow: "0px 0px 10px #ff0",
+                  scaleX: 1.04,
+                  transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+                }}
+              >
                 <span> Annual CTC</span>
                 <span className="text-lg flex items-center justify-center gap-1 font-semibold">
                   <RiMoneyRupeeCircleFill className="text-xl" />{" "}
                   {aboutJob.salaryRange}
                 </span>
-              </div>
+              </motion.div>
 
-              <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
+              <motion.div
+                className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl"
+                whileHover={{
+                  translateY: "-10px",
+                  boxShadow: "0px 0px 10px #ff0",
+                  scaleX: 1.04,
+                  transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+                }}
+              >
                 <span>Located In</span>
                 <span className="text-lg flex items-center justify-center gap-1 font-semibold">
                   <FaLocationDot className="text-xl" /> {aboutJob.location}
                 </span>
-              </div>
-              <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl ">
+              </motion.div>
+              <motion.div
+                className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl "
+                whileHover={{
+                  translateY: "-10px",
+                  boxShadow: "0px 0px 10px #ff0",
+                  scaleX: 1.04,
+                  transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+                }}
+              >
                 <span>Employment Type</span>
                 <span className="text-lg flex items-center justify-center gap-1 font-semibold">
                   <FaBusinessTime className="text-xl" />{" "}
                   {aboutJob.employmentType}
                 </span>
-              </div>
-              <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
+              </motion.div>
+              <motion.div
+                className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl"
+                whileHover={{
+                  translateY: "-10px",
+                  boxShadow: "0px 0px 10px #ff0",
+                  scaleX: 1.04,
+                  transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+                }}
+              >
                 <span>Experience Level</span>
                 <span className="text-lg flex items-center justify-center gap-1 font-semibold">
                   <RiUserStarFill className="text-xl" />{" "}
                   {aboutJob.experienceLevel}
                 </span>
-              </div>
+              </motion.div>
 
-              <div className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl">
+              <motion.div
+                className="text-center text-xl py-2 flex flex-col bg-gray-700 text-yellow-400 rounded-xl"
+                whileHover={{
+                  translateY: "-10px",
+                  boxShadow: "0px 0px 10px #ff0",
+                  scaleX: 1.04,
+                  transition: { duration: 0.8, type: "spring", bounce: 0.6 },
+                }}
+              >
                 <span>Apply By</span>
-                <span className="text-lg flex items-center justify-center gap-1 font-semibold">
+                <span
+                  className={`text-lg flex items-center justify-center gap-1 font-semibold ${
+                    new Date(aboutJob?.applicationDeadline) < new Date() &&
+                    "text-red-500"
+                  }`}
+                >
                   <FaCalendarCheck className="text-xl" />{" "}
                   {formatApplicationDeadline(aboutJob.applicationDeadline)}
                 </span>
-              </div>
+              </motion.div>
             </div>
           </div>
           <hr />
@@ -215,15 +281,24 @@ const JobDetailsPage = () => {
 
             <div className="flex flex-wrap gap-3 mx-">
               {aboutJob?.requiredSkills?.map((skill, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className="flex items-center bg-zinc-700 shadow-[1px_1px_10px] rounded-xl hover:shadow-slate-50 hover:scale-105 transition-transform duration-200"
+                  className="flex items-center bg-zinc-700 rounded-lg group"
+                  whileHover={{
+                    translateY: "-5px",
+                    boxShadow: "0px 0px 10px #ff0",
+                    background: "black",
+                    scaleX: 1.025,
+                    transition: { duration: 0.8, type: "spring", bounce: 0.7 },
+                  }}
+                  animate={{ y: [-40, -20, 0, 10, 0] }}
+                  transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
                 >
                   <GoDotFill className="text-xl text-yellow-300" />
-                  <h2 className="cursor-pointer text-lg  bg-slate-600 rounded-r-xl px-4 py-1">
+                  <h2 className="cursor-pointer text-lg  bg-slate-600 rounded-r-lg px-4 py-1 group-hover:bg-slate-800">
                     {skill}
                   </h2>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -293,6 +368,7 @@ const JobDetailsPage = () => {
                           jobTitle: aboutJob.title,
                           employer: aboutJob.companyName,
                           employerId: aboutJob.employer,
+                          jobId,
                         }}
                       >
                         <div className="flex justify-start flex-col">
@@ -330,7 +406,7 @@ const JobDetailsPage = () => {
               </div>
             )}
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

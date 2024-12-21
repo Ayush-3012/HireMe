@@ -1,11 +1,17 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import MessageInput from "./MessageInput";
 import { HiDotsVertical } from "react-icons/hi";
 import { useAllContext } from "../../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
 
-const ChatConversation = ({ activeConversation }) => {
+const ChatConversation = ({
+  activeConversation,
+  setConversation,
+  setActiveConversation,
+  conversation,
+}) => {
   const [messages, setMessages] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const { chats } = useAllContext();
@@ -39,24 +45,35 @@ const ChatConversation = ({ activeConversation }) => {
 
   const handleDeleteConversation = async () => {
     const res = await chats?.deleteConversation(activeConversation?._id);
-    enqueueSnackbar(res.data.message, { variant: "success" });
-    setMenuOpen(false);
+    if (res?.status === 200) {
+      enqueueSnackbar(res.data.message, { variant: "success" });
+      setMenuOpen(false);
+      const updatedConversation = conversation.filter(
+        (chat) => chat._id !== activeConversation?._id
+      );
+      setConversation(updatedConversation);
+      setActiveConversation(updatedConversation[0] || null);
+    }
   };
-
-  // const handleBlockUser = () => {
-  //   // Logic to block the user
-  //   console.log("Block User", activeConversation);
-  //   setMenuOpen(false);
-  // };
 
   return (
     <>
       {!activeConversation ? (
-        <div className="flex flex-1 rounded-lg justify-center items-center text-xl py-2 font-serif text-yellow-400 bg-gray-600">
+        <motion.div
+          className="flex flex-1 rounded-lg justify-center items-center text-4xl py-10 font-serif text-yellow-400 bg-gray-600"
+          initial={{ opacity: 0, y: -300 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+        >
           No Active Conversation
-        </div>
+        </motion.div>
       ) : (
-        <div className="flex flex-1 flex-col rounded-lg px-4 gap-1 font-serif bg-gray-600 max-lg:px-2 max-md:px-1">
+        <motion.div
+          className="flex flex-1 flex-col rounded-lg px-4 gap-1 font-serif bg-gray-600 max-lg:px-2 max-md:px-1"
+          initial={{ opacity: 0, y: -300 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+        >
           <div className="border-b-2 border-slate-900 text-yellow-400 flex justify-between items-center">
             <div className="flex flex-col">
               <h2 className="text-2xl max-lg:text-xl max-md:text-lg">
@@ -79,16 +96,10 @@ const ChatConversation = ({ activeConversation }) => {
                 <div className="absolute right-0 bg-slate-700 text-yellow-400 rounded-md shadow-lg w-32 text-sm z-50">
                   <div
                     onClick={handleDeleteConversation}
-                    className="px-4 py-2 hover:bg-slate-500 hover:rounded-t-md cursor-pointer"
+                    className="px-4 py-2 hover:bg-slate-500 hover:rounded-md cursor-pointer"
                   >
                     Delete Conversation
                   </div>
-                  {/* <div
-                    onClick={handleBlockUser}
-                    className="px-4 py-2 hover:bg-slate-500 hover:rounded-b-md cursor-pointer"
-                  >
-                    Block User
-                  </div> */}
                 </div>
               )}
             </div>
@@ -128,7 +139,7 @@ const ChatConversation = ({ activeConversation }) => {
             senderId={senderId}
             setMessages={setMessages}
           />
-        </div>
+        </motion.div>
       )}
     </>
   );

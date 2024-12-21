@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
 import { IoAddCircle } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -19,8 +20,15 @@ const EducationInput = ({ education, setEducation }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 shadow-yellow-400 shadow-[2px_2px_10px] p-4">
-    <h1 className="text-xl text-yellow-400 font-medium self-start">Education - </h1>
+    <motion.div
+      className="flex flex-col rounded-md items-center gap-4 shadow-yellow-400 shadow-[2px_2px_10px] p-4"
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+    >
+      <h1 className="text-xl text-yellow-400 font-medium self-start">
+        Education -{" "}
+      </h1>
       {education.map((edu, index) => (
         <div
           key={index}
@@ -79,7 +87,7 @@ const EducationInput = ({ education, setEducation }) => {
       >
         <IoAddCircle />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { motion } from "framer-motion";
 const ChatList = ({
   conversation,
   setActiveConversation,
@@ -20,9 +21,14 @@ const ChatList = ({
   };
 
   return (
-    <div className="font-serif">
+    <motion.div
+      className="font-serif"
+      initial={{ opacity: 0, y: 300 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.6 }}
+    >
       {conversation?.length === 0 ? (
-        <div className="flex rounded-lg justify-center items-center text-xl px-4 py-2 text-yellow-400 bg-gray-600">
+        <div className="flex rounded-lg justify-center items-center text-4xl px-4 py-10 text-yellow-400 bg-gray-600">
           No Conversation
         </div>
       ) : (
@@ -62,7 +68,7 @@ const ChatList = ({
           })}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

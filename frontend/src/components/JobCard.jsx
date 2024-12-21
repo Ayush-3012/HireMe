@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { MdDelete, MdDeleteForever } from "react-icons/md";
 import { RiMoneyRupeeCircleFill } from "react-icons/ri";
@@ -67,7 +68,7 @@ const JobCard = ({
                 {jobDetails.title}
               </p>
               {currentUser === "employee" ? (
-                <button
+                <motion.button
                   onClick={(e) => {
                     e.preventDefault();
                     navigate("/company-profile", {
@@ -75,10 +76,14 @@ const JobCard = ({
                     });
                   }}
                   to={"/company-profile"}
-                  className="text-xl hover:text-slate-100 max-md:text-lg max-sm:text-sm text-slate-200"
+                  className="text-xl text-slate-100 max-md:text-lg max-sm:text-sm "
+                  whileHover={{
+                    color: "#f0f",
+                    transition: { duration: 0.5 },
+                  }}
                 >
                   @{jobDetails.companyName}
-                </button>
+                </motion.button>
               ) : (
                 <p className="text-xl max-md:text-lg max-sm:text-sm text-yellow-400">
                   @{jobDetails.companyName}

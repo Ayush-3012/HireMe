@@ -20,6 +20,11 @@ const conversationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    jobId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Job",
+      required: true,
+    },
     jobTitle: {
       type: String,
       required: true,

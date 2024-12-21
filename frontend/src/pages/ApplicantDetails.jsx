@@ -8,13 +8,18 @@ import { enqueueSnackbar } from "notistack";
 const ApplicantDetails = () => {
   const location = useLocation();
   const { chats } = useAllContext();
-  const { applicant, jobTitle, employer, employerId } = location.state || {};
+  const { applicant, jobTitle, employer, employerId, jobId } =
+    location.state || {};
   const [showConnectComponent, setShowConnectComponent] = useState(false);
   const [isConversationExists, setIsConversationExists] = useState(false);
 
   useEffect(() => {
     const fetchInfo = async () => {
-      const res = await chats?.checkConversation(employerId, applicant._id);
+      const res = await chats?.checkConversation(
+        employerId,
+        applicant._id,
+        jobId
+      );
       setIsConversationExists(res?.exists);
     };
     fetchInfo();
@@ -142,27 +147,20 @@ const ApplicantDetails = () => {
           className={`${
             isConversationExists
               ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
-              : "bg-slate-200 hover:bg-yellow-400 hover:text-slate-800 hover:-translate-y-2 shadow-[2px_1px_10px]"
-          } flex items-center relative justify-center my-4 py-2 rounded-xl   shadow-yellow-400  transition-all ease-in-out duration-300 max-md:my-2 max-md:py-1 `}
+              : "bg-slate-200 cursor-pointer hover:bg-yellow-400 hover:text-slate-800 hover:-translate-y-2 shadow-[2px_1px_10px]"
+          } flex items-center relative text-3xl max-md:text-2xl max-sm:text-xl justify-center my-4 py-2 rounded-xl shadow-yellow-400  transition-all ease-in-out duration-300 max-md:my-2 max-md:py-1 `}
+          onClick={() => {
+            !isConversationExists
+              ? setShowConnectComponent(true)
+              : enqueueSnackbar(
+                  `You Both are connected, please check chat section`,
+                  {
+                    variant: "error",
+                  }
+                );
+          }}
         >
-          <button
-            className={`text-3xl max-md:text-2xl max-sm:text-xl ${
-              isConversationExists && "cursor-not-allowed"
-            }`}
-            onClick={() => {
-              !isConversationExists
-                ? setShowConnectComponent(true)
-                : enqueueSnackbar(
-                    `You Both are connected, please check chat section`,
-                    {
-                      variant: "error",
-                    }
-                  );
-            }}
-            // disabled={isConversationExists}
-          >
-            Connect With {applicant.fullName}
-          </button>
+          Connect With {applicant.fullName}
         </div>
       }
       {!isConversationExists && showConnectComponent && (
@@ -172,6 +170,11 @@ const ApplicantDetails = () => {
           employeeName={applicant.fullName}
           employerName={employer}
           jobTitle={jobTitle}
+          jobId={jobId}
+          onConversationCreated={() => {
+            setIsConversationExists(true);
+            setShowConnectComponent(false);
+          }}
         />
       )}
     </div>
