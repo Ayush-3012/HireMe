@@ -8,6 +8,7 @@ app.get("/", (req, res) => res.json("Hello Welcome"));
 
 app.use(cors({ origin: process.env.CORS, credentials: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
