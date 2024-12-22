@@ -4,9 +4,13 @@ dotenv.config();
 import app from "./app.js";
 app.get("/", (req, res) => res.send("Hello, Welcome!"));
 
-app.listen(process.env.PORT, () => {
-  console.log(` Server is listening to port ${process.env.PORT}`);
-});
+connectDb()
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log(` Server is listening to port ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => console.log("MongoDb Connection failed: ", err));
 
 // import connectDB from "./db/connect.js";
 
