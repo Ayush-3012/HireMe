@@ -5,13 +5,13 @@ import app from "./app.js";
 import connectDB from "./db/connect.js";
 
 const startServer = async () => {
-  try {
-    await connectDB();
-    console.log(" MongoDB connected!");
-  } catch (err) {
-    console.error(" MongoDB connection failed:", err);
-    process.exit(1);
-  }
+  await connectDB()
+    .then(() => {
+      app.listen(process.env.PORT, () => {
+        console.log(` Server is listening to port ${process.env.PORT}`);
+      });
+    })
+    .catch((err) => console.log("MongoDb connection failed: ", err));
 };
 
 startServer();
