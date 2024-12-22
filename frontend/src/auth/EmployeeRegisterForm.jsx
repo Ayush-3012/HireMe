@@ -33,9 +33,9 @@ const EmployeeRegisterForm = () => {
 
   const navigate = useNavigate();
 
-  const showCurrentComponent = (e) => {
-    e.preventDefault();
-    switch (e.target.innerText) {
+  const showCurrentComponent = (val) => {
+    // e.preventDefault();
+    switch (val) {
       case "My Profile":
         setShowBasicInfo(true);
         setShowSkillsPage(false);
@@ -144,7 +144,10 @@ const EmployeeRegisterForm = () => {
             className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showBasicInfo ? "bg-slate-950" : "bg-slate-700"
             }`}
-            onClick={(e) => showCurrentComponent(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              showCurrentComponent("My Profile");
+            }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, type: "spring", bounce: 0.5 }}
@@ -156,7 +159,10 @@ const EmployeeRegisterForm = () => {
             className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showSkillsPage ? "bg-slate-950" : "bg-slate-700"
             }`}
-            onClick={(e) => showCurrentComponent(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              showCurrentComponent("Skills");
+            }}
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, type: "spring", bounce: 0.5 }}
@@ -168,7 +174,10 @@ const EmployeeRegisterForm = () => {
             className={`flex justify-center items-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showEducationPage ? "bg-slate-950" : "bg-slate-700"
             }`}
-            onClick={(e) => showCurrentComponent(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              showCurrentComponent("Education");
+            }}
             initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.7, type: "spring", bounce: 0.5 }}
@@ -180,7 +189,10 @@ const EmployeeRegisterForm = () => {
             className={`flex items-center justify-center gap-1 hover:bg-yellow-900 py-1 px-2 rounded-md max-md:px-4 max-md:py-2 ${
               showExperiencePage ? "bg-slate-950" : "bg-slate-700"
             }`}
-            onClick={(e) => showCurrentComponent(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              showCurrentComponent("Experience");
+            }}
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 2.2, type: "spring", bounce: 0.5 }}
