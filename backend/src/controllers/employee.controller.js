@@ -54,19 +54,30 @@ export const loginEmployee = async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
 
     res.clearCookie(process.env.COOKIE_NAME, {
+      // httpOnly: true,
+      // domain: "localhost",
+      // signed: true,
+      // path: "/",
+
       httpOnly: true,
-      domain: "localhost",
-      signed: true,
       path: "/",
+      signed: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     const token = createToken(employee._id.toString());
 
     res.cookie(process.env.COOKIE_NAME, token, {
+      // httpOnly: true,
+      // path: "/",
+      // domain: "localhost",
+      // signed: true,
       httpOnly: true,
       path: "/",
-      domain: "localhost",
       signed: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     return res
@@ -127,10 +138,15 @@ export const updateEmployeeProfile = async (req, res) => {
 export const logoutEmployee = async (req, res) => {
   try {
     res.clearCookie(process.env.COOKIE_NAME, {
+      // httpOnly: true,
+      // domain: "localhost",
+      // signed: true,
+      // path: "/",
       httpOnly: true,
-      domain: "localhost",
-      signed: true,
       path: "/",
+      signed: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     res.json({ message: "Employee Logged out successfully" });
