@@ -269,8 +269,17 @@ export const deleteJob = async (req, res) => {
         .json({ message: "Unauthorized to delete this job" });
 
     await employer.jobsPosted.pull(req.params.jobId);
+    const appliedEmployees = foundJob.applicants;
+    if (appliedEmployees && appliedEmployees.length > 0) {
+      await Employee.updateMany(
+        { _id: { $in: appliedEmployees } },
+        { $pull: { appliedJobs: req.params.jobId } }
+      );
+    }
+
     await Job.findByIdAndDelete(req.params.jobId);
-    employer.save();
+
+    await employer.save();
     return res.status(200).json({ message: "Job deleted successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });

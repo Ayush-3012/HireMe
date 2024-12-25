@@ -63,7 +63,7 @@ const JobDetailsPage = () => {
     const res = await jobs?.applyJob(jobId);
     res.status !== 200
       ? enqueueSnackbar(res.response.data.message, { variant: "error" })
-      : enqueueSnackbar(res.message, { variant: "success" });
+      : enqueueSnackbar(res.data.message, { variant: "success" });
   };
 
   const handleSaveJob = async (e, jobId) => {
@@ -336,7 +336,10 @@ const JobDetailsPage = () => {
                   ? "bg-slate-500 text-yellow-400 group cursor-not-allowed"
                   : "bg-slate-200 hover:bg-yellow-400 hover:text-slate-800 hover:-translate-y-2 shadow-[1px_1px_10px] w-96 shadow-yellow-400 transition-all ease-in-out duration-300"
               } flex items-center text-3xl my-4 px-4 py-2 rounded-xl justify-center`}
-              onClick={(e) => handleJobApply(e)}
+              onClick={(e) => {
+                handleJobApply(e);
+                setIsApplied(true);
+              }}
               // disabled={isApplied}
             >
               {isApplied && "You have already applied for this job"}
