@@ -5,11 +5,12 @@ import { useAllContext } from "../../context/HireMeContext";
 
 const MessageInput = ({ conversationId, senderId, setMessages }) => {
   const [newMessage, setNewMessage] = useState("");
-  const { chats } = useAllContext();
+  const { chats, socket } = useAllContext();
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim() === "") return;
+    if (!socket?.current) return;
 
     setMessages((prevMessages) => [
       ...prevMessages,
@@ -20,6 +21,13 @@ const MessageInput = ({ conversationId, senderId, setMessages }) => {
         timestamp: new Date(),
       },
     ]);
+
+    socket.current.emit("message", {
+      conversationId,
+      senderId,
+      message: newMessage,
+      timestamp: new Date(),
+    });
 
     try {
       await chats?.postMessage({

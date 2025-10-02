@@ -5,6 +5,7 @@ import MessageInput from "./MessageInput";
 import { HiDotsVertical } from "react-icons/hi";
 import { useAllContext } from "../../context/HireMeContext";
 import { enqueueSnackbar } from "notistack";
+import { useRef } from "react";
 
 const ChatConversation = ({
   activeConversation,
@@ -14,11 +15,18 @@ const ChatConversation = ({
 }) => {
   const [messages, setMessages] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { chats } = useAllContext();
+  const { chats, socket } = useAllContext();
   const currentUser = localStorage.getItem("userType");
   const senderId = localStorage.getItem("userId");
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    if (!activeConversation?._id || !chats) return;
+
     const fetchData = async () => {
       const conversationId = activeConversation?._id;
 
@@ -32,6 +40,25 @@ const ChatConversation = ({
     };
     fetchData();
   }, [activeConversation, chats]);
+
+  useEffect(() => {
+    if (!socket?.current) return;
+
+    const handleIncomingMessage = (msg) => {
+      if (
+        msg.senderId !== senderId &&
+        msg.conversationId === activeConversation?._id
+      ) {
+        setMessages((prev) => [...prev, msg]);
+      }
+    };
+
+    socket.current.on("message", handleIncomingMessage);
+
+    return () => {
+      socket.current.off("message", handleIncomingMessage);
+    };
+  }, [socket, senderId, activeConversation]);
 
   const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -132,6 +159,7 @@ const ChatConversation = ({
             ) : (
               <p>No messages yet</p>
             )}
+            <div ref={messagesEndRef}></div>
           </div>
           <span className="border border-slate-900"></span>
           <MessageInput
