@@ -17,7 +17,10 @@ export const HireMeContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (auth.user && !socket.current) {
-      socket.current = io(import.meta.env.VITE_SERVER);
+      socket.current = io(import.meta.env.VITE_SERVER, {
+        withCredentials: true,
+        transports: ["websocket", "polling"],
+      });
 
       socket.current.on("connect", () => {
         console.log("Socket connected:", socket.current.id);
